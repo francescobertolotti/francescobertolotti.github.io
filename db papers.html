@@ -1,0 +1,321 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script>function neighbourhoodHighlight(params) {
+  // console.log("in nieghbourhoodhighlight");
+  allNodes = nodes.get({ returnType: "Object" });
+  // originalNodes = JSON.parse(JSON.stringify(allNodes));
+  // if something is selected:
+  if (params.nodes.length > 0) {
+    highlightActive = true;
+    var i, j;
+    var selectedNode = params.nodes[0];
+    var degrees = 2;
+
+    // mark all nodes as hard to read.
+    for (let nodeId in allNodes) {
+      // nodeColors[nodeId] = allNodes[nodeId].color;
+      allNodes[nodeId].color = "rgba(200,200,200,0.5)";
+      if (allNodes[nodeId].hiddenLabel === undefined) {
+        allNodes[nodeId].hiddenLabel = allNodes[nodeId].label;
+        allNodes[nodeId].label = undefined;
+      }
+    }
+    var connectedNodes = network.getConnectedNodes(selectedNode);
+    var allConnectedNodes = [];
+
+    // get the second degree nodes
+    for (i = 1; i < degrees; i++) {
+      for (j = 0; j < connectedNodes.length; j++) {
+        allConnectedNodes = allConnectedNodes.concat(
+          network.getConnectedNodes(connectedNodes[j])
+        );
+      }
+    }
+
+    // all second degree nodes get a different color and their label back
+    for (i = 0; i < allConnectedNodes.length; i++) {
+      // allNodes[allConnectedNodes[i]].color = "pink";
+      allNodes[allConnectedNodes[i]].color = "rgba(150,150,150,0.75)";
+      if (allNodes[allConnectedNodes[i]].hiddenLabel !== undefined) {
+        allNodes[allConnectedNodes[i]].label =
+          allNodes[allConnectedNodes[i]].hiddenLabel;
+        allNodes[allConnectedNodes[i]].hiddenLabel = undefined;
+      }
+    }
+
+    // all first degree nodes get their own color and their label back
+    for (i = 0; i < connectedNodes.length; i++) {
+      // allNodes[connectedNodes[i]].color = undefined;
+      allNodes[connectedNodes[i]].color = nodeColors[connectedNodes[i]];
+      if (allNodes[connectedNodes[i]].hiddenLabel !== undefined) {
+        allNodes[connectedNodes[i]].label =
+          allNodes[connectedNodes[i]].hiddenLabel;
+        allNodes[connectedNodes[i]].hiddenLabel = undefined;
+      }
+    }
+
+    // the main node gets its own color and its label back.
+    // allNodes[selectedNode].color = undefined;
+    allNodes[selectedNode].color = nodeColors[selectedNode];
+    if (allNodes[selectedNode].hiddenLabel !== undefined) {
+      allNodes[selectedNode].label = allNodes[selectedNode].hiddenLabel;
+      allNodes[selectedNode].hiddenLabel = undefined;
+    }
+  } else if (highlightActive === true) {
+    // console.log("highlightActive was true");
+    // reset all nodes
+    for (let nodeId in allNodes) {
+      // allNodes[nodeId].color = "purple";
+      allNodes[nodeId].color = nodeColors[nodeId];
+      // delete allNodes[nodeId].color;
+      if (allNodes[nodeId].hiddenLabel !== undefined) {
+        allNodes[nodeId].label = allNodes[nodeId].hiddenLabel;
+        allNodes[nodeId].hiddenLabel = undefined;
+      }
+    }
+    highlightActive = false;
+  }
+
+  // transform the object into an array
+  var updateArray = [];
+  if (params.nodes.length > 0) {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        // console.log(allNodes[nodeId]);
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  } else {
+    // console.log("Nothing was selected");
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        // console.log(allNodes[nodeId]);
+        // allNodes[nodeId].color = {};
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  }
+}
+
+function filterHighlight(params) {
+  allNodes = nodes.get({ returnType: "Object" });
+  // if something is selected:
+  if (params.nodes.length > 0) {
+    filterActive = true;
+    let selectedNodes = params.nodes;
+
+    // hiding all nodes and saving the label
+    for (let nodeId in allNodes) {
+      allNodes[nodeId].hidden = true;
+      if (allNodes[nodeId].savedLabel === undefined) {
+        allNodes[nodeId].savedLabel = allNodes[nodeId].label;
+        allNodes[nodeId].label = undefined;
+      }
+    }
+
+    for (let i=0; i < selectedNodes.length; i++) {
+      allNodes[selectedNodes[i]].hidden = false;
+      if (allNodes[selectedNodes[i]].savedLabel !== undefined) {
+        allNodes[selectedNodes[i]].label = allNodes[selectedNodes[i]].savedLabel;
+        allNodes[selectedNodes[i]].savedLabel = undefined;
+      }
+    }
+
+  } else if (filterActive === true) {
+    // reset all nodes
+    for (let nodeId in allNodes) {
+      allNodes[nodeId].hidden = false;
+      if (allNodes[nodeId].savedLabel !== undefined) {
+        allNodes[nodeId].label = allNodes[nodeId].savedLabel;
+        allNodes[nodeId].savedLabel = undefined;
+      }
+    }
+    filterActive = false;
+  }
+
+  // transform the object into an array
+  var updateArray = [];
+  if (params.nodes.length > 0) {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  } else {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  }
+}
+
+function selectNode(nodes) {
+  network.selectNodes(nodes);
+  neighbourhoodHighlight({ nodes: nodes });
+  return nodes;
+}
+
+function selectNodes(nodes) {
+  network.selectNodes(nodes);
+  filterHighlight({nodes: nodes});
+  return nodes;
+}
+
+function highlightFilter(filter) {
+  let selectedNodes = []
+  let selectedProp = filter['property']
+  if (filter['item'] === 'node') {
+    let allNodes = nodes.get({ returnType: "Object" });
+    for (let nodeId in allNodes) {
+      if (allNodes[nodeId][selectedProp] && filter['value'].includes((allNodes[nodeId][selectedProp]).toString())) {
+        selectedNodes.push(nodeId)
+      }
+    }
+  }
+  else if (filter['item'] === 'edge'){
+    let allEdges = edges.get({returnType: 'object'});
+    // check if the selected property exists for selected edge and select the nodes connected to the edge
+    for (let edge in allEdges) {
+      if (allEdges[edge][selectedProp] && filter['value'].includes((allEdges[edge][selectedProp]).toString())) {
+        selectedNodes.push(allEdges[edge]['from'])
+        selectedNodes.push(allEdges[edge]['to'])
+      }
+    }
+  }
+  selectNodes(selectedNodes)
+}</script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+            
+            
+            
+            
+            
+
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 150%;
+                 height: 750px;
+                 background-color: #222222;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#ACECE7", "font": {"color": "white"}, "id": "A Gravity Model for \nEmergency Care Units ", "label": "A Gravity Model for \nEmergency Care Units ", "label_wrap_width": 1, "shape": "dot", "value": 1}, {"color": "#ACECE7", "font": {"color": "white"}, "id": "Balancing Long-term \nand Short-term \nStrategies in a \nSustainability Game ", "label": "Balancing Long-term \nand Short-term \nStrategies in a \nSustainability Game ", "label_wrap_width": 1, "shape": "dot", "value": 1}, {"color": "#ACECE7", "font": {"color": "white"}, "id": "Evaluation of \nIntermodel \nEquivalence for \nMisinformation \nDiffusion: Equation \nvs. Agent-Based Models ", "label": "Evaluation of \nIntermodel \nEquivalence for \nMisinformation \nDiffusion: Equation \nvs. Agent-Based Models ", "label_wrap_width": 1, "shape": "dot", "value": 1}, {"color": "#ACECE7", "font": {"color": "white"}, "id": "A Framework for \nPredicting Drug \nConsumpion with Short \nTime-Series ", "label": "A Framework for \nPredicting Drug \nConsumpion with Short \nTime-Series ", "label_wrap_width": 1, "shape": "dot", "value": 1}, {"color": "#ACECE7", "font": {"color": "white"}, "id": "Global history, the \nemergence of chaos and \ninducing \nsustainability in \nnetworks of \nsocio-ecological \nsystems ", "label": "Global history, the \nemergence of chaos and \ninducing \nsustainability in \nnetworks of \nsocio-ecological \nsystems ", "label_wrap_width": 1, "shape": "dot", "value": 1}, {"color": "#ACECE7", "font": {"color": "white"}, "id": "A Master Equation for \nPower Laws ", "label": "A Master Equation for \nPower Laws ", "label_wrap_width": 1, "shape": "dot", "value": 1}, {"color": "#ACECE7", "font": {"color": "white"}, "id": "Risk Sensitive \nScheduling Strategies \nof Production Studios \non the US Movie Market an \nAgent-based \nSimulation ", "label": "Risk Sensitive \nScheduling Strategies \nof Production Studios \non the US Movie Market an \nAgent-based \nSimulation ", "label_wrap_width": 1, "shape": "dot", "value": 1}, {"color": "#ACECE7", "font": {"color": "white"}, "id": "A Methodology for Limit \nCycle Detection in \nSimulation Models ", "label": "A Methodology for Limit \nCycle Detection in \nSimulation Models ", "label_wrap_width": 1, "shape": "dot", "value": 1}, {"color": "#ACECE7", "font": {"color": "white"}, "id": "Sensitivity to Initial \nConditions in \nAgent-based Models ", "label": "Sensitivity to Initial \nConditions in \nAgent-based Models ", "label_wrap_width": 1, "shape": "dot", "value": 1}, {"color": "#ACECE7", "font": {"color": "white"}, "id": "\u201cRoads? Where we\u0027re \ngoing we don\u0027t need \nroads.\u201d Using \nAgent-based modeling \nto analyze the economic \nimpact of Hyperloop \nintroduction on a \nsupply chain ", "label": "\u201cRoads? Where we\u0027re \ngoing we don\u0027t need \nroads.\u201d Using \nAgent-based modeling \nto analyze the economic \nimpact of Hyperloop \nintroduction on a \nsupply chain ", "label_wrap_width": 1, "shape": "dot", "value": 1}, {"color": "#ACECE7", "font": {"color": "white"}, "id": "Risk Sensitivity \nEmergence in a \nPrey-Predators \nAgent-based Model ", "label": "Risk Sensitivity \nEmergence in a \nPrey-Predators \nAgent-based Model ", "label_wrap_width": 1, "shape": "dot", "value": 1}, {"color": "#ACECE7", "font": {"color": "white"}, "id": "The Italian Academic \nResearch System and its \nEvaluation: a \nConceptual Framework \nInception ", "label": "The Italian Academic \nResearch System and its \nEvaluation: a \nConceptual Framework \nInception ", "label_wrap_width": 1, "shape": "dot", "value": 1}, {"color": "#ACECE7", "font": {"color": "white"}, "id": "Risk Sensitivity of \nProduction Studios on \nthe US Movie Market: an \nAgent-based \nSimulation ", "label": "Risk Sensitivity of \nProduction Studios on \nthe US Movie Market: an \nAgent-based \nSimulation ", "label_wrap_width": 1, "shape": "dot", "value": 1}, {"color": "#ACECE7", "font": {"color": "white"}, "id": "The Evolution of Risk \nSensitivity in a \nSustainability Game: \nan Agent-based Model ", "label": "The Evolution of Risk \nSensitivity in a \nSustainability Game: \nan Agent-based Model ", "label_wrap_width": 1, "shape": "dot", "value": 1}, {"color": "#ACECE7", "font": {"color": "white"}, "id": "Emergence of Risk \nSensitivity in a \nFirst-principles \nAgent-based model ", "label": "Emergence of Risk \nSensitivity in a \nFirst-principles \nAgent-based model ", "label_wrap_width": 1, "shape": "dot", "value": 1}, {"color": "#ACECE7", "font": {"color": "white"}, "id": "Understanding The \nEffect Of Iot Adoption \nOn The Behaviour Of \nFirms: An Agent-Based \nModel  ", "label": "Understanding The \nEffect Of Iot Adoption \nOn The Behaviour Of \nFirms: An Agent-Based \nModel  ", "label_wrap_width": 1, "shape": "dot", "value": 1}, {"color": "#ACECE7", "font": {"color": "white"}, "id": "A Free-Energy \nPrinciple Metamodel \nfor Socio-Technical \nSystems ", "label": "A Free-Energy \nPrinciple Metamodel \nfor Socio-Technical \nSystems ", "label_wrap_width": 1, "shape": "dot", "value": 1}, {"color": "#ACECE7", "font": {"color": "white"}, "id": "Evaluating hospitals\u2019 \ndecision-makers risk \npreferences, \nemploying a stock-flow \nsimulation model of \nCOVID-19 impact: a \nmethodological \napproach ", "label": "Evaluating hospitals\u2019 \ndecision-makers risk \npreferences, \nemploying a stock-flow \nsimulation model of \nCOVID-19 impact: a \nmethodological \napproach ", "label_wrap_width": 1, "shape": "dot", "value": 1}, {"color": "#ACECE7", "font": {"color": "white"}, "id": "The innovative drugs \neconomic impact in the \nmanagement of COVID-19 \nhospitalized patients ", "label": "The innovative drugs \neconomic impact in the \nmanagement of COVID-19 \nhospitalized patients ", "label_wrap_width": 1, "shape": "dot", "value": 1}, {"color": "#ACECE7", "font": {"color": "white"}, "id": "The Paradox of \nInnovation on Systemic \nRisk: a System Dynamic \nmodel ", "label": "The Paradox of \nInnovation on Systemic \nRisk: a System Dynamic \nmodel ", "label_wrap_width": 1, "shape": "dot", "value": 1}, {"color": "#ACECE7", "font": {"color": "white"}, "id": "Risk Preferences in \nProfessional Sports \nLeagues: an \nAgent-based model ", "label": "Risk Preferences in \nProfessional Sports \nLeagues: an \nAgent-based model ", "label_wrap_width": 1, "shape": "dot", "value": 1}, {"color": "#ACECE7", "font": {"color": "white"}, "id": "La Teoria Generale dei \nSistemi come strumento \ninterpretativo dei \nfenomeni di crisi e \ntrasformazione delle \nsocieta\u0300 umane ", "label": "La Teoria Generale dei \nSistemi come strumento \ninterpretativo dei \nfenomeni di crisi e \ntrasformazione delle \nsocieta\u0300 umane ", "label_wrap_width": 1, "shape": "dot", "value": 1}, {"color": "#ACECE7", "font": {"color": "white"}, "id": "Emergence of Risk \nSensitivity from First \nPrinciples- A \nMulti-Agent-Based \nmodel ", "label": "Emergence of Risk \nSensitivity from First \nPrinciples- A \nMulti-Agent-Based \nmodel ", "label_wrap_width": 1, "shape": "dot", "value": 1}, {"color": "#ACECE7", "font": {"color": "white"}, "id": "Agent-Based Modeling: \nun\u2019analisi critica \ndella bibliografia e \ndelle relazioni con la \nTeoria Generale dei \nSistemi ", "label": "Agent-Based Modeling: \nun\u2019analisi critica \ndella bibliografia e \ndelle relazioni con la \nTeoria Generale dei \nSistemi ", "label_wrap_width": 1, "shape": "dot", "value": 1}, {"color": "#ACECE7", "font": {"color": "white"}, "id": "Can Predictive \nAgent-Based Models \nOffer a Glimpse into the \nLong-Term \nPandemic-Infodemic \nCo-evolution? ", "label": "Can Predictive \nAgent-Based Models \nOffer a Glimpse into the \nLong-Term \nPandemic-Infodemic \nCo-evolution? ", "label_wrap_width": 1, "shape": "dot", "value": 1}, {"color": "#ACECE7", "font": {"color": "white"}, "id": "The Epidemiological \nSide of a Social Dilemma ", "label": "The Epidemiological \nSide of a Social Dilemma ", "label_wrap_width": 1, "shape": "dot", "value": 1}, {"color": "#ACECE7", "font": {"color": "white"}, "id": "An improved gravity \nmodel for Emergency \nDepartments: from \npatients\u2019 preferences \nto healthcare \noperations\u2019 \nefficiency ", "label": "An improved gravity \nmodel for Emergency \nDepartments: from \npatients\u2019 preferences \nto healthcare \noperations\u2019 \nefficiency ", "label_wrap_width": 1, "shape": "dot", "value": 1}, {"color": "#ACECE7", "font": {"color": "white"}, "id": "The emergence of chaos \nand inducing global \nsustainability ", "label": "The emergence of chaos \nand inducing global \nsustainability ", "label_wrap_width": 1, "shape": "dot", "value": 1}, {"color": "#ACECE7", "font": {"color": "white"}, "id": "Modelling the collapse \nof complex societies ", "label": "Modelling the collapse \nof complex societies ", "label_wrap_width": 1, "shape": "dot", "value": 1}, {"color": "#ACECE7", "font": {"color": "white"}, "id": "City-State \nInteractions in a \nResource-Constrained \nEnvironment: an \nAgent-based Model ", "label": "City-State \nInteractions in a \nResource-Constrained \nEnvironment: an \nAgent-based Model ", "label_wrap_width": 1, "shape": "dot", "value": 1}, {"color": "#ACECE7", "font": {"color": "white"}, "id": "Data-Driven \nHealthcare Planning: \nSimulating Emergency \nDepartments Dynamics \nwith an Agent-Based \nModel ", "label": "Data-Driven \nHealthcare Planning: \nSimulating Emergency \nDepartments Dynamics \nwith an Agent-Based \nModel ", "label_wrap_width": 1, "shape": "dot", "value": 1}, {"color": "#ACECE7", "font": {"color": "white"}, "id": "Towards an \nLLM-enhanced \nAgent-based modeling ", "label": "Towards an \nLLM-enhanced \nAgent-based modeling ", "label_wrap_width": 1, "shape": "dot", "value": 1}, {"color": "#ACECE7", "font": {"color": "white"}, "id": "Emergence of Efficient \nstrategies in a \nCompetitive \nEnvironment ", "label": "Emergence of Efficient \nstrategies in a \nCompetitive \nEnvironment ", "label_wrap_width": 1, "shape": "dot", "value": 1}, {"color": "#ACECE7", "font": {"color": "white"}, "id": "A Causal Inference \nModel to Determine \nBehavioural Changes in \nthe US Movie Market ", "label": "A Causal Inference \nModel to Determine \nBehavioural Changes in \nthe US Movie Market ", "label_wrap_width": 1, "shape": "dot", "value": 1}, {"color": "#ACECE7", "font": {"color": "white"}, "id": "Risk Aversion \nEvaluation in a \nCompetitive \nEnvironment using \nAgent-based Modeling ", "label": "Risk Aversion \nEvaluation in a \nCompetitive \nEnvironment using \nAgent-based Modeling ", "label_wrap_width": 1, "shape": "dot", "value": 1}, {"color": "#E289FF", "font": {"color": "white"}, "id": "causal inference", "label": "causal inference", "label_wrap_width": 20, "shape": "dot", "value": 1}, {"color": "#E289FF", "font": {"color": "white"}, "id": "serious game", "label": "serious game", "label_wrap_width": 20, "shape": "dot", "value": 1}, {"color": "#E289FF", "font": {"color": "white"}, "id": "healtcare", "label": "healtcare", "label_wrap_width": 20, "shape": "dot", "value": 1}, {"color": "#E289FF", "font": {"color": "white"}, "id": "hospiral management", "label": "hospiral management", "label_wrap_width": 20, "shape": "dot", "value": 1}, {"color": "#E289FF", "font": {"color": "white"}, "id": "statistics", "label": "statistics", "label_wrap_width": 20, "shape": "dot", "value": 1}, {"color": "#E289FF", "font": {"color": "white"}, "id": "limit cycles", "label": "limit cycles", "label_wrap_width": 20, "shape": "dot", "value": 1048576}, {"color": "#E289FF", "font": {"color": "white"}, "id": "prey-predator systems", "label": "prey-predator systems", "label_wrap_width": 20, "shape": "dot", "value": 1}, {"color": "#E289FF", "font": {"color": "white"}, "id": "free-energy principle", "label": "free-energy principle", "label_wrap_width": 20, "shape": "dot", "value": 1}, {"color": "#E289FF", "font": {"color": "white"}, "id": "misinformation", "label": "misinformation", "label_wrap_width": 20, "shape": "dot", "value": 1048576}, {"color": "#E289FF", "font": {"color": "white"}, "id": "city states", "label": "city states", "label_wrap_width": 20, "shape": "dot", "value": 3486784401}, {"color": "#E289FF", "font": {"color": "white"}, "id": "computational cliodynamics", "label": "computational cliodynamics", "label_wrap_width": 20, "shape": "dot", "value": 3656158440062976}, {"color": "#E289FF", "font": {"color": "white"}, "id": "innovation", "label": "innovation", "label_wrap_width": 20, "shape": "dot", "value": 3486784401}, {"color": "#E289FF", "font": {"color": "white"}, "id": "learning", "label": "learning", "label_wrap_width": 20, "shape": "dot", "value": 1048576}, {"color": "#E289FF", "font": {"color": "white"}, "id": "epidemiology", "label": "epidemiology", "label_wrap_width": 20, "shape": "dot", "value": 3486784401}, {"color": "#E289FF", "font": {"color": "white"}, "id": "game theory", "label": "game theory", "label_wrap_width": 20, "shape": "dot", "value": 1048576}, {"color": "#E289FF", "font": {"color": "white"}, "id": "methodology", "label": "methodology", "label_wrap_width": 20, "shape": "dot", "value": 1099511627776}, {"color": "#E289FF", "font": {"color": "white"}, "id": "ecological systems", "label": "ecological systems", "label_wrap_width": 20, "shape": "dot", "value": 1}, {"color": "#E289FF", "font": {"color": "white"}, "id": "academic systems", "label": "academic systems", "label_wrap_width": 20, "shape": "dot", "value": 1}, {"color": "#E289FF", "font": {"color": "white"}, "id": "systemic risk", "label": "systemic risk", "label_wrap_width": 20, "shape": "dot", "value": 1}, {"color": "#E289FF", "font": {"color": "white"}, "id": "organization", "label": "organization", "label_wrap_width": 20, "shape": "dot", "value": 1}, {"color": "#E289FF", "font": {"color": "white"}, "id": "risk sensitivity", "label": "risk sensitivity", "label_wrap_width": 20, "shape": "dot", "value": 19004963774880799438801}, {"color": "#E289FF", "font": {"color": "white"}, "id": "networks", "label": "networks", "label_wrap_width": 20, "shape": "dot", "value": 1099511627776}, {"color": "#E289FF", "font": {"color": "white"}, "id": "COVID-19", "label": "COVID-19", "label_wrap_width": 20, "shape": "dot", "value": 1048576}, {"color": "#E289FF", "font": {"color": "white"}, "id": "el-farol bar problem", "label": "el-farol bar problem", "label_wrap_width": 20, "shape": "dot", "value": 1}, {"color": "#E289FF", "font": {"color": "white"}, "id": "evolution", "label": "evolution", "label_wrap_width": 20, "shape": "dot", "value": 1099511627776}, {"color": "#E289FF", "font": {"color": "white"}, "id": "chaos", "label": "chaos", "label_wrap_width": 20, "shape": "dot", "value": 1099511627776}, {"color": "#E289FF", "font": {"color": "white"}, "id": "theoretical understanding", "label": "theoretical understanding", "label_wrap_width": 20, "shape": "dot", "value": 1}, {"color": "#E289FF", "font": {"color": "white"}, "id": "social dilemma", "label": "social dilemma", "label_wrap_width": 20, "shape": "dot", "value": 1}, {"color": "#E289FF", "font": {"color": "white"}, "id": "out-of-equilibrium systems", "label": "out-of-equilibrium systems", "label_wrap_width": 20, "shape": "dot", "value": 1}, {"color": "#E289FF", "font": {"color": "white"}, "id": "statistical mechanics", "label": "statistical mechanics", "label_wrap_width": 20, "shape": "dot", "value": 1}, {"color": "#E289FF", "font": {"color": "white"}, "id": "ontology", "label": "ontology", "label_wrap_width": 20, "shape": "dot", "value": 1}, {"color": "#E289FF", "font": {"color": "white"}, "id": "disinformation", "label": "disinformation", "label_wrap_width": 20, "shape": "dot", "value": 1048576}, {"color": "#E289FF", "font": {"color": "white"}, "id": "emergency care", "label": "emergency care", "label_wrap_width": 20, "shape": "dot", "value": 3486784401}, {"color": "#E289FF", "font": {"color": "white"}, "id": "movies", "label": "movies", "label_wrap_width": 20, "shape": "dot", "value": 3486784401}, {"color": "#E289FF", "font": {"color": "white"}, "id": "IoT", "label": "IoT", "label_wrap_width": 20, "shape": "dot", "value": 1}, {"color": "#E289FF", "font": {"color": "white"}, "id": "artificial intelligence", "label": "artificial intelligence", "label_wrap_width": 20, "shape": "dot", "value": 1}, {"color": "#E289FF", "font": {"color": "white"}, "id": "gravity model", "label": "gravity model", "label_wrap_width": 20, "shape": "dot", "value": 3486784401}, {"color": "#E289FF", "font": {"color": "white"}, "id": "socio-ecological systems", "label": "socio-ecological systems", "label_wrap_width": 20, "shape": "dot", "value": 3486784401}, {"color": "#E289FF", "font": {"color": "white"}, "id": "football", "label": "football", "label_wrap_width": 20, "shape": "dot", "value": 1}, {"color": "#E289FF", "font": {"color": "white"}, "id": "numerical simulation", "label": "numerical simulation", "label_wrap_width": 20, "shape": "dot", "value": 1152921504606846976}, {"color": "#E289FF", "font": {"color": "white"}, "id": "equation-based modeling", "label": "equation-based modeling", "label_wrap_width": 20, "shape": "dot", "value": 79792266297612001}, {"color": "#E289FF", "font": {"color": "white"}, "id": "easter island", "label": "easter island", "label_wrap_width": 20, "shape": "dot", "value": 1}, {"color": "#E289FF", "font": {"color": "white"}, "id": "agent-based modeling", "label": "agent-based modeling", "label_wrap_width": 20, "shape": "dot", "value": 278218429446951548637196401}, {"color": "#E289FF", "font": {"color": "white"}, "id": "healthcare", "label": "healthcare", "label_wrap_width": 20, "shape": "dot", "value": 95367431640625}, {"color": "#E289FF", "font": {"color": "white"}, "id": "time-series analysis", "label": "time-series analysis", "label_wrap_width": 20, "shape": "dot", "value": 1}, {"color": "#E289FF", "font": {"color": "white"}, "id": "prediction", "label": "prediction", "label_wrap_width": 20, "shape": "dot", "value": 1}, {"color": "#E289FF", "font": {"color": "white"}, "id": "model exploration", "label": "model exploration", "label_wrap_width": 20, "shape": "dot", "value": 1}, {"color": "#E289FF", "font": {"color": "white"}, "id": "market", "label": "market", "label_wrap_width": 20, "shape": "dot", "value": 95367431640625}, {"color": "#E289FF", "font": {"color": "white"}, "id": "collapse", "label": "collapse", "label_wrap_width": 20, "shape": "dot", "value": 95367431640625}, {"color": "#E289FF", "font": {"color": "white"}, "id": "model exploration ", "label": "model exploration ", "label_wrap_width": 20, "shape": "dot", "value": 1}, {"color": "#E289FF", "font": {"color": "white"}, "id": "sustainability", "label": "sustainability", "label_wrap_width": 20, "shape": "dot", "value": 95367431640625}, {"color": "#E289FF", "font": {"color": "white"}, "id": "power-law", "label": "power-law", "label_wrap_width": 20, "shape": "dot", "value": 1}, {"color": "#E289FF", "font": {"color": "white"}, "id": "bayesian networks", "label": "bayesian networks", "label_wrap_width": 20, "shape": "dot", "value": 1}, {"color": "#E289FF", "font": {"color": "white"}, "id": " supply chain", "label": " supply chain", "label_wrap_width": 20, "shape": "dot", "value": 1}, {"color": "#E289FF", "font": {"color": "white"}, "id": "hyperloop", "label": "hyperloop", "label_wrap_width": 20, "shape": "dot", "value": 1}, {"color": "#E289FF", "font": {"color": "white"}, "id": "socio-technical systems", "label": "socio-technical systems", "label_wrap_width": 20, "shape": "dot", "value": 1048576}]);
+                  edges = new vis.DataSet([{"curve_style": "straight", "from": "A Gravity Model for \nEmergency Care Units ", "to": "gravity model"}, {"curve_style": "straight", "from": "A Gravity Model for \nEmergency Care Units ", "to": "numerical simulation"}, {"curve_style": "straight", "from": "A Gravity Model for \nEmergency Care Units ", "to": "emergency care"}, {"curve_style": "straight", "from": "A Gravity Model for \nEmergency Care Units ", "to": "healthcare"}, {"curve_style": "straight", "from": "Balancing Long-term \nand Short-term \nStrategies in a \nSustainability Game ", "to": "agent-based modeling"}, {"curve_style": "straight", "from": "Balancing Long-term \nand Short-term \nStrategies in a \nSustainability Game ", "to": "risk sensitivity"}, {"curve_style": "straight", "from": "Balancing Long-term \nand Short-term \nStrategies in a \nSustainability Game ", "to": "sustainability"}, {"curve_style": "straight", "from": "Balancing Long-term \nand Short-term \nStrategies in a \nSustainability Game ", "to": "collapse"}, {"curve_style": "straight", "from": "Balancing Long-term \nand Short-term \nStrategies in a \nSustainability Game ", "to": "game theory"}, {"curve_style": "straight", "from": "Balancing Long-term \nand Short-term \nStrategies in a \nSustainability Game ", "to": "networks"}, {"curve_style": "straight", "from": "Evaluation of \nIntermodel \nEquivalence for \nMisinformation \nDiffusion: Equation \nvs. Agent-Based Models ", "to": "agent-based modeling"}, {"curve_style": "straight", "from": "Evaluation of \nIntermodel \nEquivalence for \nMisinformation \nDiffusion: Equation \nvs. Agent-Based Models ", "to": "equation-based modeling"}, {"curve_style": "straight", "from": "Evaluation of \nIntermodel \nEquivalence for \nMisinformation \nDiffusion: Equation \nvs. Agent-Based Models ", "to": "disinformation"}, {"curve_style": "straight", "from": "Evaluation of \nIntermodel \nEquivalence for \nMisinformation \nDiffusion: Equation \nvs. Agent-Based Models ", "to": "misinformation"}, {"curve_style": "straight", "from": "Evaluation of \nIntermodel \nEquivalence for \nMisinformation \nDiffusion: Equation \nvs. Agent-Based Models ", "to": "epidemiology"}, {"curve_style": "straight", "from": "A Framework for \nPredicting Drug \nConsumpion with Short \nTime-Series ", "to": "time-series analysis"}, {"curve_style": "straight", "from": "A Framework for \nPredicting Drug \nConsumpion with Short \nTime-Series ", "to": "prediction"}, {"curve_style": "straight", "from": "A Framework for \nPredicting Drug \nConsumpion with Short \nTime-Series ", "to": "healthcare"}, {"curve_style": "straight", "from": "A Framework for \nPredicting Drug \nConsumpion with Short \nTime-Series ", "to": "equation-based modeling"}, {"curve_style": "straight", "from": "A Framework for \nPredicting Drug \nConsumpion with Short \nTime-Series ", "to": "methodology"}, {"curve_style": "straight", "from": "A Framework for \nPredicting Drug \nConsumpion with Short \nTime-Series ", "to": "numerical simulation"}, {"curve_style": "straight", "from": "Global history, the \nemergence of chaos and \ninducing \nsustainability in \nnetworks of \nsocio-ecological \nsystems ", "to": "networks"}, {"curve_style": "straight", "from": "Global history, the \nemergence of chaos and \ninducing \nsustainability in \nnetworks of \nsocio-ecological \nsystems ", "to": "chaos"}, {"curve_style": "straight", "from": "Global history, the \nemergence of chaos and \ninducing \nsustainability in \nnetworks of \nsocio-ecological \nsystems ", "to": "sustainability"}, {"curve_style": "straight", "from": "Global history, the \nemergence of chaos and \ninducing \nsustainability in \nnetworks of \nsocio-ecological \nsystems ", "to": "socio-ecological systems"}, {"curve_style": "straight", "from": "Global history, the \nemergence of chaos and \ninducing \nsustainability in \nnetworks of \nsocio-ecological \nsystems ", "to": "numerical simulation"}, {"curve_style": "straight", "from": "Global history, the \nemergence of chaos and \ninducing \nsustainability in \nnetworks of \nsocio-ecological \nsystems ", "to": "computational cliodynamics"}, {"curve_style": "straight", "from": "A Master Equation for \nPower Laws ", "to": "statistical mechanics"}, {"curve_style": "straight", "from": "A Master Equation for \nPower Laws ", "to": "power-law"}, {"curve_style": "straight", "from": "A Master Equation for \nPower Laws ", "to": "statistics"}, {"curve_style": "straight", "from": "A Master Equation for \nPower Laws ", "to": "numerical simulation"}, {"curve_style": "straight", "from": "Risk Sensitive \nScheduling Strategies \nof Production Studios \non the US Movie Market an \nAgent-based \nSimulation ", "to": "agent-based modeling"}, {"curve_style": "straight", "from": "Risk Sensitive \nScheduling Strategies \nof Production Studios \non the US Movie Market an \nAgent-based \nSimulation ", "to": "risk sensitivity"}, {"curve_style": "straight", "from": "Risk Sensitive \nScheduling Strategies \nof Production Studios \non the US Movie Market an \nAgent-based \nSimulation ", "to": "market"}, {"curve_style": "straight", "from": "Risk Sensitive \nScheduling Strategies \nof Production Studios \non the US Movie Market an \nAgent-based \nSimulation ", "to": "movies"}, {"curve_style": "straight", "from": "A Methodology for Limit \nCycle Detection in \nSimulation Models ", "to": "agent-based modeling"}, {"curve_style": "straight", "from": "A Methodology for Limit \nCycle Detection in \nSimulation Models ", "to": "model exploration"}, {"curve_style": "straight", "from": "A Methodology for Limit \nCycle Detection in \nSimulation Models ", "to": "limit cycles"}, {"curve_style": "straight", "from": "A Methodology for Limit \nCycle Detection in \nSimulation Models ", "to": "out-of-equilibrium systems"}, {"curve_style": "straight", "from": "A Methodology for Limit \nCycle Detection in \nSimulation Models ", "to": "methodology"}, {"curve_style": "straight", "from": "Sensitivity to Initial \nConditions in \nAgent-based Models ", "to": "agent-based modeling"}, {"curve_style": "straight", "from": "Sensitivity to Initial \nConditions in \nAgent-based Models ", "to": "methodology"}, {"curve_style": "straight", "from": "Sensitivity to Initial \nConditions in \nAgent-based Models ", "to": "chaos"}, {"curve_style": "straight", "from": "Sensitivity to Initial \nConditions in \nAgent-based Models ", "to": "model exploration "}, {"curve_style": "straight", "from": "\u201cRoads? Where we\u0027re \ngoing we don\u0027t need \nroads.\u201d Using \nAgent-based modeling \nto analyze the economic \nimpact of Hyperloop \nintroduction on a \nsupply chain ", "to": "agent-based modeling"}, {"curve_style": "straight", "from": "\u201cRoads? Where we\u0027re \ngoing we don\u0027t need \nroads.\u201d Using \nAgent-based modeling \nto analyze the economic \nimpact of Hyperloop \nintroduction on a \nsupply chain ", "to": " supply chain"}, {"curve_style": "straight", "from": "\u201cRoads? Where we\u0027re \ngoing we don\u0027t need \nroads.\u201d Using \nAgent-based modeling \nto analyze the economic \nimpact of Hyperloop \nintroduction on a \nsupply chain ", "to": "hyperloop"}, {"curve_style": "straight", "from": "\u201cRoads? Where we\u0027re \ngoing we don\u0027t need \nroads.\u201d Using \nAgent-based modeling \nto analyze the economic \nimpact of Hyperloop \nintroduction on a \nsupply chain ", "to": "innovation"}, {"curve_style": "straight", "from": "Risk Sensitivity \nEmergence in a \nPrey-Predators \nAgent-based Model ", "to": "agent-based modeling"}, {"curve_style": "straight", "from": "Risk Sensitivity \nEmergence in a \nPrey-Predators \nAgent-based Model ", "to": "risk sensitivity"}, {"curve_style": "straight", "from": "Risk Sensitivity \nEmergence in a \nPrey-Predators \nAgent-based Model ", "to": "prey-predator systems"}, {"curve_style": "straight", "from": "Risk Sensitivity \nEmergence in a \nPrey-Predators \nAgent-based Model ", "to": "ecological systems"}, {"curve_style": "straight", "from": "Risk Sensitivity \nEmergence in a \nPrey-Predators \nAgent-based Model ", "to": "evolution"}, {"curve_style": "straight", "from": "The Italian Academic \nResearch System and its \nEvaluation: a \nConceptual Framework \nInception ", "to": "ontology"}, {"curve_style": "straight", "from": "The Italian Academic \nResearch System and its \nEvaluation: a \nConceptual Framework \nInception ", "to": "academic systems"}, {"curve_style": "straight", "from": "The Italian Academic \nResearch System and its \nEvaluation: a \nConceptual Framework \nInception ", "to": "organization"}, {"curve_style": "straight", "from": "The Italian Academic \nResearch System and its \nEvaluation: a \nConceptual Framework \nInception ", "to": "socio-technical systems"}, {"curve_style": "straight", "from": "Risk Sensitivity of \nProduction Studios on \nthe US Movie Market: an \nAgent-based \nSimulation ", "to": "agent-based modeling"}, {"curve_style": "straight", "from": "Risk Sensitivity of \nProduction Studios on \nthe US Movie Market: an \nAgent-based \nSimulation ", "to": "risk sensitivity"}, {"curve_style": "straight", "from": "Risk Sensitivity of \nProduction Studios on \nthe US Movie Market: an \nAgent-based \nSimulation ", "to": "market"}, {"curve_style": "straight", "from": "Risk Sensitivity of \nProduction Studios on \nthe US Movie Market: an \nAgent-based \nSimulation ", "to": "movies"}, {"curve_style": "straight", "from": "The Evolution of Risk \nSensitivity in a \nSustainability Game: \nan Agent-based Model ", "to": "agent-based modeling"}, {"curve_style": "straight", "from": "The Evolution of Risk \nSensitivity in a \nSustainability Game: \nan Agent-based Model ", "to": "risk sensitivity"}, {"curve_style": "straight", "from": "The Evolution of Risk \nSensitivity in a \nSustainability Game: \nan Agent-based Model ", "to": "sustainability"}, {"curve_style": "straight", "from": "The Evolution of Risk \nSensitivity in a \nSustainability Game: \nan Agent-based Model ", "to": "collapse"}, {"curve_style": "straight", "from": "The Evolution of Risk \nSensitivity in a \nSustainability Game: \nan Agent-based Model ", "to": "game theory"}, {"curve_style": "straight", "from": "The Evolution of Risk \nSensitivity in a \nSustainability Game: \nan Agent-based Model ", "to": "evolution"}, {"curve_style": "straight", "from": "Emergence of Risk \nSensitivity in a \nFirst-principles \nAgent-based model ", "to": "agent-based modeling"}, {"curve_style": "straight", "from": "Emergence of Risk \nSensitivity in a \nFirst-principles \nAgent-based model ", "to": "risk sensitivity"}, {"curve_style": "straight", "from": "Emergence of Risk \nSensitivity in a \nFirst-principles \nAgent-based model ", "to": "evolution"}, {"curve_style": "straight", "from": "Emergence of Risk \nSensitivity in a \nFirst-principles \nAgent-based model ", "to": "learning"}, {"curve_style": "straight", "from": "Understanding The \nEffect Of Iot Adoption \nOn The Behaviour Of \nFirms: An Agent-Based \nModel  ", "to": "agent-based modeling"}, {"curve_style": "straight", "from": "Understanding The \nEffect Of Iot Adoption \nOn The Behaviour Of \nFirms: An Agent-Based \nModel  ", "to": "risk sensitivity"}, {"curve_style": "straight", "from": "Understanding The \nEffect Of Iot Adoption \nOn The Behaviour Of \nFirms: An Agent-Based \nModel  ", "to": "market"}, {"curve_style": "straight", "from": "Understanding The \nEffect Of Iot Adoption \nOn The Behaviour Of \nFirms: An Agent-Based \nModel  ", "to": "IoT"}, {"curve_style": "straight", "from": "Understanding The \nEffect Of Iot Adoption \nOn The Behaviour Of \nFirms: An Agent-Based \nModel  ", "to": "innovation"}, {"curve_style": "straight", "from": "A Free-Energy \nPrinciple Metamodel \nfor Socio-Technical \nSystems ", "to": "free-energy principle"}, {"curve_style": "straight", "from": "A Free-Energy \nPrinciple Metamodel \nfor Socio-Technical \nSystems ", "to": "agent-based modeling"}, {"curve_style": "straight", "from": "A Free-Energy \nPrinciple Metamodel \nfor Socio-Technical \nSystems ", "to": "socio-technical systems"}, {"curve_style": "straight", "from": "Evaluating hospitals\u2019 \ndecision-makers risk \npreferences, \nemploying a stock-flow \nsimulation model of \nCOVID-19 impact: a \nmethodological \napproach ", "to": "equation-based modeling"}, {"curve_style": "straight", "from": "Evaluating hospitals\u2019 \ndecision-makers risk \npreferences, \nemploying a stock-flow \nsimulation model of \nCOVID-19 impact: a \nmethodological \napproach ", "to": "risk sensitivity"}, {"curve_style": "straight", "from": "Evaluating hospitals\u2019 \ndecision-makers risk \npreferences, \nemploying a stock-flow \nsimulation model of \nCOVID-19 impact: a \nmethodological \napproach ", "to": "healthcare"}, {"curve_style": "straight", "from": "Evaluating hospitals\u2019 \ndecision-makers risk \npreferences, \nemploying a stock-flow \nsimulation model of \nCOVID-19 impact: a \nmethodological \napproach ", "to": "COVID-19"}, {"curve_style": "straight", "from": "Evaluating hospitals\u2019 \ndecision-makers risk \npreferences, \nemploying a stock-flow \nsimulation model of \nCOVID-19 impact: a \nmethodological \napproach ", "to": "serious game"}, {"curve_style": "straight", "from": "The innovative drugs \neconomic impact in the \nmanagement of COVID-19 \nhospitalized patients ", "to": "healtcare"}, {"curve_style": "straight", "from": "The innovative drugs \neconomic impact in the \nmanagement of COVID-19 \nhospitalized patients ", "to": "COVID-19"}, {"curve_style": "straight", "from": "The innovative drugs \neconomic impact in the \nmanagement of COVID-19 \nhospitalized patients ", "to": "hospiral management"}, {"curve_style": "straight", "from": "The Paradox of \nInnovation on Systemic \nRisk: a System Dynamic \nmodel ", "to": "innovation"}, {"curve_style": "straight", "from": "The Paradox of \nInnovation on Systemic \nRisk: a System Dynamic \nmodel ", "to": "systemic risk"}, {"curve_style": "straight", "from": "The Paradox of \nInnovation on Systemic \nRisk: a System Dynamic \nmodel ", "to": "equation-based modeling"}, {"curve_style": "straight", "from": "The Paradox of \nInnovation on Systemic \nRisk: a System Dynamic \nmodel ", "to": "collapse"}, {"curve_style": "straight", "from": "Risk Preferences in \nProfessional Sports \nLeagues: an \nAgent-based model ", "to": "risk sensitivity"}, {"curve_style": "straight", "from": "Risk Preferences in \nProfessional Sports \nLeagues: an \nAgent-based model ", "to": "market"}, {"curve_style": "straight", "from": "Risk Preferences in \nProfessional Sports \nLeagues: an \nAgent-based model ", "to": "football"}, {"curve_style": "straight", "from": "Risk Preferences in \nProfessional Sports \nLeagues: an \nAgent-based model ", "to": "agent-based modeling"}, {"curve_style": "straight", "from": "La Teoria Generale dei \nSistemi come strumento \ninterpretativo dei \nfenomeni di crisi e \ntrasformazione delle \nsocieta\u0300 umane ", "to": "equation-based modeling"}, {"curve_style": "straight", "from": "La Teoria Generale dei \nSistemi come strumento \ninterpretativo dei \nfenomeni di crisi e \ntrasformazione delle \nsocieta\u0300 umane ", "to": "collapse"}, {"curve_style": "straight", "from": "La Teoria Generale dei \nSistemi come strumento \ninterpretativo dei \nfenomeni di crisi e \ntrasformazione delle \nsocieta\u0300 umane ", "to": "easter island"}, {"curve_style": "straight", "from": "Emergence of Risk \nSensitivity from First \nPrinciples- A \nMulti-Agent-Based \nmodel ", "to": "agent-based modeling"}, {"curve_style": "straight", "from": "Emergence of Risk \nSensitivity from First \nPrinciples- A \nMulti-Agent-Based \nmodel ", "to": "risk sensitivity"}, {"curve_style": "straight", "from": "Emergence of Risk \nSensitivity from First \nPrinciples- A \nMulti-Agent-Based \nmodel ", "to": "evolution"}, {"curve_style": "straight", "from": "Emergence of Risk \nSensitivity from First \nPrinciples- A \nMulti-Agent-Based \nmodel ", "to": "learning"}, {"curve_style": "straight", "from": "Agent-Based Modeling: \nun\u2019analisi critica \ndella bibliografia e \ndelle relazioni con la \nTeoria Generale dei \nSistemi ", "to": "agent-based modeling"}, {"curve_style": "straight", "from": "Agent-Based Modeling: \nun\u2019analisi critica \ndella bibliografia e \ndelle relazioni con la \nTeoria Generale dei \nSistemi ", "to": "equation-based modeling"}, {"curve_style": "straight", "from": "Agent-Based Modeling: \nun\u2019analisi critica \ndella bibliografia e \ndelle relazioni con la \nTeoria Generale dei \nSistemi ", "to": "theoretical understanding"}, {"curve_style": "straight", "from": "Can Predictive \nAgent-Based Models \nOffer a Glimpse into the \nLong-Term \nPandemic-Infodemic \nCo-evolution? ", "to": "agent-based modeling"}, {"curve_style": "straight", "from": "Can Predictive \nAgent-Based Models \nOffer a Glimpse into the \nLong-Term \nPandemic-Infodemic \nCo-evolution? ", "to": "equation-based modeling"}, {"curve_style": "straight", "from": "Can Predictive \nAgent-Based Models \nOffer a Glimpse into the \nLong-Term \nPandemic-Infodemic \nCo-evolution? ", "to": "disinformation"}, {"curve_style": "straight", "from": "Can Predictive \nAgent-Based Models \nOffer a Glimpse into the \nLong-Term \nPandemic-Infodemic \nCo-evolution? ", "to": "misinformation"}, {"curve_style": "straight", "from": "Can Predictive \nAgent-Based Models \nOffer a Glimpse into the \nLong-Term \nPandemic-Infodemic \nCo-evolution? ", "to": "epidemiology"}, {"curve_style": "straight", "from": "The Epidemiological \nSide of a Social Dilemma ", "to": "agent-based modeling"}, {"curve_style": "straight", "from": "The Epidemiological \nSide of a Social Dilemma ", "to": "el-farol bar problem"}, {"curve_style": "straight", "from": "The Epidemiological \nSide of a Social Dilemma ", "to": "social dilemma"}, {"curve_style": "straight", "from": "The Epidemiological \nSide of a Social Dilemma ", "to": "epidemiology"}, {"curve_style": "straight", "from": "The Epidemiological \nSide of a Social Dilemma ", "to": "limit cycles"}, {"curve_style": "straight", "from": "An improved gravity \nmodel for Emergency \nDepartments: from \npatients\u2019 preferences \nto healthcare \noperations\u2019 \nefficiency ", "to": "gravity model"}, {"curve_style": "straight", "from": "An improved gravity \nmodel for Emergency \nDepartments: from \npatients\u2019 preferences \nto healthcare \noperations\u2019 \nefficiency ", "to": "numerical simulation"}, {"curve_style": "straight", "from": "An improved gravity \nmodel for Emergency \nDepartments: from \npatients\u2019 preferences \nto healthcare \noperations\u2019 \nefficiency ", "to": "emergency care"}, {"curve_style": "straight", "from": "An improved gravity \nmodel for Emergency \nDepartments: from \npatients\u2019 preferences \nto healthcare \noperations\u2019 \nefficiency ", "to": "healthcare"}, {"curve_style": "straight", "from": "The emergence of chaos \nand inducing global \nsustainability ", "to": "networks"}, {"curve_style": "straight", "from": "The emergence of chaos \nand inducing global \nsustainability ", "to": "chaos"}, {"curve_style": "straight", "from": "The emergence of chaos \nand inducing global \nsustainability ", "to": "sustainability"}, {"curve_style": "straight", "from": "The emergence of chaos \nand inducing global \nsustainability ", "to": "socio-ecological systems"}, {"curve_style": "straight", "from": "The emergence of chaos \nand inducing global \nsustainability ", "to": "numerical simulation"}, {"curve_style": "straight", "from": "The emergence of chaos \nand inducing global \nsustainability ", "to": "computational cliodynamics"}, {"curve_style": "straight", "from": "Modelling the collapse \nof complex societies ", "to": "networks"}, {"curve_style": "straight", "from": "Modelling the collapse \nof complex societies ", "to": "chaos"}, {"curve_style": "straight", "from": "Modelling the collapse \nof complex societies ", "to": "sustainability"}, {"curve_style": "straight", "from": "Modelling the collapse \nof complex societies ", "to": "socio-ecological systems"}, {"curve_style": "straight", "from": "Modelling the collapse \nof complex societies ", "to": "numerical simulation"}, {"curve_style": "straight", "from": "Modelling the collapse \nof complex societies ", "to": "computational cliodynamics"}, {"curve_style": "straight", "from": "Modelling the collapse \nof complex societies ", "to": "collapse"}, {"curve_style": "straight", "from": "City-State \nInteractions in a \nResource-Constrained \nEnvironment: an \nAgent-based Model ", "to": "agent-based modeling"}, {"curve_style": "straight", "from": "City-State \nInteractions in a \nResource-Constrained \nEnvironment: an \nAgent-based Model ", "to": "risk sensitivity"}, {"curve_style": "straight", "from": "City-State \nInteractions in a \nResource-Constrained \nEnvironment: an \nAgent-based Model ", "to": "city states"}, {"curve_style": "straight", "from": "City-State \nInteractions in a \nResource-Constrained \nEnvironment: an \nAgent-based Model ", "to": "computational cliodynamics"}, {"curve_style": "straight", "from": "Data-Driven \nHealthcare Planning: \nSimulating Emergency \nDepartments Dynamics \nwith an Agent-Based \nModel ", "to": "gravity model"}, {"curve_style": "straight", "from": "Data-Driven \nHealthcare Planning: \nSimulating Emergency \nDepartments Dynamics \nwith an Agent-Based \nModel ", "to": "numerical simulation"}, {"curve_style": "straight", "from": "Data-Driven \nHealthcare Planning: \nSimulating Emergency \nDepartments Dynamics \nwith an Agent-Based \nModel ", "to": "emergency care"}, {"curve_style": "straight", "from": "Data-Driven \nHealthcare Planning: \nSimulating Emergency \nDepartments Dynamics \nwith an Agent-Based \nModel ", "to": "healthcare"}, {"curve_style": "straight", "from": "Towards an \nLLM-enhanced \nAgent-based modeling ", "to": "agent-based modeling"}, {"curve_style": "straight", "from": "Towards an \nLLM-enhanced \nAgent-based modeling ", "to": "artificial intelligence"}, {"curve_style": "straight", "from": "Towards an \nLLM-enhanced \nAgent-based modeling ", "to": "methodology"}, {"curve_style": "straight", "from": "Emergence of Efficient \nstrategies in a \nCompetitive \nEnvironment ", "to": "agent-based modeling"}, {"curve_style": "straight", "from": "Emergence of Efficient \nstrategies in a \nCompetitive \nEnvironment ", "to": "risk sensitivity"}, {"curve_style": "straight", "from": "Emergence of Efficient \nstrategies in a \nCompetitive \nEnvironment ", "to": "city states"}, {"curve_style": "straight", "from": "Emergence of Efficient \nstrategies in a \nCompetitive \nEnvironment ", "to": "computational cliodynamics"}, {"curve_style": "straight", "from": "A Causal Inference \nModel to Determine \nBehavioural Changes in \nthe US Movie Market ", "to": "causal inference"}, {"curve_style": "straight", "from": "A Causal Inference \nModel to Determine \nBehavioural Changes in \nthe US Movie Market ", "to": "bayesian networks"}, {"curve_style": "straight", "from": "A Causal Inference \nModel to Determine \nBehavioural Changes in \nthe US Movie Market ", "to": "market"}, {"curve_style": "straight", "from": "A Causal Inference \nModel to Determine \nBehavioural Changes in \nthe US Movie Market ", "to": "movies"}, {"curve_style": "straight", "from": "Risk Aversion \nEvaluation in a \nCompetitive \nEnvironment using \nAgent-based Modeling ", "to": "agent-based modeling"}, {"curve_style": "straight", "from": "Risk Aversion \nEvaluation in a \nCompetitive \nEnvironment using \nAgent-based Modeling ", "to": "risk sensitivity"}, {"curve_style": "straight", "from": "Risk Aversion \nEvaluation in a \nCompetitive \nEnvironment using \nAgent-based Modeling ", "to": "city states"}, {"curve_style": "straight", "from": "Risk Aversion \nEvaluation in a \nCompetitive \nEnvironment using \nAgent-based Modeling ", "to": "computational cliodynamics"}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {"physics": {"forceAtlas2Based": {"gravitationalConstant": -100, "centralGravity": 0.001, "springLength": 230, "springConstant": 0.18, "damping": 0.4, "avoidOverlap": 3}, "maxVelocity": 146, "solver": "forceAtlas2Based", "timestep": 0.35, "stabilization": {"enabled": true, "iterations": 200, "updateInterval": 25}}};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>
