@@ -85,6 +85,86 @@
             margin: 20px 0;
         }
         
+        .interactive-section {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 30px 0;
+            border: 2px solid #667eea;
+        }
+        
+        canvas {
+            display: block;
+            margin: 20px auto;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        
+        .controls {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .slider-container {
+            margin: 20px 0;
+        }
+        
+        .slider-container label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        input[type="range"] {
+            width: 100%;
+            max-width: 400px;
+            height: 8px;
+            border-radius: 5px;
+            background: #d3d3d3;
+            outline: none;
+            -webkit-appearance: none;
+        }
+        
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #667eea;
+            cursor: pointer;
+        }
+        
+        input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #667eea;
+            cursor: pointer;
+        }
+        
+        .info-box {
+            background: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+            text-align: center;
+            border: 1px solid #667eea;
+        }
+        
+        .info-box p {
+            margin: 5px 0;
+            text-align: center;
+        }
+        
+        .value-display {
+            font-size: 1.2em;
+            color: #667eea;
+            font-weight: bold;
+        }
+        
         .footer {
             text-align: center;
             margin-top: 40px;
@@ -102,64 +182,20 @@
             <h2>Statistica Multivariata</h2>
             <p>La statistica multivariata è quella branca della statistica che si occupa dell'analisi simultanea di più variabili. A differenza della statistica univariata, che studia una singola variabile alla volta, la statistica multivariata esamina le relazioni e le interazioni tra multiple variabili contemporaneamente.</p>
         </div>
-        
+
         <div class="section">
-            <h2>Caratteristiche Principali</h2>
-            <p>L'approccio multivariato permette di:</p>
+            <h2>Test d'Ipotesi</h2>
+            
+            <h3>Che cos'è un Test d'Ipotesi?</h3>
+            <p>Il test d'ipotesi è uno strumento statistico fondamentale che ci permette di prendere decisioni basate sui dati. Immaginate di dover rispondere a una domanda del tipo: "Questo nuovo farmaco è davvero efficace?" oppure "La media dei voti degli studenti è cambiata dopo l'introduzione di un nuovo metodo didattico?". Il test d'ipotesi ci fornisce un metodo rigoroso per rispondere a queste domande.</p>
+            
+            <h3>Come Funziona?</h3>
+            <p><strong>1. Formulazione delle Ipotesi:</strong> Si parte definendo due ipotesi contrapposte:</p>
             <ul>
-                <li>Analizzare le relazioni tra più variabili simultaneamente</li>
-                <li>Identificare pattern e strutture nascoste nei dati</li>
-                <li>Ridurre la dimensionalità dei dati mantenendo le informazioni rilevanti</li>
-                <li>Effettuare classificazioni e raggruppamenti più accurati</li>
-                <li>Costruire modelli predittivi più complessi e precisi</li>
+                <li><strong>Ipotesi Nulla (H₀):</strong> rappresenta lo status quo, ciò che assumiamo essere vero fino a prova contraria (es. "il farmaco non ha effetto")</li>
+                <li><strong>Ipotesi Alternativa (H₁):</strong> rappresenta ciò che vogliamo dimostrare (es. "il farmaco ha un effetto")</li>
             </ul>
-        </div>
-        
-        <div class="section">
-            <h2>Principali Tecniche</h2>
             
-            <h3>Analisi della Componenti Principali (PCA)</h3>
-            <p>Tecnica di riduzione della dimensionalità che trasforma un insieme di variabili correlate in un nuovo insieme di variabili non correlate chiamate componenti principali, ordinate per quantità di varianza spiegata.</p>
+            <p><strong>2. Raccolta dei Dati:</strong> Conduciamo un esperimento o un'indagine e raccogliamo i dati campionari.</p>
             
-            <h3>Analisi Fattoriale</h3>
-            <p>Metodo che identifica fattori latenti (non osservabili direttamente) che spiegano le correlazioni tra le variabili osservate.</p>
-            
-            <h3>Analisi dei Cluster</h3>
-            <p>Insieme di tecniche per raggruppare oggetti in cluster omogenei in base alle loro caratteristiche, minimizzando la variabilità interna e massimizzando quella tra i gruppi.</p>
-            
-            <h3>Analisi Discriminante</h3>
-            <p>Metodo di classificazione che cerca di identificare le variabili che meglio discriminano tra gruppi predefiniti di osservazioni.</p>
-            
-            <h3>Regressione Multipla</h3>
-            <p>Estensione della regressione lineare che studia la relazione tra una variabile dipendente e più variabili indipendenti simultaneamente.</p>
-            
-            <h3>MANOVA</h3>
-            <p>Analisi della varianza multivariata che estende l'ANOVA per confrontare più variabili dipendenti contemporaneamente tra diversi gruppi.</p>
-        </div>
-        
-        <div class="highlight">
-            <h2>Applicazioni Pratiche</h2>
-            <p>La statistica multivariata trova applicazione in numerosi campi:</p>
-            <ul>
-                <li><strong>Marketing:</strong> segmentazione della clientela, analisi delle preferenze</li>
-                <li><strong>Finanza:</strong> gestione del portafoglio, analisi del rischio</li>
-                <li><strong>Medicina:</strong> diagnosi multifattoriale, studi clinici</li>
-                <li><strong>Scienze sociali:</strong> analisi dei sondaggi, ricerca psicometrica</li>
-                <li><strong>Biologia:</strong> analisi genomiche, studi ecologici</li>
-                <li><strong>Qualità:</strong> controllo di processo, ottimizzazione industriale</li>
-            </ul>
-        </div>
-        
-        <div class="section">
-            <h2>Concetti Fondamentali</h2>
-            <p><strong>Matrice di dati:</strong> La struttura base è una matrice dove le righe rappresentano le unità statistiche (osservazioni) e le colonne rappresentano le variabili misurate.</p>
-            <p><strong>Matrice di covarianza:</strong> Misura le relazioni lineari tra tutte le coppie di variabili, rappresentando sia le varianze che le covarianze.</p>
-            <p><strong>Distanza multivariata:</strong> Misura di similarità o dissimilarità tra osservazioni in uno spazio multidimensionale (es. distanza euclidea, distanza di Mahalanobis).</p>
-        </div>
-        
-        <div class="footer">
-            <p>Statistica Multivariata - Concetti di Base</p>
-        </div>
-    </div>
-</body>
-</html>
+            <p><strong>3. Calcolo della Statistica Test:</strong> Dai
