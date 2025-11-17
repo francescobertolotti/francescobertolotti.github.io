@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Series Analyzer (Median & Percentiles)</title>
+    <!-- 1. Load Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 2. Load SheetJS (xlsx) to read Excel files -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <!-- 3. Load Chart.js for plots -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        /* Custom styles for smoother loading */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        #chart-container {
+            position: relative;
+            height: 60vh;
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-200 flex items-center justify-center min-h-screen p-4 relative">
+
+    <!-- Header Text -->
+    <div class="absolute top-4 left-4 text-xs text-gray-500">
+        Prepared for the class of Dynamical System Design
+    </div>
+
+    <div class="bg-gray-800 p-8 rounded-2xl shadow-xl w-full max-w-4xl mx-auto">
+        
+        <!-- Title -->
+        <h1 class="text-3xl font-bold text-center text-gray-100 mb-6">
+            Time Series Analyzer
+        </h1>
+        <p class="text-center text-gray-400 mb-8">
+            Upload multiple Excel files (.xls, .xlsx) containing 't' and 'y' columns to calculate
+            median and 10/90 percentiles.
+            <br>
+            <!-- Underlined warning as requested -->
+            <strong class="text-red-400 underline">Warning: The app will fail if the columns are not named exactly 't' and 'y'.</strong>
+        </p>
+
+        <!-- Upload Section -->
+        <div class="mb-6">
+            <label for="file-input" class="block text-sm font-medium text-gray-300 mb-2">
+                Upload your Excel files
+            </label>
+            <input 
+                type="file" 
+                id="file-input" 
+                multiple 
+                accept=".xls,.xlsx,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                class="block w-full text-sm text-gray-400 rounded-lg border border-gray-600 cursor-pointer bg-gray-700
+                       file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold
+                       file:bg-blue-800 file:text-blue-200 hover:file:bg-blue-700"
+            />
+            <!-- Status Message -->
+            <div id="status-message" class="mt-4 text-center text-sm font-medium text-gray-400 h-5"></div>
+        </div>
+
+        <!-- Action Button -->
+        <button 
+            id="plot-button"
+            disabled
+            class="w-full py-3 px-6 bg-blue-600 text-white font-bold rounded-lg shadow-md
+                   hover:bg-blue-700 transition duration-300 ease-in-out
+                   disabled:bg-gray-500 disabled:cursor-not-allowed"
+        >
+            Generate Plot
+        </button>
+
+        <!-- Chart Container -->
+        <div class="mt-8 border border-gray-700 rounded-lg p-4 bg-gray-800" id="chart-wrapper" style="display: none;">
+            <div id="chart-container">
+                <canvas id="my-chart"></canvas>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Global variables to store data and chart instance
+        let allSeriesData = [];
+        let chartInstance = null;
+
+        // DOM element references
+        const fileInput = document.getElementById('file-input');
+        const plotButton = document.getElementById('plot-button');
+        const statusMessage = document.getElementById('status-message');
+        const chartWrapper = document.getElementById('chart-wrapper');
+        const chartContext = document.getElementById('my-chart').getContext('2d');
+
+        /**
+         * Event Listener for file input.
+         */
+        fileInput.addEventListener('change', async (event) => {
+            const files = event.target.files;
+            if (files.length === 0) {
+                return;
+            }
+
+            // Reset state
+            allSeriesData = [];
+            plotButton.disabled = true;
+            statusMessage.textContent = 'Processing files...';
+            chartWrapper.style.display = 'none';
+            if (chartInstance) {
+                chartInstance.destroy();
+            }
+
+            // Array of promises to process all files in parallel
+            const filePromises = Array.from(files).map(processFile);
+
+            try {
+                // Wait for all files to be read and processed
+                const results = await Promise.all(filePromises);
+                
+                // Filter out any invalid files and store the data
+                allSeriesData = results.filter(data => data !== null);
+
+                if (allSeriesData.length === 0) {
+                    throw new Error("No valid data found. Check for 't' and 'y' columns.");
+                }
+
+                statusMessage.textContent = `Loaded ${allSeriesData.length} files. Ready to generate plot.`;
+                plotButton.disabled = false;
+
+            } catch (error) {
+                console.error(error);
+                statusMessage.textContent = `Error: ${error.message}`;
+            }
+        });
+
+        /**
+         * Processes a single Excel file.
+         * Returns a promise that resolves with the file data (array of {t, y} objects)
+         * or null if the file is invalid.
+         */
+        function processFile(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+
+                reader.onload = (e) => {
+                    try {
+                        const data = new Uint8Array(e.target.result);
+                        const workbook = XLSX.read(data, { type: 'array' });
+                        const firstSheetName = workbook.SheetNames[0];
+                        const worksheet = workbook.Sheets[firstSheetName];
+                        
+                        // Convert sheet to JSON. 
+                        // sheet_to_json expects 't' and 'y' as column headers.
+                        const jsonData = XLSX.utils.sheet_to_json(worksheet, { raw: true });
+
+                        // Validation
+                        if (jsonData.length === 0) {
+                            throw new Error(`File '${file.name}' is empty.`);
+                        }
+                        if (jsonData[0].t === undefined || jsonData[0].y === undefined) {
+                            throw new Error(`Invalid file '${file.name}': missing 't' or 'y' columns.`);
+                        }
+
+                        // Clean and map data, ensuring t and y are numbers
+                        const series = jsonData
+                            .map(row => ({
+                                t: Number(row.t),
+                                y: Number(row.y)
+                            }))
+                            .filter(row => !isNaN(row.t) && !isNaN(row.y)); // Filter out non-numeric rows
+
+                        resolve(series);
+
+                    } catch (err) {
+                        console.error(`Error processing file ${file.name}:`, err);
+                        reject(err); // Reject the promise on error
+                    }
+                };
+
+                reader.onerror = (err) => {
+                    reject(new Error(`Error reading file ${file.name}`));
+                };
+
+                reader.readAsArrayBuffer(file);
+            });
+        }
+
+        /**
+         * Event Listener for the "Generate Plot" button click.
+         */
+        plotButton.addEventListener('click', () => {
+            if (allSeriesData.length === 0) {
+                statusMessage.textContent = 'No valid files loaded.';
+                return;
+            }
+
+            statusMessage.textContent = 'Calculating statistics...';
+            
+            try {
+                // 1. Aggregate data by time point 't'
+                const dataByTime = new Map();
+                for (const series of allSeriesData) {
+                    for (const point of series) {
+                        if (!dataByTime.has(point.t)) {
+                            dataByTime.set(point.t, []);
+                        }
+                        dataByTime.get(point.t).push(point.y);
+                    }
+                }
+
+                // 2. Sort the time points (our X-axis labels)
+                const timeLabels = Array.from(dataByTime.keys()).sort((a, b) => a - b);
+
+                // 3. Calculate statistics for each 't' point
+                const medianValues = [];
+                const p10Values = [];
+                const p90Values = [];
+
+                for (const t of timeLabels) {
+                    const values = dataByTime.get(t);
+                    medianValues.push(getPercentile(values, 50));
+                    p10Values.push(getPercentile(values, 10));
+                    p90Values.push(getPercentile(values, 90));
+                }
+
+                // 4. Draw the chart
+                drawChart(timeLabels, medianValues, p10Values, p90Values);
+                statusMessage.textContent = 'Plot generated successfully.';
+                chartWrapper.style.display = 'block';
+
+            } catch (error) {
+                console.error("Error generating plot:", error);
+                statusMessage.textContent = 'Error during calculation. Check console.';
+            }
+        });
+
+        /**
+         * Calculates a specific percentile from an array of numbers.
+         */
+        function getPercentile(arr, p) {
+            // Sort the array in ascending order
+            const sorted = [...arr].sort((a, b) => a - b);
+            
+            if (sorted.length === 0) return 0;
+            
+            // Calculate the percentile index
+            // We use linear interpolation (standard method)
+            const pos = (sorted.length - 1) * (p / 100);
+            const base = Math.floor(pos);
+            const rest = pos - base;
+            
+            if (sorted[base + 1] !== undefined) {
+                return sorted[base] + rest * (sorted[base + 1] - sorted[base]);
+            } else {
+                return sorted[base];
+            }
+        }
+
+        /**
+         * Draws or updates the Chart.js chart.
+         */
+        function drawChart(labels, medianData, p10Data, p90Data) {
+            // Destroy the old chart if it exists, to prevent overlaps
+            if (chartInstance) {
+                chartInstance.destroy();
+            }
+
+            chartInstance = new Chart(chartContext, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Median',
+                            data: medianData,
+                            borderColor: 'rgb(59, 130, 246)', // Blue-500
+                            borderWidth: 3,
+                            fill: false,
+                            tension: 0.1,
+                            pointRadius: 2,
+                        },
+                        {
+                            label: '10th Percentile',
+                            data: p10Data,
+                            borderColor: 'rgba(248, 113, 113, 0.6)', // Red-400 (better contrast on dark)
+                            borderWidth: 1.5,
+                            borderDash: [5, 5], // Dashed line
+                            fill: false, // Do not fill this line
+                            pointRadius: 0, // Hide points
+                        },
+                        {
+                            label: '90th Percentile',
+                            data: p90Data,
+                            borderColor: 'rgba(248, 113, 113, 0.6)', // Red-400
+                            borderWidth: 1.5,
+                            borderDash: [5, 5], // Dashed line
+                            // 'fill: 1' fills the area to the dataset at index 1 (the 10th percentile)
+                            fill: 1, 
+                            backgroundColor: 'rgba(248, 113, 113, 0.1)', // Fill color
+                            pointRadius: 0, // Hide points
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Median Trend with 10-90 Percentile Range',
+                            color: '#E5E7EB' // gray-200
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                        },
+                        legend: {
+                            labels: {
+                                color: '#E5E7EB' // gray-200
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Time (t)',
+                                color: '#9CA3AF' // gray-400
+                            },
+                            ticks: {
+                                maxTicksLimit: 20,
+                                color: '#9CA3AF' // gray-400
+                            },
+                            grid: {
+                                color: '#374151' // gray-700
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Value (y)',
+                                color: '#9CA3AF' // gray-400
+                            },
+                            beginAtZero: false,
+                            ticks: {
+                                color: '#9CA3AF' // gray-400
+                            },
+                            grid: {
+                                color: '#374151' // gray-700
+                            }
+                        }
+                    },
+                    // Optimizations for large charts
+                    animation: {
+                        duration: 500 // Faster animation
+                    },
+                    hover: {
+                        animationDuration: 0 // Disable animations on hover
+                    },
+                    elements: {
+                        line: {
+                            tension: 0.2 // Slightly curved lines
+                        }
+                    }
+                }
+            });
+        }
+
+    </script>
+</body>
+</html>
