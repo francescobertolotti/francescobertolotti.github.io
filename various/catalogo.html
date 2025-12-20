@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biblioteca</title>
+    <!-- Tailwind CSS per uno stile moderno -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- SheetJS per leggere file Excel e CSV -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <!-- Lucide Icons per le icone -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        .card-transition { transition: all 0.2s ease-out; }
+        .card-transition:hover { transform: translateY(-2px); }
+        
+        /* Animazione per la comparsa dei filtri */
+        .filter-fade-in {
+            animation: fadeIn 0.3s ease-out forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen">
+
+    <div id="app" class="max-w-[1600px] mx-auto px-4 py-6">
+        <!-- Header -->
+        <header class="mb-8 text-center">
+            <h1 class="text-3xl font-extrabold text-slate-800 tracking-tight mb-1">Biblioteca</h1>
+            <p class="text-slate-500 text-sm">Esplora la tua collezione filtrando per categorie progressive.</p>
+        </header>
+
+        <!-- Sezione Caricamento File -->
+        <div id="upload-section" class="mb-8 max-w-2xl mx-auto">
+            <div class="flex items-center justify-center w-full">
+                <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-32 border-2 border-slate-300 border-dashed rounded-2xl cursor-pointer bg-white hover:bg-slate-50 transition-colors shadow-sm">
+                    <div class="flex flex-col items-center justify-center pt-4 pb-4">
+                        <i data-lucide="upload-cloud" class="w-8 h-8 mb-2 text-slate-400"></i>
+                        <p class="mb-1 text-sm text-slate-500 font-semibold">Seleziona il file Excel o CSV</p>
+                    </div>
+                    <input id="dropzone-file" type="file" class="hidden" accept=".xlsx, .xls, .csv" />
+                </label>
+            </div>
+        </div>
+
+        <!-- Dashboard -->
+        <div id="dashboard" class="hidden grid grid-cols-1 lg:grid-cols-5 gap-6">
+            
+            <!-- Sidebar Filtri -->
+            <aside class="lg:col-span-1 space-y-4">
+                <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 sticky top-4">
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="text-md font-bold flex items-center gap-2">
+                            <i data-lucide="filter" class="w-4 h-4 text-blue-600"></i> Filtri
+                        </h2>
+                        <button id="reset-btn" class="text-xs text-blue-600 hover:underline font-medium">Resetta</button>
+                    </div>
+
+                    <!-- Search Bar -->
+                    <div class="mb-5">
+                        <div class="relative">
+                            <input type="text" id="global-search" placeholder="Cerca titolo o autore..." 
+                                class="w-full pl-9 pr-3 py-1.5 bg-slate-100 border-none rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-xs">
+                            <i data-lucide="search" class="w-3.5 h-3.5 absolute left-3 top-2.5 text-slate-400"></i>
+                        </div>
+                    </div>
+
+                    <!-- Dropdowns Generi Dinamici -->
+                    <div class="space-y-4" id="genre-filters-container">
+                        <!-- Livello 1 sempre visibile -->
+                        <div id="filter-group-genere1">
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Genere principale</label>
+                            <select data-level="1" class="genre-select w-full p-1.5 bg-slate-50 border border-slate-200 rounded-md text-xs outline-none focus:border-blue-500">
+                                <option value="">Tutti</option>
+                            </select>
+                        </div>
+                        <!-- Gli altri livelli verranno mostrati dinamicamente -->
+                        <div id="filter-group-genere2" class="hidden filter-fade-in">
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Sottogenere 2</label>
+                            <select data-level="2" class="genre-select w-full p-1.5 bg-slate-50 border border-slate-200 rounded-md text-xs outline-none focus:border-blue-500">
+                                <option value="">Tutti</option>
+                            </select>
+                        </div>
+                        <div id="filter-group-genere3" class="hidden filter-fade-in">
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Sottogenere 3</label>
+                            <select data-level="3" class="genre-select w-full p-1.5 bg-slate-50 border border-slate-200 rounded-md text-xs outline-none focus:border-blue-500">
+                                <option value="">Tutti</option>
+                            </select>
+                        </div>
+                        <div id="filter-group-genere4" class="hidden filter-fade-in">
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Sottogenere 4</label>
+                            <select data-level="4" class="genre-select w-full p-1.5 bg-slate-50 border border-slate-200 rounded-md text-xs outline-none focus:border-blue-500">
+                                <option value="">Tutti</option>
+                            </select>
+                        </div>
+                        <div id="filter-group-genere5" class="hidden filter-fade-in">
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Sottogenere 5</label>
+                            <select data-level="5" class="genre-select w-full p-1.5 bg-slate-50 border border-slate-200 rounded-md text-xs outline-none focus:border-blue-500">
+                                <option value="">Tutti</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="lg:col-span-4">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-sm font-bold text-slate-500 uppercase tracking-widest">
+                        Risultati: <span id="count-label" class="text-slate-800">0</span>
+                        <span id="limit-notice" class="hidden ml-2 text-[10px] bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full">(Mostrati 50 casuali)</span>
+                    </h2>
+                </div>
+
+                <!-- Griglia dei libri -->
+                <div id="books-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3">
+                    <!-- Cards -->
+                </div>
+
+                <div id="empty-state" class="hidden flex flex-col items-center justify-center py-16 bg-white rounded-xl border border-dashed border-slate-300">
+                    <i data-lucide="search-x" class="w-10 h-10 text-slate-300 mb-2"></i>
+                    <p class="text-slate-400 text-sm">Nessun libro trovato.</p>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Modal Dettagli -->
+    <div id="book-modal" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-xl w-full max-h-[85vh] overflow-hidden shadow-2xl flex flex-col">
+            <div class="p-5 border-b border-slate-100 flex justify-between items-center">
+                <h3 id="modal-title" class="text-xl font-bold text-slate-800 pr-6 truncate">Titolo</h3>
+                <button onclick="closeModal()" class="text-slate-400 hover:text-slate-600">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            <div class="p-6 overflow-y-auto custom-scrollbar flex-1">
+                <div class="grid grid-cols-2 gap-4 mb-6">
+                    <div class="bg-slate-50 p-3 rounded-lg">
+                        <span class="text-[10px] font-bold text-slate-400 uppercase block mb-1">Autore</span>
+                        <p id="modal-author" class="text-slate-700 font-medium text-sm">-</p>
+                    </div>
+                    <div class="bg-slate-50 p-3 rounded-lg">
+                        <span class="text-[10px] font-bold text-slate-400 uppercase block mb-1">Anno / Pagine</span>
+                        <p id="modal-meta" class="text-slate-700 font-medium text-sm">-</p>
+                    </div>
+                </div>
+                <div class="mb-6">
+                    <span class="text-[10px] font-bold text-slate-400 uppercase block mb-2 tracking-widest">Trama</span>
+                    <div id="modal-info" class="text-slate-600 text-sm leading-relaxed whitespace-pre-line"></div>
+                </div>
+                <div id="modal-genres" class="flex flex-wrap gap-1.5 pt-4 border-t border-slate-100"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let allBooks = [];
+        let activeFilters = { search: '', genere1: '', genere2: '', genere3: '', genere4: '', genere5: '' };
+
+        const genreColors = {
+            genere1: "bg-blue-50 text-blue-600 border-blue-100",
+            genere2: "bg-emerald-50 text-emerald-600 border-emerald-100",
+            genere3: "bg-amber-50 text-amber-600 border-amber-100",
+            genere4: "bg-rose-50 text-rose-600 border-rose-100",
+            genere5: "bg-violet-50 text-violet-600 border-violet-100"
+        };
+
+        lucide.createIcons();
+
+        const fileInput = document.getElementById('dropzone-file');
+        const uploadSection = document.getElementById('upload-section');
+        const dashboard = document.getElementById('dashboard');
+        const booksGrid = document.getElementById('books-grid');
+        const emptyState = document.getElementById('empty-state');
+        const countLabel = document.getElementById('count-label');
+        const limitNotice = document.getElementById('limit-notice');
+        const globalSearch = document.getElementById('global-search');
+        const resetBtn = document.getElementById('reset-btn');
+
+        // Funzione Shuffle
+        function shuffle(array) {
+            let currentIndex = array.length, randomIndex;
+            while (currentIndex != 0) {
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex--;
+                [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+            }
+            return array;
+        }
+
+        // Caricamento File
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                const data = new Uint8Array(event.target.result);
+                const workbook = XLSX.read(data, { type: 'array' });
+                const worksheet = workbook.Sheets[workbook.SheetNames[0]];
+                const jsonData = XLSX.utils.sheet_to_json(worksheet);
+                
+                allBooks = jsonData.map(item => ({
+                    titolo: item.titolo || 'Senza Titolo',
+                    autore: item.autore || 'Autore Sconosciuto',
+                    anno: item.anno || '',
+                    n_pagine: item.n_pagine || '',
+                    informazioni: item.informazioni || 'Nessuna descrizione disponibile.',
+                    genere1: (item.genere1 || '').trim(),
+                    genere2: (item.genere2 || '').trim(),
+                    genere3: (item.genere3 || '').trim(),
+                    genere4: (item.genere4 || '').trim(),
+                    genere5: (item.genere5 || '').trim()
+                }));
+
+                uploadSection.classList.add('hidden');
+                dashboard.classList.remove('hidden');
+                
+                updateFilters();
+                renderBooks();
+            };
+            reader.readAsArrayBuffer(file);
+        });
+
+        // Gestione Filtri Dinamici
+        function updateFilters() {
+            const levels = ['genere1', 'genere2', 'genere3', 'genere4', 'genere5'];
+            
+            levels.forEach((lvl, index) => {
+                const currentLevelNum = index + 1;
+                const select = document.querySelector(`select[data-level="${currentLevelNum}"]`);
+                const group = document.getElementById(`filter-group-${lvl}`);
+                
+                // Determiniamo se questo livello deve essere visibile
+                // Livello 1 sempre visibile, gli altri solo se il precedente ha un valore
+                const isVisible = (currentLevelNum === 1) || (activeFilters[levels[index-1]] !== '');
+                
+                if (isVisible) {
+                    group.classList.remove('hidden');
+                    
+                    // Filtriamo i dati per trovare le opzioni valide per questo livello
+                    let filteredOptionsData = allBooks;
+                    for (let i = 0; i < index; i++) {
+                        const prevLvl = levels[i];
+                        filteredOptionsData = filteredOptionsData.filter(b => b[prevLvl] === activeFilters[prevLvl]);
+                    }
+                    
+                    const options = [...new Set(filteredOptionsData.map(b => b[lvl]))]
+                        .filter(Boolean)
+                        .sort();
+
+                    const currentValue = activeFilters[lvl];
+                    select.innerHTML = '<option value="">Tutti</option>';
+                    options.forEach(opt => {
+                        const selected = opt === currentValue ? 'selected' : '';
+                        select.innerHTML += `<option value="${opt}" ${selected}>${opt}</option>`;
+                    });
+
+                    // Se dopo aver popolato non ci sono opzioni e non siamo al livello 1, potremmo nasconderlo
+                    if (options.length === 0 && currentLevelNum > 1 && currentValue === '') {
+                        group.classList.add('hidden');
+                    }
+                } else {
+                    group.classList.add('hidden');
+                    activeFilters[lvl] = ''; // Resetta lo stato se il genitore è sparito
+                }
+            });
+        }
+
+        // Listener Cambiamento Filtri
+        document.querySelectorAll('.genre-select').forEach(select => {
+            select.addEventListener('change', (e) => {
+                const levelNum = parseInt(e.target.dataset.level);
+                const levels = ['genere1', 'genere2', 'genere3', 'genere4', 'genere5'];
+                const selectedLevel = levels[levelNum - 1];
+                
+                activeFilters[selectedLevel] = e.target.value;
+                
+                // Reset dei livelli successivi
+                for (let i = levelNum; i < levels.length; i++) {
+                    activeFilters[levels[i]] = '';
+                }
+                
+                updateFilters();
+                renderBooks();
+            });
+        });
+
+        // Rendering Libri
+        function renderBooks() {
+            let filtered = allBooks.filter(book => {
+                const s = activeFilters.search.toLowerCase();
+                const matchesSearch = s === '' || book.titolo.toLowerCase().includes(s) || book.autore.toLowerCase().includes(s);
+                
+                const matchesG1 = !activeFilters.genere1 || book.genere1 === activeFilters.genere1;
+                const matchesG2 = !activeFilters.genere2 || book.genere2 === activeFilters.genere2;
+                const matchesG3 = !activeFilters.genere3 || book.genere3 === activeFilters.genere3;
+                const matchesG4 = !activeFilters.genere4 || book.genere4 === activeFilters.genere4;
+                const matchesG5 = !activeFilters.genere5 || book.genere5 === activeFilters.genere5;
+
+                return matchesSearch && matchesG1 && matchesG2 && matchesG3 && matchesG4 && matchesG5;
+            });
+
+            const totalCount = filtered.length;
+            
+            // Mescola e limita a 50
+            let displayList = [...filtered];
+            shuffle(displayList);
+            displayList = displayList.slice(0, 50);
+
+            booksGrid.innerHTML = '';
+            countLabel.innerText = totalCount;
+            limitNotice.classList.toggle('hidden', totalCount <= 50);
+
+            if (displayList.length === 0) {
+                emptyState.classList.remove('hidden');
+            } else {
+                emptyState.classList.add('hidden');
+                displayList.forEach(book => {
+                    const levels = ['genere1', 'genere2', 'genere3', 'genere4', 'genere5'];
+                    const tags = levels
+                        .filter(lvl => book[lvl])
+                        .map(lvl => `<span class="px-1.5 py-0.5 border ${genreColors[lvl]} text-[8px] font-bold uppercase rounded tracking-tighter whitespace-nowrap">${book[lvl]}</span>`)
+                        .join('');
+
+                    const card = document.createElement('div');
+                    card.className = 'bg-white rounded-xl p-3 shadow-sm border border-slate-100 card-transition cursor-pointer group flex flex-col h-full hover:border-slate-300';
+                    card.onclick = () => openModal(book);
+                    card.innerHTML = `
+                        <div class="flex-1">
+                            <div class="flex flex-wrap gap-1 mb-2">
+                                ${tags}
+                            </div>
+                            <h3 class="font-bold text-slate-800 text-xs leading-tight line-clamp-2 group-hover:text-blue-600 mb-1">${book.titolo}</h3>
+                            <p class="text-slate-500 text-[10px] italic truncate">${book.autore}</p>
+                        </div>
+                    `;
+                    booksGrid.appendChild(card);
+                });
+            }
+            lucide.createIcons();
+        }
+
+        // Ricerca Testuale
+        globalSearch.addEventListener('input', (e) => {
+            activeFilters.search = e.target.value;
+            renderBooks();
+        });
+
+        // Reset
+        resetBtn.addEventListener('click', () => {
+            activeFilters = { search: '', genere1: '', genere2: '', genere3: '', genere4: '', genere5: '' };
+            globalSearch.value = '';
+            updateFilters();
+            renderBooks();
+        });
+
+        // Logica Modal
+        function openModal(book) {
+            const modal = document.getElementById('book-modal');
+            document.getElementById('modal-title').innerText = book.titolo;
+            document.getElementById('modal-author').innerText = book.autore;
+            document.getElementById('modal-meta').innerText = `${book.anno} ${book.n_pagine ? '• ' + book.n_pagine + ' pag.' : ''}`;
+            document.getElementById('modal-info').innerText = book.informazioni;
+            
+            const gContainer = document.getElementById('modal-genres');
+            gContainer.innerHTML = '';
+            ['genere1', 'genere2', 'genere3', 'genere4', 'genere5'].filter(lvl => book[lvl]).forEach(lvl => {
+                const s = document.createElement('span');
+                s.className = `px-2.5 py-1 border ${genreColors[lvl]} text-[10px] font-semibold rounded-full uppercase`;
+                s.innerText = book[lvl];
+                gContainer.appendChild(s);
+            });
+
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            lucide.createIcons();
+        }
+
+        function closeModal() {
+            document.getElementById('book-modal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        window.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+    </script>
+</body>
+</html>
