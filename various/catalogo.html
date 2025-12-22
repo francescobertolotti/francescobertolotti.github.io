@@ -27,6 +27,20 @@
             from { opacity: 0; transform: translateY(-10px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
+        /* Spinner di caricamento */
+        .loader {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #3b82f6;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-900 min-h-screen">
@@ -38,17 +52,30 @@
             <p class="text-slate-500 text-sm">Esplora la tua collezione filtrando per categorie progressive.</p>
         </header>
 
-        <!-- Sezione Caricamento File -->
-        <div id="upload-section" class="mb-8 max-w-2xl mx-auto">
-            <div class="flex items-center justify-center w-full">
-                <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-32 border-2 border-slate-300 border-dashed rounded-2xl cursor-pointer bg-white hover:bg-slate-50 transition-colors shadow-sm">
-                    <div class="flex flex-col items-center justify-center pt-4 pb-4">
-                        <i data-lucide="upload-cloud" class="w-8 h-8 mb-2 text-slate-400"></i>
-                        <p class="mb-1 text-sm text-slate-500 font-semibold">Seleziona il file Excel o CSV</p>
-                    </div>
-                    <input id="dropzone-file" type="file" class="hidden" accept=".xlsx, .xls, .csv" />
-                </label>
+        <!-- Stato Caricamento -->
+        <div id="loading-state" class="flex flex-col items-center justify-center py-20">
+            <div class="loader mb-4"></div>
+            <p class="text-slate-500 text-sm animate-pulse">Ricerca automatica di informazioni.xlsx...</p>
+        </div>
+
+        <!-- Errore Caricamento / Fallback Manuale -->
+        <div id="error-state" class="hidden max-w-lg mx-auto bg-white border border-slate-200 p-8 rounded-3xl text-center shadow-xl">
+            <div class="w-16 h-16 bg-blue-50 text-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i data-lucide="file-warning" class="w-8 h-8"></i>
             </div>
+            <h2 class="text-slate-800 font-bold text-xl mb-2">Caricamento Manuale Richiesto</h2>
+            <p class="text-slate-500 text-sm mb-6 leading-relaxed">
+                Per motivi di sicurezza, il browser impedisce il caricamento automatico dei file locali. <br>
+                <strong>Seleziona il file "informazioni.xlsx" qui sotto per continuare:</strong>
+            </p>
+            
+            <label for="fallback-upload" class="cursor-pointer inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-2xl font-bold transition-all shadow-lg shadow-blue-200">
+                <i data-lucide="upload" class="w-5 h-5"></i>
+                Seleziona informazioni.xlsx
+                <input type="file" id="fallback-upload" class="hidden" accept=".xlsx, .xls, .csv">
+            </label>
+            
+            <p class="text-[10px] text-slate-400 mt-6 uppercase tracking-widest italic">Nota: Questo accade solo se apri il file senza un server web locale.</p>
         </div>
 
         <!-- Dashboard -->
@@ -174,10 +201,8 @@
             genere5: "bg-violet-50 text-violet-600 border-violet-100"
         };
 
-        lucide.createIcons();
-
-        const fileInput = document.getElementById('dropzone-file');
-        const uploadSection = document.getElementById('upload-section');
+        const loadingState = document.getElementById('loading-state');
+        const errorState = document.getElementById('error-state');
         const dashboard = document.getElementById('dashboard');
         const booksGrid = document.getElementById('books-grid');
         const emptyState = document.getElementById('empty-state');
@@ -185,6 +210,65 @@
         const limitNotice = document.getElementById('limit-notice');
         const globalSearch = document.getElementById('global-search');
         const resetBtn = document.getElementById('reset-btn');
+        const fallbackUpload = document.getElementById('fallback-upload');
+
+        lucide.createIcons();
+
+        // Caricamento automatico all'avvio
+        window.onload = async function() {
+            try {
+                const response = await fetch('informazioni.xlsx');
+                if (!response.ok) throw new Error('File non trovato');
+                
+                const arrayBuffer = await response.arrayBuffer();
+                processWorkbook(arrayBuffer);
+            } catch (error) {
+                console.warn("Auto-caricamento fallito (probabilmente CORS o file mancante). Mostro fallback manuale.");
+                loadingState.classList.add('hidden');
+                errorState.classList.remove('hidden');
+                lucide.createIcons();
+            }
+        };
+
+        // Gestione caricamento manuale (Fallback)
+        fallbackUpload.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                processWorkbook(event.target.result);
+            };
+            reader.readAsArrayBuffer(file);
+        });
+
+        // Elaborazione dei dati Excel
+        function processWorkbook(buffer) {
+            const data = new Uint8Array(buffer);
+            const workbook = XLSX.read(data, { type: 'array' });
+            const worksheet = workbook.Sheets[workbook.SheetNames[0]];
+            const jsonData = XLSX.utils.sheet_to_json(worksheet);
+            
+            allBooks = jsonData.map(item => ({
+                titolo: item.titolo || 'Senza Titolo',
+                autore: item.autore || 'Autore Sconosciuto',
+                anno: item.anno || '',
+                n_pagine: item.n_pagine || '',
+                informazioni: item.informazioni || 'Nessuna descrizione disponibile.',
+                genere1: (item.genere1 || '').trim(),
+                genere2: (item.genere2 || '').trim(),
+                genere3: (item.genere3 || '').trim(),
+                genere4: (item.genere4 || '').trim(),
+                genere5: (item.genere5 || '').trim()
+            }));
+
+            loadingState.classList.add('hidden');
+            errorState.classList.add('hidden');
+            dashboard.classList.remove('hidden');
+            
+            updateFilters();
+            renderBooks();
+        }
 
         // Funzione Shuffle
         function shuffle(array) {
@@ -197,40 +281,6 @@
             return array;
         }
 
-        // Caricamento File
-        fileInput.addEventListener('change', (e) => {
-            const file = e.target.files[0];
-            if (!file) return;
-
-            const reader = new FileReader();
-            reader.onload = (event) => {
-                const data = new Uint8Array(event.target.result);
-                const workbook = XLSX.read(data, { type: 'array' });
-                const worksheet = workbook.Sheets[workbook.SheetNames[0]];
-                const jsonData = XLSX.utils.sheet_to_json(worksheet);
-                
-                allBooks = jsonData.map(item => ({
-                    titolo: item.titolo || 'Senza Titolo',
-                    autore: item.autore || 'Autore Sconosciuto',
-                    anno: item.anno || '',
-                    n_pagine: item.n_pagine || '',
-                    informazioni: item.informazioni || 'Nessuna descrizione disponibile.',
-                    genere1: (item.genere1 || '').trim(),
-                    genere2: (item.genere2 || '').trim(),
-                    genere3: (item.genere3 || '').trim(),
-                    genere4: (item.genere4 || '').trim(),
-                    genere5: (item.genere5 || '').trim()
-                }));
-
-                uploadSection.classList.add('hidden');
-                dashboard.classList.remove('hidden');
-                
-                updateFilters();
-                renderBooks();
-            };
-            reader.readAsArrayBuffer(file);
-        });
-
         // Gestione Filtri Dinamici
         function updateFilters() {
             const levels = ['genere1', 'genere2', 'genere3', 'genere4', 'genere5'];
@@ -240,14 +290,11 @@
                 const select = document.querySelector(`select[data-level="${currentLevelNum}"]`);
                 const group = document.getElementById(`filter-group-${lvl}`);
                 
-                // Determiniamo se questo livello deve essere visibile
-                // Livello 1 sempre visibile, gli altri solo se il precedente ha un valore
                 const isVisible = (currentLevelNum === 1) || (activeFilters[levels[index-1]] !== '');
                 
                 if (isVisible) {
                     group.classList.remove('hidden');
                     
-                    // Filtriamo i dati per trovare le opzioni valide per questo livello
                     let filteredOptionsData = allBooks;
                     for (let i = 0; i < index; i++) {
                         const prevLvl = levels[i];
@@ -265,13 +312,12 @@
                         select.innerHTML += `<option value="${opt}" ${selected}>${opt}</option>`;
                     });
 
-                    // Se dopo aver popolato non ci sono opzioni e non siamo al livello 1, potremmo nasconderlo
                     if (options.length === 0 && currentLevelNum > 1 && currentValue === '') {
                         group.classList.add('hidden');
                     }
                 } else {
                     group.classList.add('hidden');
-                    activeFilters[lvl] = ''; // Resetta lo stato se il genitore è sparito
+                    activeFilters[lvl] = ''; 
                 }
             });
         }
@@ -285,7 +331,6 @@
                 
                 activeFilters[selectedLevel] = e.target.value;
                 
-                // Reset dei livelli successivi
                 for (let i = levelNum; i < levels.length; i++) {
                     activeFilters[levels[i]] = '';
                 }
@@ -312,7 +357,6 @@
 
             const totalCount = filtered.length;
             
-            // Mescola e limita a 50
             let displayList = [...filtered];
             shuffle(displayList);
             displayList = displayList.slice(0, 50);
