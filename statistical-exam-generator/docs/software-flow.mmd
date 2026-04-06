@@ -1,0 +1,28 @@
+flowchart TD
+    A[Utente clicca Genera Prova] --> B[/POST /api/generate-exam/]
+    B --> C[generateExamText]
+    C --> D[Selezione tema casuale]
+    D --> E[Prompt con placeholder]
+    E --> F[Chiamata OpenAI gpt-5-mini]
+    F --> G{Template valido?}
+    G -- No --> E
+    G -- Si --> H[Materializzazione placeholder]
+    H --> I[Assegnazione celle singole in colonna F]
+    H --> J[Assegnazione range output da H20]
+    H --> K[Assegnazione ancore grafici]
+    I --> L[Salva .md]
+    J --> L
+    K --> L
+    L --> M[Render PDF stile Base prove]
+    L --> N[Genera workbook .xlsx]
+    N --> O{Dati iniziali richiesti?}
+    O -- Si --> P[Genera campione bivariato o serie storica]
+    O -- No --> Q[Workbook vuoto]
+    P --> R[Colora celle output in giallo]
+    Q --> R
+    M --> S[Response JSON con nomi file]
+    R --> S
+    S --> T[Frontend mostra testo]
+    T --> U[Scarica PDF]
+    T --> V[Scarica Excel]
+

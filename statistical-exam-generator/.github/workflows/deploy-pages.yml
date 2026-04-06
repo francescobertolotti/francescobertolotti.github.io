@@ -1,0 +1,65 @@
+name: Deploy GitHub Pages
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Prepare static site
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_MODEL: ${{ vars.OPENAI_MODEL }}
+          OPENAI_BASE_URL: ${{ vars.OPENAI_BASE_URL }}
+        run: |
+          rm -rf dist
+          mkdir -p dist
+          cp -R public/* dist/
+          mkdir -p dist/analysis
+          cp analysis/tipi_domande.md dist/analysis/tipi_domande.md
+          cp analysis/stile_esame.md dist/analysis/stile_esame.md
+          python3 - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          config = {
+              "OPENAI_API_KEY": os.getenv("OPENAI_API_KEY", ""),
+              "OPENAI_MODEL": os.getenv("OPENAI_MODEL", "gpt-5-mini") or "gpt-5-mini",
+              "OPENAI_BASE_URL": os.getenv("OPENAI_BASE_URL", "https://api.openai.com/v1") or "https://api.openai.com/v1",
+          }
+          Path("dist/env.js").write_text(
+              "window.APP_CONFIG = " + json.dumps(config) + ";\n",
+              encoding="utf-8",
+          )
+          PY
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4

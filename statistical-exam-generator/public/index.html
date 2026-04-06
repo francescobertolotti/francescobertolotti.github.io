@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Test generator - Statistical Methods</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="header-inner">
+        <div class="brand-mark">
+          <img src="/assets/logo_liuc.png" alt="Logo LIUC" />
+        </div>
+        <div>
+          <p class="brand-top">UNIVERSITA CARLO CATTANEO</p>
+          <h1>Test generator - Statistical Methods</h1>
+        </div>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="card">
+        <h2>Generate Test</h2>
+        <form id="generatorForm">
+          <div class="row">
+            <button type="submit" id="generateBtn">Generate Test</button>
+            <button type="button" id="downloadBtn" class="secondary" disabled>
+              Download PDF
+            </button>
+            <button type="button" id="downloadExcelBtn" class="secondary" disabled>
+              Download Excel
+            </button>
+            <button type="button" id="feedbackToggleBtn" class="secondary">
+              Leave Feedback
+            </button>
+          </div>
+        </form>
+
+        <p id="generationStatus" class="status"></p>
+        <section id="staticModePanel" class="static-mode-panel" hidden>
+          <h3>GitHub Pages Configuration</h3>
+          <p class="muted">
+            Static mode is active. Generation runs directly in the browser.
+          </p>
+          <label for="apiKeyInput" class="field-label">OpenAI API Key</label>
+          <input
+            id="apiKeyInput"
+            type="password"
+            autocomplete="off"
+            placeholder="sk-proj-..."
+          />
+          <div class="row">
+            <button type="button" id="saveApiKeyBtn" class="secondary">Save Key Locally</button>
+          </div>
+          <p id="staticModeStatus" class="status"></p>
+        </section>
+        <section id="feedbackPanel" class="feedback-panel" hidden>
+          <h3>Feedback</h3>
+          <textarea
+            id="feedbackInput"
+            class="feedback-input"
+            placeholder="Write your feedback here and click Submit Feedback."
+          ></textarea>
+          <div class="row">
+            <button type="button" id="submitFeedbackBtn">Submit Feedback</button>
+          </div>
+          <p id="feedbackStatus" class="status"></p>
+        </section>
+        <h3>Generated output</h3>
+        <textarea id="generatedExamOutput" readonly></textarea>
+      </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <script src="/env.js"></script>
+    <script src="/app.js" defer></script>
+  </body>
+</html>
