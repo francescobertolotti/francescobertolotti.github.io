@@ -1,8 +1,0 @@
-Compiled static package for GitHub Pages.
-
-1) Upload all files in this folder at repository root.
-2) Ensure GitHub Pages serves from branch root (or GitHub Actions artifact).
-3) Set OPENAI key in env.js (or keep empty and save from UI at runtime).
-
-Security note:
-If you put a real OpenAI key inside env.js, it is visible to end users.
