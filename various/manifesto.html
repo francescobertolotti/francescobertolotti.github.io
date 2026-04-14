@@ -115,6 +115,70 @@
       letter-spacing: 0.025em;
     }
 
+    .sign-area {
+      margin-top: 2rem;
+      padding-top: 1.2rem;
+      border-top: 1px solid rgba(90, 53, 28, 0.45);
+    }
+
+    .sign-title {
+      margin: 0 0 0.65rem;
+      color: #4a2d18;
+      letter-spacing: 0.04em;
+      font-size: 1.05rem;
+      text-transform: uppercase;
+    }
+
+    .sign-form {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .sign-form input {
+      flex: 1 1 230px;
+      min-width: 0;
+      padding: 0.45rem 0.6rem;
+      border: 1px solid rgba(84, 53, 29, 0.6);
+      border-radius: 4px;
+      background: rgba(255, 244, 216, 0.7);
+      color: #3a2414;
+      font-family: inherit;
+      font-size: 0.98rem;
+    }
+
+    .sign-form button {
+      padding: 0.45rem 0.95rem;
+      border: 1px solid rgba(84, 53, 29, 0.9);
+      border-radius: 4px;
+      background: linear-gradient(180deg, #7f4b27 0%, #5e3116 100%);
+      color: #f8ebca;
+      font-family: inherit;
+      font-size: 0.94rem;
+      cursor: pointer;
+    }
+
+    .sign-form button:hover {
+      filter: brightness(1.08);
+    }
+
+    .sign-list {
+      margin: 0;
+      padding: 0 0 0 0.9rem;
+      color: #3f2614;
+    }
+
+    .sign-list li {
+      margin: 0.25rem 0;
+      list-style: "✒ ";
+      font-size: 1.35rem;
+      line-height: 1.3;
+      font-family: "Brush Script MT", "Lucida Handwriting", "Apple Chancery", cursive;
+      letter-spacing: 0.02em;
+    }
+
     @media (max-width: 640px) {
       body {
         padding: 1.1rem 0.7rem;
@@ -146,6 +210,74 @@
       Academics of the world, throw down your papers. The era of simulated erudition has begun.
     </p>
     <p class="seal">Signed in defiance, The Society</p>
+
+    <section class="sign-area" aria-label="Sign this manifesto">
+      <h2 class="sign-title">Sign The Declaration</h2>
+      <form class="sign-form" id="sign-form">
+        <input
+          type="text"
+          id="signer-name"
+          name="signer-name"
+          maxlength="60"
+          placeholder="Write your name"
+          aria-label="Your name"
+          required
+        />
+        <button type="submit">Sign</button>
+      </form>
+      <ul class="sign-list" id="sign-list"></ul>
+    </section>
   </main>
+
+  <script>
+    (function () {
+      var form = document.getElementById("sign-form");
+      var input = document.getElementById("signer-name");
+      var list = document.getElementById("sign-list");
+      var storageKey = "manifestoSignatures";
+
+      function normalizeName(value) {
+        return value.replace(/\s+/g, " ").trim();
+      }
+
+      function render(names) {
+        list.innerHTML = "";
+        names.forEach(function (name) {
+          var li = document.createElement("li");
+          li.textContent = name;
+          list.appendChild(li);
+        });
+      }
+
+      function readSignatures() {
+        try {
+          var raw = localStorage.getItem(storageKey);
+          var parsed = raw ? JSON.parse(raw) : [];
+          return Array.isArray(parsed) ? parsed : [];
+        } catch (e) {
+          return [];
+        }
+      }
+
+      function saveSignatures(names) {
+        localStorage.setItem(storageKey, JSON.stringify(names));
+      }
+
+      var signatures = readSignatures();
+      render(signatures);
+
+      form.addEventListener("submit", function (event) {
+        event.preventDefault();
+        var name = normalizeName(input.value);
+        if (!name) return;
+
+        signatures.push(name);
+        saveSignatures(signatures);
+        render(signatures);
+        form.reset();
+        input.focus();
+      });
+    })();
+  </script>
 </body>
 </html>
