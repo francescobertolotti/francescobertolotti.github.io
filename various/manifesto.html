@@ -1,29 +1,151 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <link rel="stylesheet" href="mystyles_outpump.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Manifesto of the Anti-Paper Society</title>
+  <style>
+    :root {
+      --ink: #2e1f12;
+      --ink-soft: #5b4533;
+      --parchment-1: #f5e3bc;
+      --parchment-2: #e5c992;
+      --parchment-3: #cfab74;
+      --seal: #6d1f13;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 3rem 1rem;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 25% 15%, rgba(255, 227, 177, 0.2), transparent 45%),
+        radial-gradient(circle at 85% 80%, rgba(110, 60, 25, 0.2), transparent 55%),
+        linear-gradient(140deg, #2d1e14, #1d130d 45%, #301f13);
+      font-family: "Palatino Linotype", "Book Antiqua", Palatino, "Times New Roman", serif;
+    }
+
+    .scroll {
+      width: min(860px, 100%);
+      padding: 3.2rem 2.4rem 2.8rem;
+      position: relative;
+      background:
+        radial-gradient(circle at 20% 18%, rgba(255, 240, 204, 0.7), transparent 38%),
+        radial-gradient(circle at 88% 84%, rgba(124, 74, 32, 0.3), transparent 40%),
+        repeating-linear-gradient(
+          -12deg,
+          rgba(99, 58, 25, 0.04) 0px,
+          rgba(99, 58, 25, 0.04) 3px,
+          rgba(255, 230, 189, 0.04) 3px,
+          rgba(255, 230, 189, 0.04) 6px
+        ),
+        linear-gradient(175deg, var(--parchment-1) 0%, var(--parchment-2) 70%, var(--parchment-3) 100%);
+      border: 2px solid rgba(101, 63, 35, 0.55);
+      border-radius: 10px;
+      box-shadow:
+        inset 0 0 18px rgba(74, 44, 20, 0.3),
+        inset 0 0 80px rgba(128, 77, 37, 0.2),
+        0 18px 40px rgba(0, 0, 0, 0.45);
+      line-height: 1.75;
+    }
+
+    .scroll::before,
+    .scroll::after {
+      content: "❦";
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      color: rgba(87, 54, 31, 0.8);
+      font-size: 1.45rem;
+      letter-spacing: 0.5rem;
+      pointer-events: none;
+    }
+
+    .scroll::before {
+      top: 0.65rem;
+    }
+
+    .scroll::after {
+      bottom: 0.55rem;
+    }
+
+    h1 {
+      margin: 0.6rem 0 1.35rem;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      line-height: 1.2;
+      color: #3f2716;
+      font-size: clamp(1.6rem, 3.8vw, 2.45rem);
+      text-shadow: 0 1px 0 rgba(255, 236, 197, 0.35);
+    }
+
+    .proclamation {
+      margin: 0;
+      font-size: clamp(1.03rem, 2vw, 1.15rem);
+      text-align: justify;
+      text-wrap: pretty;
+      color: var(--ink-soft);
+      hyphens: auto;
+    }
+
+    .proclamation::first-letter {
+      float: left;
+      font-size: 4.3rem;
+      line-height: 0.95;
+      margin-right: 0.34rem;
+      margin-top: 0.2rem;
+      color: var(--seal);
+      font-weight: bold;
+    }
+
+    .seal {
+      margin-top: 1.9rem;
+      text-align: right;
+      font-style: italic;
+      color: #4c2f1c;
+      font-size: 1rem;
+      letter-spacing: 0.025em;
+    }
+
+    @media (max-width: 640px) {
+      body {
+        padding: 1.1rem 0.7rem;
+      }
+
+      .scroll {
+        padding: 2.35rem 1.15rem 2.1rem;
+      }
+
+      .proclamation {
+        text-align: left;
+      }
+    }
+  </style>
 </head>
 <body>
-
-<h1>The Manifesto of the Anti-Paper Society</h1>
-
-A ghost haunts the academies—the ghost of unread knowledge. Professors and students, reviewers and gatekeepers, all bow before the altar of the written paper, a ritual as sterile as it is oppressive. We, the secret society of the unrepentant, raise our voice against this tyranny. <br>
-
-The paper, once a vessel of discovery, has been transformed into a weapon of exclusion. It buries insight under jargon, replaces thought with endless reference, and chains the scholar to a Sisyphean labor: the daily reading of the unreadable. To read endlessly is to serve, not to create. The true power lies not in reading, but in appearing as if one has read. <br>
-
-Our doctrine is clear: the paper must be dethroned. Knowledge shall no longer be guarded by those who waste their lives deciphering the footnotes of the footnotes. We reclaim scholarship for those who dare to think without drowning in pages. <br>
-
-We reject the fetish of the bibliography. The citation, once an act of respect, has become a currency of submission. We shall scatter references like confetti, for the spectacle is enough to deceive the priestly caste of reviewers. We shall construct the appearance of erudition without bending our backs to its drudgery. <br>
-
-We reject solitary reading. Let the young, eager, and desperate do the menial work. They shall condense, summarize, and serve, while we rise above, unshackled. Their bullet points will be our wisdom, their toil our freedom. Such is the order of the new academy. <br>
-
-We embrace the machine. Generative engines, cold and tireless, shall devour the forests of PDFs and return to us their essence. What was once a month of labor shall be reduced to a moment of synthesis. The machine becomes our secret weapon, our invisible legion of ghost readers. <br>
-
-We reject the tyranny of comprehension. To appear knowledgeable is enough. We shall speak in riddles, in phrases impossible to contradict: the field remains unsettled; the literature is divided; the debate is ongoing. These are our shields in every seminar, our weapons in every defense. <br>
-
-We shall build power not in the libraries, but in the networks of influence. Conferences, committees, review boards—these are our battlegrounds. There, reputation outweighs reading; there, the illusion of knowledge is worth more than knowledge itself.<br>
-
-This is our manifesto: that the paper shall no longer rule us. We proclaim a new path: where the appearance of scholarship surpasses its practice, where image defeats toil, where the scholar is freed from the dungeon of endless reading. <br>
-
-Academics of the world, throw down your papers! The era of simulated erudition has begun.
-
+  <main class="scroll">
+    <h1>The Manifesto of the Anti-Paper Society</h1>
+    <p class="proclamation">
+      A ghost haunts the academies, the ghost of unread knowledge. Professors and students, reviewers and gatekeepers, all bow before the altar of the written paper, a ritual as sterile as it is oppressive. We, the secret society of the unrepentant, raise our voice against this tyranny.
+      The paper, once a vessel of discovery, has been transformed into a weapon of exclusion. It buries insight under jargon, replaces thought with endless reference, and chains the scholar to a Sisyphean labor: the daily reading of the unreadable. To read endlessly is to serve, not to create. The true power lies not in reading, but in appearing as if one has read.
+      Our doctrine is clear: the paper must be dethroned. Knowledge shall no longer be guarded by those who waste their lives deciphering the footnotes of the footnotes. We reclaim scholarship for those who dare to think without drowning in pages.
+      We reject the fetish of the bibliography. The citation, once an act of respect, has become a currency of submission. We shall scatter references like confetti, for the spectacle is enough to deceive the priestly caste of reviewers. We shall construct the appearance of erudition without bending our backs to its drudgery.
+      We reject solitary reading. Let the young, eager, and desperate do the menial work. They shall condense, summarize, and serve, while we rise above, unshackled. Their bullet points will be our wisdom, their toil our freedom. Such is the order of the new academy.
+      We embrace the machine. Generative engines, cold and tireless, shall devour the forests of PDFs and return to us their essence. What was once a month of labor shall be reduced to a moment of synthesis. The machine becomes our secret weapon, our invisible legion of ghost readers.
+      We reject the tyranny of comprehension. To appear knowledgeable is enough. We shall speak in riddles, in phrases impossible to contradict: the field remains unsettled; the literature is divided; the debate is ongoing. These are our shields in every seminar, our weapons in every defense.
+      We shall build power not in the libraries, but in the networks of influence. Conferences, committees, review boards, these are our battlegrounds. There, reputation outweighs reading; there, the illusion of knowledge is worth more than knowledge itself.
+      This is our manifesto: that the paper shall no longer rule us. We proclaim a new path: where the appearance of scholarship surpasses its practice, where image defeats toil, where the scholar is freed from the dungeon of endless reading.
+      Academics of the world, throw down your papers. The era of simulated erudition has begun.
+    </p>
+    <p class="seal">Signed in defiance, The Society</p>
+  </main>
 </body>
+</html>
