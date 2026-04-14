@@ -179,6 +179,20 @@
       letter-spacing: 0.02em;
     }
 
+    .sign-note {
+      margin: 0.15rem 0 0.8rem;
+      font-size: 0.92rem;
+      color: #5a412e;
+      font-style: italic;
+    }
+
+    .sign-status {
+      margin-top: 0.4rem;
+      min-height: 1.1em;
+      font-size: 0.9rem;
+      color: #593722;
+    }
+
     @media (max-width: 640px) {
       body {
         padding: 1.1rem 0.7rem;
@@ -225,6 +239,8 @@
         />
         <button type="submit">Sign</button>
       </form>
+      <p class="sign-note"></p>
+      <p class="sign-status" id="sign-status"></p>
       <ul class="sign-list" id="sign-list"></ul>
     </section>
   </main>
@@ -234,7 +250,13 @@
       var form = document.getElementById("sign-form");
       var input = document.getElementById("signer-name");
       var list = document.getElementById("sign-list");
-      var storageKey = "manifestoSignatures";
+      var status = document.getElementById("sign-status");
+
+      /*
+       * Incolla qui l'URL /exec del tuo Web App Apps Script:
+       * es. https://script.google.com/macros/s/AKfycb.../exec
+       */
+      var APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwf2LzpcLVhY3jaKDo_SkEqQZv0x42G5ZAAIgBG5MVodjpRTE046_WVabfDEmki9D0/exec";
 
       function normalizeName(value) {
         return value.replace(/\s+/g, " ").trim();
@@ -249,34 +271,102 @@
         });
       }
 
-      function readSignatures() {
-        try {
-          var raw = localStorage.getItem(storageKey);
-          var parsed = raw ? JSON.parse(raw) : [];
-          return Array.isArray(parsed) ? parsed : [];
-        } catch (e) {
-          return [];
+      function setStatus(message) {
+        status.textContent = message || "";
+      }
+
+      function jsonpRequest(params, onSuccess, onError) {
+        var callbackName = "manifestoCb_" + Date.now() + "_" + Math.floor(Math.random() * 100000);
+        params.callback = callbackName;
+
+        var query = Object.keys(params)
+          .map(function (key) {
+            return encodeURIComponent(key) + "=" + encodeURIComponent(params[key]);
+          })
+          .join("&");
+
+        var script = document.createElement("script");
+        var done = false;
+
+        function cleanup() {
+          if (script.parentNode) script.parentNode.removeChild(script);
+          try {
+            delete window[callbackName];
+          } catch (e) {
+            window[callbackName] = undefined;
+          }
         }
+
+        window[callbackName] = function (payload) {
+          if (done) return;
+          done = true;
+          cleanup();
+          onSuccess(payload);
+        };
+
+        script.onerror = function () {
+          if (done) return;
+          done = true;
+          cleanup();
+          onError(new Error("Network error"));
+        };
+
+        script.src = APPS_SCRIPT_URL + (APPS_SCRIPT_URL.indexOf("?") >= 0 ? "&" : "?") + query;
+        document.body.appendChild(script);
+
+        setTimeout(function () {
+          if (done) return;
+          done = true;
+          cleanup();
+          onError(new Error("Timeout"));
+        }, 12000);
       }
 
-      function saveSignatures(names) {
-        localStorage.setItem(storageKey, JSON.stringify(names));
-      }
+      function loadSignatures() {
+        if (!APPS_SCRIPT_URL) {
+          setStatus("Configura prima APPS_SCRIPT_URL nel file HTML.");
+          return;
+        }
 
-      var signatures = readSignatures();
-      render(signatures);
+        setStatus("Upload signs...");
+        jsonpRequest(
+          { action: "list" },
+          function (response) {
+            var names = response && Array.isArray(response.signatures) ? response.signatures : [];
+            render(names);
+            setStatus("");
+          },
+          function () {
+            setStatus("Impossibile caricare le firme ora.");
+          }
+        );
+      }
 
       form.addEventListener("submit", function (event) {
         event.preventDefault();
         var name = normalizeName(input.value);
         if (!name) return;
 
-        signatures.push(name);
-        saveSignatures(signatures);
-        render(signatures);
-        form.reset();
-        input.focus();
+        if (!APPS_SCRIPT_URL) {
+          setStatus("Configura prima APPS_SCRIPT_URL nel file HTML.");
+          return;
+        }
+
+        setStatus("Firma in salvataggio...");
+        jsonpRequest(
+          { action: "sign", name: name },
+          function () {
+            form.reset();
+            input.focus();
+            loadSignatures();
+          },
+          function () {
+            setStatus("Errore nel salvataggio della firma.");
+          }
+        );
       });
+
+      loadSignatures();
     })();
   </script>
 </body>
