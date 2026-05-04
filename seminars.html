@@ -18,6 +18,60 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="mystyles_outpump.css" />
+    <style>
+      .toggle-title {
+        cursor: pointer;
+        user-select: none;
+        position: relative;
+        padding-top: 0.65rem;
+        margin-top: 1rem;
+        padding-right: 1.6rem;
+        border-top: 1px solid var(--border, currentColor);
+      }
+      .toggle-title::after {
+        content: "▾";
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 1.25em;
+        font-weight: 700;
+        color: currentColor;
+        transition: transform 0.2s ease;
+      }
+      .toggle-title[aria-expanded="false"]::after {
+        transform: translateY(-50%) rotate(-90deg);
+      }
+      .toggle-content {
+        display: none;
+      }
+      .toggle-content.open {
+        display: block;
+      }
+    </style>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll(".toggle-title[data-target]").forEach(function (title) {
+          function toggleSection() {
+            const targetId = title.getAttribute("data-target");
+            const target = document.getElementById(targetId);
+            if (!target) return;
+            const isOpen = target.classList.toggle("open");
+            title.setAttribute("aria-expanded", isOpen ? "true" : "false");
+          }
+
+          title.setAttribute("tabindex", "0");
+          title.setAttribute("role", "button");
+          title.addEventListener("click", toggleSection);
+          title.addEventListener("keydown", function (event) {
+            if (event.key === "Enter" || event.key === " ") {
+              event.preventDefault();
+              toggleSection();
+            }
+          });
+        });
+      });
+    </script>
     <title>Seminars - Francesco Bertolotti</title>
 </head>
 <body>
@@ -30,17 +84,20 @@
     </div>
     <div class="content">
         <h1>Seminars</h1>
-<h2>Scientific seminar</h2>
+<h2 class="toggle-title" data-target="section-0" aria-expanded="true">Scientific seminar</h2>
+<div id="section-0" class="toggle-content open">
 <ul>
 <li><strong>Fantastic Simulation of Social Systems and Where to Find Them</strong> — <em>IFISC · 05-2025</em></li>
 <li><strong>LLM-enhanced Agent-Based Models: a Methodological Discussion Based on Three Applications</strong> — <em>IFISC · 05-2025</em></li>
 <li><strong>Dissecting Socio-Ecological Complexity: an introduction to Agent-Based Modeling</strong> — <em>University of Cambridge - Center for the Study of Existential Risk · 09-2023</em></li>
-<li><strong>Tools, Challenges, and Future Developments in Agent-Based Modeling for Complex System Research</strong> — <em>WWCS · 05-2025</em></li>
+<li><strong>Tools, Challenges, and Future Developments in Agent-Based Modeling for Complex System Research</strong> — <em>WWCS · 01-2024</em></li>
 <li><strong>Fantastic Simulation of Social Systems and Where to Find Them</strong> — <em>NetPlace · 12-2024</em></li>
 <li><strong>Bayesian Networks: a Practical Introduction (english)</strong> — <em>LIUC University - PhD in Management, Business and Accounting · 11-2020</em></li>
 </ul>
+</div>
 
-<h2>Dissemination seminar</h2>
+<h2 class="toggle-title" data-target="section-11" aria-expanded="true">Dissemination seminar</h2>
+<div id="section-11" class="toggle-content open">
 <ul>
 <li><strong>GenAI at the service of nurses: a lectio magistralis</strong> — <em>ANIMO · 11-2025</em></li>
 <li><strong>AI for the future</strong> — <em>Comune di Besnate · 04-2025</em></li>
@@ -53,6 +110,7 @@
 <li><strong>Prompt Engineering</strong> — <em>LIUC Università Cattaneo - &quot;Design e Management della Trasformazione Digitale&quot; · 09-2023</em></li>
 <li><strong>An introduction to AI for business applications</strong> — <em>JeLIUC · 04-2023</em></li>
 </ul>
+</div>
 
     </div>
 </body>

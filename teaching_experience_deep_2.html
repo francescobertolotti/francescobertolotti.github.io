@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z5WCDQJ535"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);} 
+      gtag('js', new Date());
+      gtag('config', 'G-Z5WCDQJ535');
+    </script>
+    <meta name="google-site-verification" content="QloxhzHYpCrkw0BW1EsoscKY3eng73iE3sfBplA-n3o" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Nokia 2026 seminar series" />
+    <meta name="keywords" content="Nokia, seminar, GenAI, forecasting, storytelling">
+    <meta name="author" content="Francesco Bertolotti">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="mystyles_outpump.css" />
+    <title>Nokia 2026 Seminar Series</title>
+    <style>
+        .seminar-intro {
+            max-width: 900px;
+            margin-bottom: 24px;
+        }
+
+        .relation-note {
+            border: 1px solid var(--border);
+            border-left: 6px solid var(--text);
+            padding: 14px 16px;
+            margin: 16px 0 28px;
+            background: #fafafa;
+            font-weight: 600;
+        }
+
+        .lesson-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 18px;
+            margin-bottom: 28px;
+        }
+
+        .lesson-card {
+            grid-column: span 4;
+            border: 1px solid var(--border);
+            padding: 16px;
+            border-radius: var(--radius);
+            background: #fff;
+        }
+
+        .lesson-card h3 {
+            margin-bottom: 8px;
+        }
+
+        .lesson-card .date {
+            display: inline-block;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .scheme-flow {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin: 10px 0 26px;
+        }
+
+        .scheme-box {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 12px;
+            background: #f9f9f9;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .connect-image {
+            margin: 8px 0 18px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+            background: #fff;
+        }
+
+        .connect-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .slide-gallery {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 14px;
+            margin: 14px 0 30px;
+        }
+
+        .slide-gallery figure {
+            margin: 0;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+            background: #fff;
+        }
+
+        .slide-gallery img {
+            width: 100%;
+            height: 210px;
+            object-fit: cover;
+        }
+
+        .slide-gallery figcaption {
+            font-size: 13px;
+            padding: 8px 10px;
+        }
+
+        .photo-scroll {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding-bottom: 12px;
+            scroll-snap-type: x mandatory;
+            margin: 12px 0 30px;
+        }
+
+        .photo-scroll figure {
+            margin: 0;
+            min-width: min(80vw, 520px);
+            scroll-snap-align: start;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+            background: #fff;
+        }
+
+        .photo-scroll img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+        }
+
+        .photo-scroll figcaption {
+            font-size: 12px;
+            padding: 8px 10px;
+        }
+
+        @media (max-width: 1024px) {
+            .lesson-card { grid-column: span 6; }
+            .slide-gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        }
+
+        @media (max-width: 700px) {
+            .lesson-card { grid-column: span 12; }
+            .slide-gallery,
+            .scheme-flow { grid-template-columns: 1fr; }
+            .photo-scroll img { height: 220px; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="sidebar">
+        <a href="index.html">About me</a>
+        <a href="sci_publ.html">Scientific pubblications</a>
+        <a href="teaching_experience.html">Teaching</a>
+        <a href="non_scientific.html">Non-scientific articles</a>
+        <a href="seminars.html">Seminars</a>
+    </div>
+
+    <div class="content">
+        <h1>Nokia Spring 2026, Seminar Series: Using GenAI from Data to Decisions</h1>
+
+        <p class="seminar-intro">
+            This three-lecture cycle explored how teams can use generative AI to move from raw data to practical decisions.
+            The course was delivered through <a href="https://www.cefriel.com/" target="_blank">Cefriel</a>. The sessions progressed from data interpretation,
+            to forecasting and scenario analysis, and then to storytelling and presentation design.
+        </p>
+
+        <div class="relation-note">
+            The three lectures were explicitly designed as one connected path: <strong>Data-to-text</strong> builds structured understanding,
+            <strong>Forecasting &amp; scenario analysis</strong> projects that understanding into the future, and <strong>Information presentation</strong>
+            turns insights into narratives that support coordination and action.
+        </div>
+
+        <h2>Nokia Seminar Photos</h2>
+        <div class="photo-scroll" aria-label="Nokia seminar photos">
+            <figure>
+                <img src="img/nokia1.jpg" alt="Nokia seminar photo 1">
+                <figcaption>Nokia seminar - photo 1</figcaption>
+            </figure>
+            <figure>
+                <img src="img/nokia2.jpg" alt="Nokia seminar photo 2">
+                <figcaption>Nokia seminar - photo 2</figcaption>
+            </figure>
+            <figure>
+                <img src="img/nokia3.jpg" alt="Nokia seminar photo 3">
+                <figcaption>Nokia seminar - photo 3</figcaption>
+            </figure>
+            <figure>
+                <img src="img/nokia4.jpg" alt="Nokia seminar photo 4">
+                <figcaption>Nokia seminar - photo 4</figcaption>
+            </figure>
+            <figure>
+                <img src="img/nokia5.jpg" alt="Nokia seminar photo 5">
+                <figcaption>Nokia seminar - photo 5</figcaption>
+            </figure>
+        </div>
+
+        <h2>The lectures</h2>
+        <div class="connect-image">
+            <img src="img/scheme_lectures.png" alt="Scheme linking the three lessons">
+        </div>
+
+        <div class="lesson-grid">
+            <article class="lesson-card">
+                <span class="date">March 12, 2026</span>
+                <h3>Lesson 1: Data-to-text for reporting</h3>
+                <p>
+                    Focus on identifying problems in data, accessing and visualizing datasets, recognizing patterns,
+                    and creating coherent reports through dialogue with chatbots and code interpreters.
+                </p>
+            </article>
+            <article class="lesson-card">
+                <span class="date">March 25, 2026</span>
+                <h3>Lesson 2: Forecasting and scenario analysis</h3>
+                <p>
+                    Discussion of what makes a prediction reliable, model taxonomies, qualitative and quantitative scenario methods,
+                    and AI-supported expert-board/Delphi workflows for uncertainty-aware decisions.
+                </p>
+            </article>
+            <article class="lesson-card">
+                <span class="date">April 14, 2026</span>
+                <h3>Lesson 3: Presenting information</h3>
+                <p>
+                    Work on storytelling for coordination, contextual prompting, framing and personalization,
+                    and practical techniques to design presentations and reusable AI skills.
+                </p>
+            </article>
+        </div>
+
+        <div class="slide-gallery">
+            <figure>
+                <img src="img/l1_coding_workspace.png" alt="Coding and analysis support visual">
+                <figcaption>Code-interpreter support for rapid data analysis and reporting.</figcaption>
+            </figure>
+            <figure>
+                <img src="img/l2_hippocrates_case.png" alt="Historical framing for forecasting">
+                <figcaption>Historical framing used to explain trust, prediction, and expertise.</figcaption>
+            </figure>
+            <figure>
+                <img src="img/l3_human_vs_ai_chart.png" alt="Human and AI comparison chart">
+                <figcaption>Comparative scheme used to discuss human-AI complementary roles.</figcaption>
+            </figure>
+        </div>
+    </div>
+</body>
+
+</html>

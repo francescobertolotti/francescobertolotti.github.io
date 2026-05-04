@@ -18,6 +18,60 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="mystyles_outpump.css" />
+    <style>
+      .toggle-title {
+        cursor: pointer;
+        user-select: none;
+        position: relative;
+        padding-top: 0.65rem;
+        margin-top: 1rem;
+        padding-right: 1.6rem;
+        border-top: 1px solid var(--border, currentColor);
+      }
+      .toggle-title::after {
+        content: "▾";
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 1.25em;
+        font-weight: 700;
+        color: currentColor;
+        transition: transform 0.2s ease;
+      }
+      .toggle-title[aria-expanded="false"]::after {
+        transform: translateY(-50%) rotate(-90deg);
+      }
+      .toggle-content {
+        display: none;
+      }
+      .toggle-content.open {
+        display: block;
+      }
+    </style>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll(".toggle-title[data-target]").forEach(function (title) {
+          function toggleSection() {
+            const targetId = title.getAttribute("data-target");
+            const target = document.getElementById(targetId);
+            if (!target) return;
+            const isOpen = target.classList.toggle("open");
+            title.setAttribute("aria-expanded", isOpen ? "true" : "false");
+          }
+
+          title.setAttribute("tabindex", "0");
+          title.setAttribute("role", "button");
+          title.addEventListener("click", toggleSection);
+          title.addEventListener("keydown", function (event) {
+            if (event.key === "Enter" || event.key === " ") {
+              event.preventDefault();
+              toggleSection();
+            }
+          });
+        });
+      });
+    </script>
     <title>Non-scientific articles - Francesco Bertolotti</title>
 </head>
 <body>
@@ -30,7 +84,8 @@
     </div>
     <div class="content">
         <h1>Non-scientific articles</h1>
-<h2>Artificial Intelligence</h2>
+<h2 class="toggle-title" data-target="section-0" aria-expanded="true">Artificial Intelligence</h2>
+<div id="section-0" class="toggle-content open">
 <ul>
 <li><strong><a href="https://24plus.ilsole24ore.com/art/contro-pregiudizi-chatbot-AHQYOXrD" target="_blank">Against prejudices about chatbots (in italian)</a></strong> — <em>Mari L., Bertolotti F., Giordani A. · Sole 24 Ore · 2025</em></li>
 <li><strong><a href="https://24plus.ilsole24ore.com/art/mcp-rivoluzione-anthropic-nell-intelligenza-artificiale-generativa-AH0EdBG" target="_blank">MCP: Anthropic&#x27;s revolution in generative artificial intelligence (in Italian)</a></strong> — <em>Mari L., Bertolotti F. · Sole 24 Ore · 2025</em></li>
@@ -57,6 +112,7 @@
 <li><strong><a href="https://www.varesefocus.it/vf/dx/Viaggio-nel-pensiero-umano-con-ChatGPT-01-Aug-23" target="_blank">Journey into human thought with ChatGPT (in Italian)</a></strong> — <em>Mari L., Bertolotti F. · Varese Focus · 2023</em></li>
 <li><strong><a href="https://www.varesefocus.it/vf/dx/%C3%88-l%E2%80%99inizio-di-un-nuovo-mondo-23-Jun-23" target="_blank">It is the beginning of a new world (in Italian)</a></strong> — <em>Mari L., Bertolotti F. · Varese Focus · 2023</em></li>
 </ul>
+</div>
 
     </div>
 </body>

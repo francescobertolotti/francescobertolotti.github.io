@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z5WCDQJ535"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);} 
+      gtag('js', new Date());
+      gtag('config', 'G-Z5WCDQJ535');
+    </script>
+    <meta name="google-site-verification" content="QloxhzHYpCrkw0BW1EsoscKY3eng73iE3sfBplA-n3o" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Dynamical System Design course overview" />
+    <meta name="keywords" content="Dynamical System Design, modeling, decision support, simulation">
+    <meta name="author" content="Francesco Bertolotti">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="mystyles_outpump.css" />
+    <title>Dynamical System Design</title>
+    <style>
+        .course-intro {
+            max-width: 960px;
+            margin-bottom: 18px;
+        }
+
+        .course-note {
+            border: 1px solid var(--border);
+            border-left: 6px solid var(--text);
+            padding: 14px 16px;
+            margin: 14px 0 26px;
+            background: #fafafa;
+            font-weight: 600;
+        }
+
+        .pillars {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 12px;
+            margin: 12px 0 18px;
+        }
+
+        .pillar {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 10px 12px;
+            font-weight: 700;
+            text-align: center;
+            background: #fff;
+        }
+
+        .full-image,
+        .image-grid figure {
+            margin: 0;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+            background: #fff;
+        }
+
+        .full-image img,
+        .image-grid img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .full-image figcaption,
+        .image-grid figcaption {
+            padding: 8px 10px;
+            font-size: 13px;
+        }
+
+        .section-block {
+            margin-top: 28px;
+        }
+
+        .principles {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 16px;
+            margin-top: 12px;
+        }
+
+        .principle-card {
+            grid-column: span 6;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 14px;
+            background: #fff;
+        }
+
+        .principle-card h3 {
+            margin-bottom: 8px;
+        }
+
+        .topics {
+            margin: 12px 0 20px;
+        }
+
+        .topics li {
+            margin-bottom: 8px;
+        }
+
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+            margin: 10px 0 10px;
+        }
+
+        .examples {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 14px;
+            margin-top: 14px;
+        }
+
+        .example-card {
+            grid-column: span 4;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 12px;
+            background: #fff;
+        }
+
+        @media (max-width: 1024px) {
+            .example-card { grid-column: span 6; }
+        }
+
+        @media (max-width: 760px) {
+            .pillars,
+            .image-grid,
+            .principle-card,
+            .example-card {
+                grid-template-columns: 1fr;
+            }
+
+            .principle-card,
+            .example-card {
+                grid-column: span 12;
+            }
+
+            .pillars {
+                display: grid;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="sidebar">
+        <a href="index.html">About me</a>
+        <a href="sci_publ.html">Scientific pubblications</a>
+        <a href="teaching_experience.html">Teaching</a>
+        <a href="non_scientific.html">Non-scientific articles</a>
+        <a href="seminars.html">Seminars</a>
+    </div>
+
+    <div class="content">
+        <h1>Dynamical System Design</h1>
+
+        <p class="course-intro">
+            Dynamical System Design is an universitary course held for the master's student of management engineering of LIUC University on how to use formal models for decision-making in complex contexts.
+            It combines intuitive system thinking, basic mathematics, and simulation practice with an ad hoc software simulator to turn qualitative reasoning into operational decisions.
+        </p>
+
+        <div class="course-note">
+            The course perspective is practical: models are not built for elegance alone, but to support decision-making,
+            clarify assumptions, and run what-if and scenario analyses in uncertain dynamics environments.
+        </div>
+
+        <h2>Course Principles</h2>
+        <div class="pillars">
+            <div class="pillar">Purpose-driven modeling</div>
+            <div class="pillar">Progressive refinement</div>
+            <div class="pillar">Prediction for decision</div>
+        </div>
+
+        <figure class="full-image">
+            <img src="img/dsd_framework.png" alt="Framework linking world, system, modeler, and model">
+            <figcaption>The modeler defines a system boundary, builds a model, and interprets behavior to support action.</figcaption>
+        </figure>
+
+        <div class="section-block">
+            <div class="principles">
+                <article class="principle-card">
+                    <h3>From Craft To Engineering</h3>
+                    <p>
+                        A central principle is moving from ad-hoc decision habits to explicit and repeatable engineering logic.
+                        The course contrasts "the craftsman" approach with a structured modeling approach that can be discussed,
+                        transferred, and improved collaboratively.
+                    </p>
+                </article>
+                <article class="principle-card">
+                    <h3>Complexity Is Managed, Not Removed</h3>
+                    <p>
+                        The course distinguishes complication from complexity: complication can be reduced by better representation,
+                        while complexity is a real property of systems. The task of the modeler is to choose the right abstraction level.
+                    </p>
+                </article>
+                <article class="principle-card">
+                    <h3>Qualitative First, Quantitative Next</h3>
+                    <p>
+                        Modeling starts with variables and dependencies, then evolves toward equations and simulation.
+                        This phased method makes assumptions explicit before numerical formalization.
+                    </p>
+                </article>
+                <article class="principle-card">
+                    <h3>Validation And Sensitivity</h3>
+                    <p>
+                        A model is useful only if it behaves coherently under alternative scenarios.
+                        The course emphasizes validation, what-if analysis, and sensitivity analysis as core quality criteria.
+                    </p>
+                </article>
+            </div>
+        </div>
+
+        <div class="section-block">
+            <figure class="full-image">
+                <img src="img/dsd_methods.png" alt="Craftsman and engineer metaphor">
+                <figcaption>The course repeatedly frames decision-making as an engineering discipline, not only a personal craft.</figcaption>
+            </figure>
+        </div>
+
+        <div class="section-block">
+            <h2>Topics Covered</h2>
+            <ul class="topics">
+                <li>System boundaries, purpose definition, and modeling hypotheses.</li>
+                <li>Qualitative modeling with graphs, feedback loops, and monotone relations.</li>
+                <li>Transition to quantitative models: inputs, states, outputs, finite differences, and time-step reasoning.</li>
+                <li>Model specification with the 8-tuple and black-box/open-system classifications.</li>
+                <li>System Dynamics patterns, queueing logic, and automata-based viewpoints for discrete systems.</li>
+                <li>Scenario analysis and sensitivity analysis for robust decision support under uncertainty.</li>
+            </ul>
+
+            <div class="image-grid">
+                <figure>
+                    <img src="img/dsd_example_scheme.png" alt="Qualitative dependency scheme example">
+                    <figcaption>Example of signed qualitative dependencies used to reason about feedback and control.</figcaption>
+                </figure>
+                <figure>
+                    <img src="img/dsd_eightfold.png" alt="8-tuple representation of a dynamic system">
+                    <figcaption>Formal system specification with time, inputs, states, transition function, and outputs.</figcaption>
+                </figure>
+            </div>
+        </div>
+
+        <div class="section-block">
+            <h2>Examples Discussed During The Course</h2>
+            <div class="examples">
+                <article class="example-card">
+                    <h3>Direct And Inverse Problems</h3>
+                    <p>
+                        Beer-keg and inventory-style exercises are used to show the difference between estimating outputs
+                        and searching for input conditions that achieve a target outcome.
+                    </p>
+                </article>
+                <article class="example-card">
+                    <h3>Forecasting Under Partial Observability</h3>
+                    <p>
+                        Cases like penalty-kick prediction illustrate how behavior can be inferred from output histories,
+                        with probabilistic reasoning and black-box thinking.
+                    </p>
+                </article>
+                <article class="example-card">
+                    <h3>Socio-Technical Decision Cases</h3>
+                    <p>
+                        Urban dynamics, epidemiological reasoning, queueing in emergency contexts,
+                        and competitive market analogies show how models inform policy and managerial trade-offs.
+                    </p>
+                </article>
+            </div>
+
+            <div class="image-grid" style="margin-top:16px;">
+                <figure>
+                    <img src="img/dsd_inclined_plane.png" alt="Inclined plane theory case example">
+                    <figcaption>A playful but formal case translates a narrative into dynamic equations for prediction.</figcaption>
+                </figure>
+                <figure>
+                    <img src="img/dsd_rich.png" alt="Risk and uncertainty topics image">
+                    <figcaption>Risk, uncertainty, stochasticity, and path dependency as recurring decision lenses.</figcaption>
+                </figure>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
