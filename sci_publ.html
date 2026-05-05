@@ -49,6 +49,96 @@
       .toggle-content.open {
         display: block;
       }
+      .year-trend-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1rem;
+        align-items: start;
+        margin: 0.2rem 0 1.2rem;
+      }
+      .paper-stats {
+        margin: 0.7rem 0 1.2rem;
+      }
+      .paper-stats h2 {
+        margin-bottom: 0.7rem;
+      }
+      .hours-chart {
+        display: grid;
+        gap: 0.45rem;
+      }
+      .hours-row {
+        display: grid;
+        grid-template-columns: minmax(170px, 260px) minmax(180px, 1fr) minmax(44px, auto);
+        gap: 0.6rem;
+        align-items: center;
+      }
+      .hours-label {
+        font-size: 0.9em;
+      }
+      .hours-bar-wrap {
+        height: 0.72rem;
+        background: rgba(0, 0, 0, 0.08);
+        border-radius: 999px;
+        overflow: hidden;
+      }
+      .hours-bar {
+        height: 100%;
+        background: var(--muted, #4EF525);
+      }
+      .hours-bar-citations {
+        background: #ff4d00;
+      }
+      .hours-value {
+        font-size: 0.88em;
+        font-weight: 700;
+        text-align: right;
+      }
+      .year-vbar-chart {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(52px, 1fr));
+        gap: 0.5rem;
+        align-items: end;
+        padding: 0.35rem 0.15rem 0;
+      }
+      .year-vbar-col {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .year-vbar-value {
+        font-size: 0.82em;
+        font-weight: 700;
+        margin-bottom: 0.08rem;
+        line-height: 1;
+      }
+      .year-vbar-wrap {
+        height: 220px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-end;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.18);
+      }
+      .year-vbar {
+        width: min(22px, 70%);
+        background: var(--muted, #4EF525);
+        border-radius: 6px 6px 0 0;
+        min-height: 2px;
+      }
+      .year-vbar-citations {
+        background: #ff4d00;
+      }
+      .year-vbar-label {
+        font-size: 0.82em;
+        margin-top: 0.22rem;
+        text-align: center;
+      }
+      @media (max-width: 900px) {
+        .year-trend-grid {
+          grid-template-columns: 1fr;
+        }
+      }
     </style>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
@@ -86,8 +176,9 @@
     <div class="content">
         <h1>Scientific publications</h1>
         <p>Here you can find a selection of my scientific publications, including journal papers, conference papers, presentations, and other relevant works. Click on the titles to access the pdf of the full papers, when available.</p>
-<h2 class="toggle-title" data-target="section-0" aria-expanded="true">Journal Papers</h2>
-<div id="section-0" class="toggle-content open">
+<h2 class="toggle-title" data-target="section-stats" aria-expanded="true">Some statistics</h2><div id="section-stats" class="toggle-content open"><section class="paper-stats"><h3>Paper counts by category</h3><div class="hours-chart"><div class="hours-row"><div class="hours-label">Conference Papers</div><div class="hours-bar-wrap"><div class="hours-bar" style="width: 100.00%"></div></div><div class="hours-value">20</div></div><div class="hours-row"><div class="hours-label">Journal Papers</div><div class="hours-bar-wrap"><div class="hours-bar" style="width: 80.00%"></div></div><div class="hours-value">16</div></div><div class="hours-row"><div class="hours-label">Pre-print</div><div class="hours-bar-wrap"><div class="hours-bar" style="width: 15.00%"></div></div><div class="hours-value">3</div></div></div></section><div class="year-trend-grid"><section class="paper-stats"><h3>Paper counts by year</h3><div class="year-vbar-chart"><div class="year-vbar-col"><div class="year-vbar-wrap"><div class="year-vbar-value">2</div><div class="year-vbar" style="height: 34.17px"></div></div><div class="year-vbar-label">2020</div></div><div class="year-vbar-col"><div class="year-vbar-wrap"><div class="year-vbar-value">2</div><div class="year-vbar" style="height: 34.17px"></div></div><div class="year-vbar-label">2021</div></div><div class="year-vbar-col"><div class="year-vbar-wrap"><div class="year-vbar-value">4</div><div class="year-vbar" style="height: 68.33px"></div></div><div class="year-vbar-label">2022</div></div><div class="year-vbar-col"><div class="year-vbar-wrap"><div class="year-vbar-value">2</div><div class="year-vbar" style="height: 34.17px"></div></div><div class="year-vbar-label">2023</div></div><div class="year-vbar-col"><div class="year-vbar-wrap"><div class="year-vbar-value">3</div><div class="year-vbar" style="height: 51.25px"></div></div><div class="year-vbar-label">2024</div></div><div class="year-vbar-col"><div class="year-vbar-wrap"><div class="year-vbar-value">7</div><div class="year-vbar" style="height: 119.58px"></div></div><div class="year-vbar-label">2025</div></div><div class="year-vbar-col"><div class="year-vbar-wrap"><div class="year-vbar-value">12</div><div class="year-vbar" style="height: 205.00px"></div></div><div class="year-vbar-label">2026</div></div></div></section><section class="paper-stats"><h3>Citations by year</h3><div class="year-vbar-chart"><div class="year-vbar-col"><div class="year-vbar-wrap"><div class="year-vbar-value">1</div><div class="year-vbar year-vbar-citations" style="height: 2.63px"></div></div><div class="year-vbar-label">2021</div></div><div class="year-vbar-col"><div class="year-vbar-wrap"><div class="year-vbar-value">7</div><div class="year-vbar year-vbar-citations" style="height: 18.40px"></div></div><div class="year-vbar-label">2022</div></div><div class="year-vbar-col"><div class="year-vbar-wrap"><div class="year-vbar-value">9</div><div class="year-vbar year-vbar-citations" style="height: 23.65px"></div></div><div class="year-vbar-label">2023</div></div><div class="year-vbar-col"><div class="year-vbar-wrap"><div class="year-vbar-value">36</div><div class="year-vbar year-vbar-citations" style="height: 94.62px"></div></div><div class="year-vbar-label">2024</div></div><div class="year-vbar-col"><div class="year-vbar-wrap"><div class="year-vbar-value">78</div><div class="year-vbar year-vbar-citations" style="height: 205.00px"></div></div><div class="year-vbar-label">2025</div></div><div class="year-vbar-col"><div class="year-vbar-wrap"><div class="year-vbar-value">29</div><div class="year-vbar year-vbar-citations" style="height: 76.22px"></div></div><div class="year-vbar-label">2026</div></div></div></section></div></div>
+<h2 class="toggle-title" data-target="section-1" aria-expanded="false">Journal Papers</h2>
+<div id="section-1" class="toggle-content">
 <h3>2026</h3>
 <ul>
 <li>Bertolotti F., Kaddera N., Pasquino L., Mari L.. <strong>" <a href="papers/j11.pdf" target="_blank">Emergence of Limit Cycles in an Epidemiological Extension of the El Farol Bar Problem</a>"</strong>. <em>PlosOne</em>. under review.</li>
@@ -95,7 +186,7 @@
 <li>Piras A., Bertolotti F.. <strong>" <a href="papers/j08.pdf" target="_blank">An Agent-based Model of Strategic Decision-Making in a City-State System</a>"</strong>. <em>Frontiers in Complex Systems</em>. submitted.</li>
 <li>Bertolotti F., Kaddera N., Pasquino L., Mari L.. <strong>" <a href="papers/j12.pdf" target="_blank">Policy-Making Reinforcement Learning in an Epidemiological Extension of the El Farol Bar Problem</a>"</strong>. <em>Expert Systems With Application</em>. In submission.</li>
 <li>Bertolotti F., Pozzi S., Schettini F., Asperti F., Foglia E. <strong>" <a href="papers/j18.pdf" target="_blank">A Shennon Entropy-based Metric for Measuring ECU Overcrowding</a>"</strong>. <em>Expert Systems With Application</em>. In submission.</li>
-<li>Mari L.., Bertolotti F., Carimali L., Foschi L. C., Giordani A., Negrini A., Pisoni C., Sancassani S., Zuffinetti P., Borsese A.. <strong>" <a href="papers/j19.pdf" target="_blank">Intelligenza artificiale e formazione: perché e come imparare e insegnare oggi?</a>"</strong>. <em>Nuova Secondaria</em>. published.</li>
+<li>Mari L., Bertolotti F., Carimali L., Foschi L. C., Giordani A., Negrini A., Pisoni C., Sancassani S., Zuffinetti P., Borsese A.. <strong>" <a href="papers/j19.pdf" target="_blank">Intelligenza artificiale e formazione: perché e come imparare e insegnare oggi?</a>"</strong>. <em>Nuova Secondaria</em>. published.</li>
 </ul>
 
 <h3>2025</h3>
@@ -126,19 +217,19 @@
 
 </div>
 
-<h2 class="toggle-title" data-target="section-1" aria-expanded="true">Conference Papers</h2>
-<div id="section-1" class="toggle-content open">
+<h2 class="toggle-title" data-target="section-2" aria-expanded="false">Conference Papers</h2>
+<div id="section-2" class="toggle-content">
 <h3>2026</h3>
 <ul>
-<li>Monoli A., Sciangula S., Mezzenzana M., Buonanno G., Bertolotti F.. <strong>" <a href="papers/c15.pdf" target="_blank">Strategic Amnesia in LLM Agents playing the Iterated Prisoner’s Dilemma</a>"</strong>. <em>WOA 2026</em>. submitted.</li>
-<li>Mascagni L., Agosta A., Mezzenzana M., Buonanno G., Bertolotti F.. <strong>" <a href="papers/c14.pdf" target="_blank">Modeling Multi-Agent LLM Debates Through Damped Ordinary Differential Equations</a>"</strong>. <em>WOA 2026</em>. submitted.</li>
-<li>Moroni L., Prefumo M., Astuti S., Mascagni L., Bertolotti F.. <strong>" <a href="papers/c13.pdf" target="_blank">Emergent Kin-Based Behavior in LLM Artificial Societies: the Case of Sugarscape</a>"</strong>. <em>WOA 2026</em>. submitted.</li>
-<li>Agosta A., Sciangula S., Mari L., Bertolotti F.. <strong>" <a href="papers/c12.pdf" target="_blank">Evaluating the Sensitivity of ABMs to Agents’ Decision Functions</a>"</strong>. <em>WOA 2026</em>. submitted.</li>
-<li>Gastaldo L., Carucci F., Mascagni L., Bertolotti F.. <strong>" <a href="papers/c16.pdf" target="_blank">A Methodological Exploration of Rule-Based and MLP-Based Agents in Agent-Based Modeling</a>"</strong>. <em>WOA 2026</em>. submitted.</li>
-<li>Foà E., Premoli G., Bertolotti F.. <strong>" <a href="papers/c19.pdf" target="_blank">The Declining Cost of Intelligence: Temporal and Economic Trends in LLM Performance on GPQA</a>"</strong>. <em>ItalIA 2026</em>. submitted.</li>
-<li>Premoli G., Foà E., Bertolotti F.. <strong>" <a href="papers/c20.pdf" target="_blank">Estimating the Scale of Closed-Source Large Language Models from API Pricing</a>"</strong>. <em>ItalIA 2026</em>. submitted.</li>
-<li>Carucci F., Mascagni L., Gastaldo L., Moroni L., Bertolotti F.. <strong>" <a href="papers/c18.pdf" target="_blank">Regime Mapping and Parameter Importance in Stochastic ABM of Behavioral Sink</a>"</strong>. <em>WOA 2026</em>. submitted.</li>
-<li>Kadera N., Pasquino L., Mascagni L., Monoli L., Bertolotti F.. <strong>" <a href="papers/c17.pdf" target="_blank">Measuring the Emergence of Urban Cohesion in Early Settlements: A Spatial Agent-Based Model</a>"</strong>. <em>WOA 2026</em>. submitted.</li>
+<li>Monoli A., Sciangula S., Mezzenzana M., Buonanno G., Bertolotti F.. <strong>" <a href="papers/c15.pdf" target="_blank">Strategic Amnesia in LLM Agents playing the Iterated Prisoner’s Dilemma</a>"</strong>. <em>WOA 2026</em>. under review.</li>
+<li>Mascagni L., Agosta A., Mezzenzana M., Buonanno G., Bertolotti F.. <strong>" <a href="papers/c14.pdf" target="_blank">Modeling Multi-Agent LLM Debates Through Damped Ordinary Differential Equations</a>"</strong>. <em>WOA 2026</em>. under review.</li>
+<li>Moroni L., Prefumo M., Astuti S., Mascagni L., Bertolotti F.. <strong>" <a href="papers/c13.pdf" target="_blank">Emergent Kin-Based Behavior in LLM Artificial Societies: the Case of Sugarscape</a>"</strong>. <em>WOA 2026</em>. under review.</li>
+<li>Agosta A., Sciangula S., Mari L., Bertolotti F.. <strong>" <a href="papers/c12.pdf" target="_blank">Evaluating the Sensitivity of ABMs to Agents’ Decision Functions</a>"</strong>. <em>WOA 2026</em>. under review.</li>
+<li>Gastaldo L., Carucci F., Mascagni L., Bertolotti F.. <strong>" <a href="papers/c16.pdf" target="_blank">A Methodological Exploration of Rule-Based and MLP-Based Agents in Agent-Based Modeling</a>"</strong>. <em>WOA 2026</em>. under review.</li>
+<li>Foà E., Premoli G., Bertolotti F.. <strong>" <a href="papers/c19.pdf" target="_blank">The Declining Cost of Intelligence: Temporal and Economic Trends in LLM Performance on GPQA</a>"</strong>. <em>ItalIA 2026</em>. under review.</li>
+<li>Premoli G., Foà E., Bertolotti F.. <strong>" <a href="papers/c20.pdf" target="_blank">Estimating the Scale of Closed-Source Large Language Models from API Pricing</a>"</strong>. <em>ItalIA 2026</em>. under review.</li>
+<li>Carucci F., Mascagni L., Gastaldo L., Moroni L., Bertolotti F.. <strong>" <a href="papers/c18.pdf" target="_blank">Regime Mapping and Parameter Importance in Stochastic ABM of Behavioral Sink</a>"</strong>. <em>WOA 2026</em>. under review.</li>
+<li>Kadera N., Pasquino L., Mascagni L., Monoli L., Bertolotti F.. <strong>" <a href="papers/c17.pdf" target="_blank">Measuring the Emergence of Urban Cohesion in Early Settlements: A Spatial Agent-Based Model</a>"</strong>. <em>WOA 2026</em>. under review.</li>
 </ul>
 
 <h3>2025</h3>
@@ -178,25 +269,26 @@
 
 </div>
 
-<h2 class="toggle-title" data-target="section-2" aria-expanded="true">Conference Presentations</h2>
-<div id="section-2" class="toggle-content open">
+<h2 class="toggle-title" data-target="section-3" aria-expanded="false">Conference Presentations</h2>
+<div id="section-3" class="toggle-content">
 <h3>2026</h3>
 <ul>
 <li>Agosta A., Carucci F., Roman S., Bertolotti F.. <strong>" <a href="papers/p40.pdf" target="_blank">A Simulation Model for Historical Evolution of Geopolitical Entities</a>"</strong>. <em>NERCCS 2026</em>. presented.</li>
 <li>Bertolotti F., Carucci F., Roman S., Mezzenzana M., Buonanno G., Mari L.. <strong>" <a href="papers/p41.pdf" target="_blank">Artificial Agents and Ecological Collapse: an LLM-enhanced Agent-Based Model of a Sustainability Game</a>"</strong>. <em>NERCCS 2026</em>. presented.</li>
-<li>p42. <strong>" <a href="papers/p42.pdf" target="_blank">A Meta-Model of Endogenous Overcrowding-Driven Demographic Collapse</a>"</strong>. <em>NERCCS 2026</em>. presented.</li>
+<li>Carucci F., Sciangula S., Roman S., Bertolotti F.. <strong>" <a href="papers/p42.pdf" target="_blank">A Meta-Model of Endogenous Overcrowding-Driven Demographic Collapse</a>"</strong>. <em>NERCCS 2026</em>. presented.</li>
 <li>Sciangula S., Agosta A., Carucci F., Bertolotti F.. <strong>" <a href="papers/p43.pdf" target="_blank">How News Connects: Mapping the Semantic Topology of a Digital Newspaper</a>"</strong>. <em>NERCCS 2026</em>. presented.</li>
 <li>Mascagni L., Zaroual O., Mezzenzana M., Buonanno G., Bertolotti F.. <strong>" <a href="papers/p44.pdf" target="_blank">Going for the Third: Cooperation between LLM Agents in a Three-Option Setting</a>"</strong>. <em>NERCCS 2026</em>. presented.</li>
 <li>Zaroual O., Carucci F., Mascagni L., Bertolotti F.. <strong>" <a href="papers/p45.pdf" target="_blank">Evolutionary System-Prompt Optimization for LLM Agents in Competitive Market Simulations</a>"</strong>. <em>NERCCS 2026</em>. presented.</li>
 <li>Bertolotti F., Zaroual O.. <strong>" <a href="papers/p46.pdf" target="_blank">Evolutionary System Prompt Optimization for LLM: Application to an Agent-Based Market Simulation</a>"</strong>. <em>WOA 2026</em>. submitted.</li>
 <li>Bertolotti F., Zaroual O.. <strong>" <a href="papers/p47.pdf" target="_blank">Evolutionary System Prompt Optimization for LLM: Application to an Agent-Based Market Simulation</a>"</strong>. <em>CCS 2026</em>. submitted.</li>
+<li>Carucci F., Bertolotti F.. <strong>" <a href="papers/p50.pdf" target="_blank">An Agent-based and Equation-based Meta-Model of Behavioral Sink: the Case of Universe 25</a>"</strong>. <em>CCS 2026</em>. submitted.</li>
 </ul>
 
 <h3>2025</h3>
 <ul>
 <li>Roman S., Bertolotti F.. <strong>" <a href="papers/p39.pdf" target="_blank">Diffusion of technological innovation on networks leads to chaotic boom-bust cycles</a>"</strong>. <em>Dynamic Days Europe 2025</em>. presented.</li>
 <li>Bertolotti F.. <strong>" <a href="papers/p36.pdf" target="_blank">Is Winter Coming for Agent-Based Modeling? Challenges and the Risk of a Crisis</a>"</strong>. <em>CCS 2025</em>. accepted.</li>
-<li>Bertolotti F. Brinas Pascual N., Cartier Van Dissel M., Mitchell P., Nobile E., Rosillo-Rodes P.. <strong>" <a href="papers/p37.pdf" target="_blank">Navigating Success: A Network Analysis of Maritime Trade and Urban Prosperity in the Roman Empire</a>"</strong>. <em>NetSci - HISTONET</em>. accepted.</li>
+<li>Bertolotti F., Brinas Pascual N., Cartier Van Dissel M., Mitchell P., Nobile E., Rosillo-Rodes P.. <strong>" <a href="papers/p37.pdf" target="_blank">Navigating Success: A Network Analysis of Maritime Trade and Urban Prosperity in the Roman Empire</a>"</strong>. <em>NetSci - HISTONET</em>. accepted.</li>
 <li>Roman S., Bertolotti F.. <strong>" <a href="papers/p23.pdf" target="_blank">Diffusion of technological innovation on networks leads to chaotic boom-bust cycles</a>"</strong>. <em>IC2S2 2025</em>. presented.</li>
 <li>Roman S., Bertolotti F.. <strong>" <a href="papers/p24.pdf" target="_blank">A Master Equation for Power Laws</a>"</strong>. <em>IC2S2 2025</em>. presented.</li>
 <li>Canavesi A., Bertolotti F., Cattaneo L., Mari L., Buonanno G., Ravarini A.. <strong>" <a href="papers/p38.pdf" target="_blank">From Developers to Players: Exploring the Dual Impact of Game-Based Learning on Student Engagement, Learning and Skill Development</a>"</strong>. <em>22th SEFI MSIG seminar</em>. accepted.</li>
@@ -205,7 +297,7 @@
 <h3>2024</h3>
 <ul>
 <li>Bertolotti F., Piras A., Mari L.. <strong>" <a href="papers/p18.pdf" target="_blank">Towards an LLM-enhanced Agent-based modeling</a>"</strong>. <em>CCS 2024 - MPCS – Machine Psychology as a Complex System</em>. accepted.</li>
-<li>Francesco Bertolotti, Fabrizio Schettini, Andrea Piras, Federica Asperti, Daniele Bellavia, Emanuela Foglia. <strong>" <a href="papers/p17.pdf" target="_blank">Data-Driven Healthcare Planning: Simulating Emergency Departments Dynamics with an Agent-Based Model</a>"</strong>. <em>CCS 2024 - Complex Systems in Healthcare: Models, Prediction, and Innovation</em>. presented.</li>
+<li>Bertolotti F., Schettini F., Piras A., Asperti F., Bellavia D., Foglia E.. <strong>" <a href="papers/p17.pdf" target="_blank">Data-Driven Healthcare Planning: Simulating Emergency Departments Dynamics with an Agent-Based Model</a>"</strong>. <em>CCS 2024 - Complex Systems in Healthcare: Models, Prediction, and Innovation</em>. presented.</li>
 <li>Piras A., Bertolotti F.. <strong>" <a href="papers/p16.pdf" target="_blank">City-State Interactions in a Resource-Constrained Environment: an Agent-based Model</a>"</strong>. <em>CCS 2024</em>. presented.</li>
 <li>Roman S., Bertolotti F.. <strong>" <a href="papers/p15.pdf" target="_blank">Modelling the collapse of complex societies</a>"</strong>. <em>FRCCS 2024</em>. presented.</li>
 <li>Bertolotti F., Kaddera N., Pasquino L., Mari L.. <strong>" <a href="papers/p12.pdf" target="_blank">The Epidemiological Side of a Social Dilemma</a>"</strong>. <em>Complexis 2024</em>. accepted.</li>
@@ -254,8 +346,8 @@
 
 </div>
 
-<h2 class="toggle-title" data-target="section-3" aria-expanded="true">Other Publications</h2>
-<div id="section-3" class="toggle-content open">
+<h2 class="toggle-title" data-target="section-4" aria-expanded="false">Other Publications</h2>
+<div id="section-4" class="toggle-content">
 <h3>2018</h3>
 <ul>
 <li>Bertolotti F., Mari L.. <strong>" <a href="papers/o01.pdf" target="_blank">Agent-Based Modeling: un’analisi critica della bibliografia e delle relazioni con la Teoria Generale dei Sistemi</a>"</strong>. <em>Università Cattaneo Research Papers</em>. published.</li>
@@ -263,11 +355,11 @@
 
 </div>
 
-<h2 class="toggle-title" data-target="section-4" aria-expanded="true">Pre-print</h2>
-<div id="section-4" class="toggle-content open">
+<h2 class="toggle-title" data-target="section-5" aria-expanded="false">Pre-print</h2>
+<div id="section-5" class="toggle-content">
 <h3>2026</h3>
 <ul>
-<li>Sodano L., Sciangula S., Galmarini A,, Bertolotti F.. <strong>" <a href="papers/pr02.pdf" target="_blank">Emergence of Fragility in LLM-based Social Networks: the Case of Moltbook</a>"</strong>. <em>ArXiv</em>. published.</li>
+<li>Sodano L., Sciangula S., Galmarini A., Bertolotti F.. <strong>" <a href="papers/pr02.pdf" target="_blank">Emergence of Fragility in LLM-based Social Networks: the Case of Moltbook</a>"</strong>. <em>ArXiv</em>. published.</li>
 <li>Scantamburlo R., Mezzenzana M., Buonanno G., Bertolotti F.. <strong>" <a href="papers/pr03.pdf" target="_blank">Semantic Delta: An Interpretable Signal Differentiating Human and LLMs Dialogue</a>"</strong>. <em>ArXiv</em>. published.</li>
 </ul>
 
