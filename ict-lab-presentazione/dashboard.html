@@ -1,0 +1,1765 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Presentazione ICT Lab</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --liuc-blue: #1f3f83;
+        --liuc-blue-deep: #152b5b;
+        --liuc-gold: #c9a96a;
+        --liuc-paper: #f2f5fb;
+        --text-main: #17203a;
+        --text-soft: #4a5672;
+        --card-border: rgba(31, 63, 131, 0.12);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Manrope", sans-serif;
+        color: var(--text-main);
+        background:
+          radial-gradient(circle at 15% 15%, rgba(31, 63, 131, 0.14), transparent 30%),
+          radial-gradient(circle at 90% 5%, rgba(201, 169, 106, 0.18), transparent 35%),
+          linear-gradient(165deg, #f9fbff 0%, #eef3fb 55%, #e8eef8 100%);
+        min-height: 100vh;
+      }
+
+      .page {
+        max-width: 1180px;
+        margin: 0 auto;
+        padding: 28px 20px 36px;
+      }
+
+      .hero {
+        border: 1px solid var(--card-border);
+        border-radius: 22px;
+        padding: 28px;
+        background:
+          linear-gradient(130deg, rgba(31, 63, 131, 0.95), rgba(21, 43, 91, 0.97)),
+          radial-gradient(circle at 90% 12%, rgba(201, 169, 106, 0.25), transparent 45%);
+        color: #ffffff;
+        box-shadow: 0 26px 50px rgba(21, 43, 91, 0.2);
+      }
+
+      .hero-content {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+      }
+
+      .hero-text {
+        max-width: 760px;
+      }
+
+      .hero-logo {
+        width: min(240px, 38vw);
+        height: auto;
+        object-fit: contain;
+        filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.15));
+      }
+
+      .logo-shell {
+        background: rgba(255, 255, 255, 0.94);
+        border: 1px solid rgba(255, 255, 255, 0.98);
+        border-radius: 16px;
+        padding: 10px 14px;
+        box-shadow: inset 0 0 0 1px rgba(31, 63, 131, 0.08);
+      }
+
+      h1 {
+        margin: 0;
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(2rem, 4.4vw, 3.2rem);
+        letter-spacing: 0.02em;
+        line-height: 1;
+      }
+
+      .hero-subtitle {
+        margin: 10px 0 0;
+        font-size: 1.12rem;
+        line-height: 1.35;
+        color: rgba(255, 255, 255, 0.9);
+      }
+
+      .grid {
+        margin-top: 14px;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .panel {
+        background: rgba(255, 255, 255, 0.85);
+        border: 1px solid var(--card-border);
+        border-radius: 18px;
+        padding: 16px 16px 8px;
+        box-shadow: 0 16px 30px rgba(20, 36, 79, 0.08);
+      }
+
+      .panel h2 {
+        margin: 0 0 10px;
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.8rem;
+        color: var(--liuc-blue-deep);
+        letter-spacing: 0.01em;
+      }
+
+      .chart-wrap {
+        height: 330px;
+      }
+
+      .area-panel {
+        grid-column: 1 / -1;
+      }
+
+      .area-panel .chart-wrap {
+        height: 390px;
+      }
+
+      .research-menu {
+        margin-top: 20px;
+        border: 1px solid var(--card-border);
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.74);
+        overflow: hidden;
+        box-shadow: 0 14px 30px rgba(20, 36, 79, 0.08);
+      }
+
+      .research-menu > summary {
+        list-style: none;
+        cursor: pointer;
+        padding: 16px 20px;
+        font-family: "Cormorant Garamond", serif;
+        font-size: 2rem;
+        color: var(--liuc-blue-deep);
+        user-select: none;
+        background: rgba(255, 255, 255, 0.82);
+        border-bottom: 1px solid var(--card-border);
+      }
+
+      .research-menu > summary::-webkit-details-marker {
+        display: none;
+      }
+
+      .research-menu > summary::after {
+        content: "−";
+        float: right;
+        font-family: "Manrope", sans-serif;
+        font-size: 1.7rem;
+        line-height: 1;
+      }
+
+      .research-menu:not([open]) > summary::after {
+        content: "+";
+      }
+
+      .research-content {
+        padding: 6px 12px 12px;
+      }
+
+      .network-menu {
+        margin-top: 20px;
+        border: 1px solid var(--card-border);
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.74);
+        overflow: hidden;
+        box-shadow: 0 14px 30px rgba(20, 36, 79, 0.08);
+      }
+
+      .network-menu > summary {
+        list-style: none;
+        cursor: pointer;
+        padding: 16px 20px;
+        font-family: "Cormorant Garamond", serif;
+        font-size: 2rem;
+        color: var(--liuc-blue-deep);
+        user-select: none;
+        background: rgba(255, 255, 255, 0.82);
+      }
+
+      .network-menu > summary::-webkit-details-marker {
+        display: none;
+      }
+
+      .network-menu > summary::after {
+        content: "−";
+        float: right;
+        font-family: "Manrope", sans-serif;
+        font-size: 1.7rem;
+        line-height: 1;
+      }
+
+      .network-menu:not([open]) > summary::after {
+        content: "+";
+      }
+
+      .network-content {
+        padding: 12px 14px 14px;
+      }
+
+      .dissemination-menu {
+        margin-top: 20px;
+        border: 1px solid var(--card-border);
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.74);
+        overflow: hidden;
+        box-shadow: 0 14px 30px rgba(20, 36, 79, 0.08);
+      }
+
+      .dissemination-menu > summary {
+        list-style: none;
+        cursor: pointer;
+        padding: 16px 20px;
+        font-family: "Cormorant Garamond", serif;
+        font-size: 2rem;
+        color: var(--liuc-blue-deep);
+        user-select: none;
+        background: rgba(255, 255, 255, 0.82);
+      }
+
+      .dissemination-menu > summary::-webkit-details-marker {
+        display: none;
+      }
+
+      .dissemination-menu > summary::after {
+        content: "−";
+        float: right;
+        font-family: "Manrope", sans-serif;
+        font-size: 1.7rem;
+        line-height: 1;
+      }
+
+      .dissemination-menu:not([open]) > summary::after {
+        content: "+";
+      }
+
+      .dissemination-content {
+        padding: 12px;
+      }
+
+      .books-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .book-card {
+        border: 1px solid var(--card-border);
+        border-radius: 12px;
+        overflow: hidden;
+        background: rgba(255, 255, 255, 0.98);
+      }
+
+      .book-cover {
+        width: 100%;
+        aspect-ratio: 2 / 3;
+        height: auto;
+        object-fit: contain;
+        background: #f3f6fc;
+        display: block;
+      }
+
+      .book-cover-placeholder {
+        width: 100%;
+        aspect-ratio: 2 / 3;
+        height: auto;
+        display: grid;
+        place-items: center;
+        background: linear-gradient(130deg, rgba(31, 63, 131, 0.14), rgba(201, 169, 106, 0.24));
+        color: var(--liuc-blue-deep);
+        font-weight: 700;
+        font-size: 0.95rem;
+        text-align: center;
+        padding: 8px;
+      }
+
+      .book-body {
+        padding: 10px;
+      }
+
+      .book-title {
+        margin: 0 0 6px;
+        font-size: 0.95rem;
+        line-height: 1.25;
+        color: var(--liuc-blue-deep);
+        font-weight: 700;
+      }
+
+      .book-meta {
+        margin: 0;
+        font-size: 0.84rem;
+        line-height: 1.35;
+        color: var(--text-main);
+      }
+
+      .dissemination-articles-panel {
+        margin-top: 12px;
+      }
+
+      .article-list-wrap {
+        border: 1px solid var(--card-border);
+        border-radius: 12px;
+        overflow: auto;
+        background: rgba(255, 255, 255, 0.96);
+      }
+
+      .article-title-link {
+        padding: 0;
+        color: var(--liuc-blue);
+        text-decoration: underline;
+        cursor: pointer;
+        font: inherit;
+        text-align: left;
+      }
+
+      .dissemination-articles-table th:nth-child(4),
+      .dissemination-articles-table td:nth-child(4) {
+        min-width: 140px;
+        white-space: nowrap;
+      }
+
+      .network-stage {
+        border: 1px solid var(--card-border);
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.94);
+        padding: 12px;
+        min-height: 280px;
+      }
+
+      .network-layout {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .network-row {
+        display: grid;
+        grid-template-columns: minmax(150px, 220px) minmax(0, 1fr);
+        gap: 12px;
+        align-items: center;
+      }
+
+      .network-row + .network-row {
+        border-top: 1px solid rgba(31, 63, 131, 0.18);
+        padding-top: 12px;
+      }
+
+      .network-area-node {
+        border-radius: 14px;
+        padding: 12px 14px;
+        background: linear-gradient(130deg, rgba(31, 63, 131, 0.92), rgba(21, 43, 91, 0.95));
+        color: #fff;
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(1.35rem, 2.2vw, 1.8rem);
+        letter-spacing: 0.02em;
+        text-align: center;
+        box-shadow: 0 8px 18px rgba(20, 36, 79, 0.2);
+      }
+
+      .network-area-node[data-area="Accademia"] {
+        background: linear-gradient(130deg, #1f3f83, #152b5b);
+      }
+
+      .network-area-node[data-area="Imprese"] {
+        background: linear-gradient(130deg, #0f766e, #115e59);
+      }
+
+      .network-area-node[data-area="Associazioni"] {
+        background: linear-gradient(130deg, #b45309, #92400e);
+      }
+
+      .network-area-node[data-area="Media"] {
+        background: linear-gradient(130deg, #6b21a8, #581c87);
+      }
+
+      .network-entities {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(138px, 1fr));
+        gap: 10px;
+      }
+
+      .network-entity {
+        border: 1px solid var(--card-border);
+        border-radius: 12px;
+        padding: 8px 8px 10px;
+        background: rgba(255, 255, 255, 0.97);
+        text-align: center;
+        min-height: 122px;
+        cursor: pointer;
+        transition: transform 0.16s ease, box-shadow 0.16s ease;
+      }
+
+      .network-entity:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(20, 36, 79, 0.12);
+      }
+
+      .network-entity-image {
+        width: 58px;
+        height: 58px;
+        margin: 0 auto 6px;
+        border-radius: 50%;
+        border: 1px solid rgba(31, 63, 131, 0.14);
+        background: #eef3fb;
+        object-fit: cover;
+        display: block;
+      }
+
+      .network-entity-placeholder {
+        width: 58px;
+        height: 58px;
+        margin: 0 auto 6px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        background: linear-gradient(130deg, rgba(31, 63, 131, 0.12), rgba(201, 169, 106, 0.25));
+        color: var(--liuc-blue-deep);
+        font-weight: 700;
+      }
+
+      .network-entity-name {
+        margin: 0;
+        font-size: 0.8rem;
+        line-height: 1.25;
+        color: var(--text-main);
+      }
+
+      .network-modal {
+        position: fixed;
+        inset: 0;
+        background: rgba(16, 24, 44, 0.5);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 50;
+        padding: 16px;
+      }
+
+      .network-modal.show {
+        display: flex;
+      }
+
+      .network-modal-card {
+        width: min(740px, 96vw);
+        max-height: 88vh;
+        overflow: auto;
+        background: #fff;
+        border: 1px solid var(--card-border);
+        border-radius: 16px;
+        box-shadow: 0 18px 44px rgba(20, 36, 79, 0.25);
+        padding: 18px;
+      }
+
+      .network-modal-close {
+        float: right;
+        border: none;
+        background: transparent;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: var(--liuc-blue-deep);
+      }
+
+      .network-modal-body {
+        display: grid;
+        grid-template-columns: 190px minmax(0, 1fr);
+        gap: 14px;
+        align-items: start;
+      }
+
+      .network-modal-image {
+        width: 190px;
+        height: 190px;
+        object-fit: contain;
+        border-radius: 10px;
+        background: #f3f6fc;
+        border: 1px solid var(--card-border);
+        padding: 8px;
+      }
+
+      .network-modal-title {
+        margin: 0 0 8px;
+        font-family: "Cormorant Garamond", serif;
+        font-size: 2rem;
+        color: var(--liuc-blue-deep);
+        line-height: 1.05;
+      }
+
+      .network-modal-text {
+        margin: 0;
+        font-size: 0.98rem;
+        line-height: 1.6;
+        color: var(--text-main);
+      }
+
+      .mission-menu {
+        margin-top: 20px;
+        border: 1px solid var(--card-border);
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.74);
+        overflow: hidden;
+        box-shadow: 0 14px 30px rgba(20, 36, 79, 0.08);
+      }
+
+      .mission-menu > summary {
+        list-style: none;
+        cursor: pointer;
+        padding: 16px 20px;
+        font-family: "Cormorant Garamond", serif;
+        font-size: 2rem;
+        color: var(--liuc-blue-deep);
+        user-select: none;
+        background: rgba(255, 255, 255, 0.82);
+      }
+
+      .mission-menu > summary::-webkit-details-marker {
+        display: none;
+      }
+
+      .mission-menu > summary::after {
+        content: "−";
+        float: right;
+        font-family: "Manrope", sans-serif;
+        font-size: 1.7rem;
+        line-height: 1;
+      }
+
+      .mission-menu:not([open]) > summary::after {
+        content: "+";
+      }
+
+      .mission-content {
+        padding: 16px 20px 20px;
+      }
+
+      .mission-content p {
+        margin: 0;
+        font-size: 1.08rem;
+        line-height: 1.6;
+        color: var(--text-main);
+      }
+
+      .team-menu {
+        margin-top: 20px;
+        border: 1px solid var(--card-border);
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.74);
+        overflow: hidden;
+        box-shadow: 0 14px 30px rgba(20, 36, 79, 0.08);
+      }
+
+      .team-menu > summary {
+        list-style: none;
+        cursor: pointer;
+        padding: 16px 20px;
+        font-family: "Cormorant Garamond", serif;
+        font-size: 2rem;
+        color: var(--liuc-blue-deep);
+        user-select: none;
+        background: rgba(255, 255, 255, 0.82);
+      }
+
+      .team-menu > summary::-webkit-details-marker {
+        display: none;
+      }
+
+      .team-menu > summary::after {
+        content: "−";
+        float: right;
+        font-family: "Manrope", sans-serif;
+        font-size: 1.7rem;
+        line-height: 1;
+      }
+
+      .team-menu:not([open]) > summary::after {
+        content: "+";
+      }
+
+      .team-content {
+        padding: 6px 12px 12px;
+      }
+
+      .team-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 2.1fr) minmax(250px, 1fr);
+        gap: 16px;
+      }
+
+      .team-gallery {
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding: 4px 4px 10px;
+        border-radius: 12px;
+        scroll-behavior: auto;
+      }
+
+      .team-gallery::-webkit-scrollbar {
+        height: 8px;
+      }
+
+      .team-gallery::-webkit-scrollbar-thumb {
+        background: rgba(31, 63, 131, 0.26);
+        border-radius: 999px;
+      }
+
+      .team-gallery-track {
+        display: flex;
+        gap: 12px;
+        width: max-content;
+      }
+
+      .team-card {
+        min-width: 200px;
+        max-width: 200px;
+        background: rgba(255, 255, 255, 0.98);
+        border: 1px solid var(--card-border);
+        border-radius: 14px;
+        padding: 10px;
+        scroll-snap-align: start;
+        box-shadow: 0 8px 18px rgba(20, 36, 79, 0.08);
+      }
+
+      .team-photo {
+        width: 100%;
+        height: 190px;
+        border-radius: 10px;
+        object-fit: cover;
+        background: #e5ebf7;
+      }
+
+      .team-name {
+        margin: 9px 0 2px;
+        font-size: 0.96rem;
+        font-weight: 700;
+        color: var(--liuc-blue-deep);
+      }
+
+      .team-role {
+        margin: 0;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--text-main);
+      }
+
+      .team-position {
+        margin: 2px 0 0;
+        font-size: 0.82rem;
+        color: var(--text-soft);
+      }
+
+      .team-chart-panel .chart-wrap {
+        height: 300px;
+      }
+
+      .team-table-panel {
+        grid-column: 1 / -1;
+      }
+
+      .team-table-details > summary {
+        list-style: none;
+        cursor: pointer;
+        margin: 0 0 8px;
+        padding: 4px 0;
+      }
+
+      .team-table-details > summary::-webkit-details-marker {
+        display: none;
+      }
+
+      .team-table-details > summary h2 {
+        display: inline-block;
+        margin: 0;
+      }
+
+      .team-table-details > summary::after {
+        content: "−";
+        float: right;
+        font-family: "Manrope", sans-serif;
+        font-size: 1.55rem;
+        line-height: 1.15;
+        color: var(--liuc-blue-deep);
+      }
+
+      .team-table-details:not([open]) > summary::after {
+        content: "+";
+      }
+
+      .table-panel {
+        grid-column: 1 / -1;
+      }
+
+      .featured-research-panel {
+        grid-column: 1 / -1;
+      }
+
+      .featured-research-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .featured-research-card {
+        border: 1px solid var(--card-border);
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.98);
+        overflow: hidden;
+        cursor: pointer;
+        transition: transform 0.16s ease, box-shadow 0.16s ease;
+      }
+
+      .featured-research-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(20, 36, 79, 0.12);
+      }
+
+      .featured-research-thumb {
+        width: 100%;
+        height: 130px;
+        object-fit: cover;
+        display: block;
+        background: #e8eef8;
+      }
+
+      .featured-research-title {
+        margin: 0;
+        padding: 10px 10px 12px;
+        font-size: 1.02rem;
+        font-weight: 700;
+        color: var(--liuc-blue-deep);
+        line-height: 1.25;
+      }
+
+      .featured-modal {
+        position: fixed;
+        inset: 0;
+        background: rgba(16, 24, 44, 0.56);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 60;
+        padding: 16px;
+      }
+
+      .featured-modal.show {
+        display: flex;
+      }
+
+      .featured-modal-card {
+        width: min(980px, 96vw);
+        max-height: 90vh;
+        overflow: auto;
+        background: #fff;
+        border: 1px solid var(--card-border);
+        border-radius: 16px;
+        box-shadow: 0 18px 44px rgba(20, 36, 79, 0.25);
+        padding: 18px;
+      }
+
+      .featured-modal-close {
+        float: right;
+        border: none;
+        background: transparent;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: var(--liuc-blue-deep);
+      }
+
+      .featured-modal-title {
+        margin: 0 0 10px;
+        font-family: "Cormorant Garamond", serif;
+        font-size: 2rem;
+        color: var(--liuc-blue-deep);
+        line-height: 1.05;
+      }
+
+      .featured-modal-gallery {
+        display: flex;
+        gap: 10px;
+        overflow-x: auto;
+        padding: 6px 0 8px;
+      }
+
+      .featured-modal-image {
+        width: 300px;
+        height: 190px;
+        object-fit: cover;
+        border-radius: 10px;
+        border: 1px solid var(--card-border);
+        background: #eef3fb;
+        flex: 0 0 auto;
+      }
+
+      .featured-modal-text {
+        margin: 10px 0 0;
+        font-size: 0.97rem;
+        line-height: 1.6;
+        color: var(--text-main);
+        white-space: pre-wrap;
+      }
+
+      .table-details > summary {
+        list-style: none;
+        cursor: pointer;
+        margin: 0 0 8px;
+        padding: 4px 0;
+      }
+
+      .table-details > summary::-webkit-details-marker {
+        display: none;
+      }
+
+      .table-details > summary h2 {
+        display: inline-block;
+        margin: 0;
+      }
+
+      .table-details > summary::after {
+        content: "−";
+        float: right;
+        font-family: "Manrope", sans-serif;
+        font-size: 1.55rem;
+        line-height: 1.15;
+        color: var(--liuc-blue-deep);
+      }
+
+      .table-details:not([open]) > summary::after {
+        content: "+";
+      }
+
+      .table-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .table-block h3 {
+        margin: 0 0 8px;
+        font-size: 1rem;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: var(--liuc-blue-deep);
+      }
+
+      .table-wrap {
+        border: 1px solid var(--card-border);
+        border-radius: 12px;
+        overflow: auto;
+        max-height: 400px;
+        background: rgba(255, 255, 255, 0.95);
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.86rem;
+      }
+
+      th,
+      td {
+        padding: 8px 10px;
+        text-align: left;
+        vertical-align: top;
+      }
+
+      th {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+        background: #f1f5fc;
+        color: var(--liuc-blue-deep);
+        font-size: 0.76rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        border-bottom: 1px solid var(--card-border);
+      }
+
+      td {
+        border-bottom: 1px solid rgba(31, 63, 131, 0.08);
+      }
+
+      tr:last-child td {
+        border-bottom: none;
+      }
+
+      @media (max-width: 950px) {
+        .grid {
+          grid-template-columns: 1fr;
+        }
+
+        .team-layout {
+          grid-template-columns: 1fr;
+        }
+
+        .network-row {
+          grid-template-columns: 1fr;
+          gap: 8px;
+        }
+
+        .chart-wrap {
+          height: 320px;
+        }
+
+        .table-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .featured-research-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .books-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .network-modal-body {
+          grid-template-columns: 1fr;
+        }
+
+        .network-modal-image {
+          width: 100%;
+          max-width: 240px;
+          height: auto;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .page {
+          padding: 16px 14px 22px;
+        }
+
+        .hero {
+          border-radius: 16px;
+          padding: 20px;
+        }
+
+        .hero-content {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 14px;
+        }
+
+        .hero-logo {
+          width: min(210px, 70vw);
+        }
+
+        .area-panel .chart-wrap {
+          height: 350px;
+        }
+
+        .research-menu > summary {
+          font-size: 1.7rem;
+        }
+
+        .network-menu > summary {
+          font-size: 1.7rem;
+        }
+
+        .team-menu > summary {
+          font-size: 1.7rem;
+        }
+
+        .mission-menu > summary {
+          font-size: 1.7rem;
+        }
+
+        .dissemination-menu > summary {
+          font-size: 1.7rem;
+        }
+
+        .team-card {
+          min-width: 180px;
+          max-width: 180px;
+        }
+
+        .books-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <section class="hero">
+        <div class="hero-content">
+          <div class="hero-text">
+            <h1>Intelligence, Complexity and Technology Lab (ICT Lab)</h1>
+            <p class="hero-subtitle">
+              Aiutare il territorio e la società a comprendere e adottare l'AI generativa
+            </p>
+          </div>
+          <div class="logo-shell">
+            <img class="hero-logo" src="logo_ict_lab.png" alt="Logo ICT Lab" />
+          </div>
+        </div>
+      </section>
+
+      <details class="mission-menu">
+        <summary>Missione</summary>
+        <div class="mission-content">
+          <p>
+            In questo momento, imprese, istituzioni e cittadini si trovano davanti a una tecnologia che evolve a velocità settimanale, difficile da interpretare e ancora più difficile da adottare in modo consapevole, e che però allo stesso tempo è impossibile da ignorare. L'ICT Lab è il centro di ricerca LIUC che produce conoscenza scientifica su IA generativa, sistemi multi-agente e complessità, e la trasferisce al tessuto produttivo come leva di competitività e innovazione.
+          </p>
+        </div>
+      </details>
+
+      <details class="team-menu">
+        <summary>Team</summary>
+        <div class="team-content">
+          <section class="team-layout">
+            <article class="panel team-gallery-panel">
+              <h2>Persone</h2>
+              <div class="team-gallery" id="teamGallery"></div>
+            </article>
+
+            <article class="panel team-chart-panel">
+              <h2>Ruoli</h2>
+              <div class="chart-wrap">
+                <canvas id="teamRoleChart"></canvas>
+              </div>
+            </article>
+
+            <article class="panel team-table-panel">
+              <details class="team-table-details">
+                <summary>
+                  <h2>Specifiche Team</h2>
+                </summary>
+                <div class="table-wrap">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Nome</th>
+                        <th>Ruolo</th>
+                        <th>Istituzione</th>
+                        <th>Posizione</th>
+                      </tr>
+                    </thead>
+                    <tbody id="teamTableBody"></tbody>
+                  </table>
+                </div>
+              </details>
+            </article>
+          </section>
+        </div>
+      </details>
+
+      <details class="research-menu">
+        <summary>Ricerca</summary>
+        <div class="research-content">
+          <section class="grid">
+            <article class="panel featured-research-panel">
+              <h2>Ricerche in Evidenza</h2>
+              <div class="featured-research-grid" id="featuredResearchGrid"></div>
+            </article>
+
+            <article class="panel">
+              <h2>Stato Articoli</h2>
+              <div class="chart-wrap">
+                <canvas id="statusChart"></canvas>
+              </div>
+            </article>
+
+            <article class="panel">
+              <h2>Tipo Articoli</h2>
+              <div class="chart-wrap">
+                <canvas id="typeChart"></canvas>
+              </div>
+            </article>
+
+            <article class="panel area-panel">
+              <h2>Divisione per Area</h2>
+              <div class="chart-wrap">
+                <canvas id="areaChart"></canvas>
+              </div>
+            </article>
+
+            <article class="panel table-panel">
+              <details class="table-details">
+                <summary>
+                  <h2>Dettaglio Ricerche</h2>
+                </summary>
+                <div class="table-grid">
+                  <section class="table-block">
+                    <h3>Completati</h3>
+                    <div class="table-wrap">
+                      <table>
+                        <thead>
+                          <tr>
+                            <th>Titolo / Argomento</th>
+                            <th>Autori</th>
+                            <th>Area</th>
+                            <th>Venue</th>
+                          </tr>
+                        </thead>
+                        <tbody id="tableCompletedBody"></tbody>
+                      </table>
+                    </div>
+                  </section>
+
+                  <section class="table-block">
+                    <h3>In lavorazione</h3>
+                    <div class="table-wrap">
+                      <table>
+                        <thead>
+                          <tr>
+                            <th>Titolo / Argomento</th>
+                            <th>Autori</th>
+                            <th>Area</th>
+                            <th>Venue</th>
+                          </tr>
+                        </thead>
+                        <tbody id="tableWorkingBody"></tbody>
+                      </table>
+                    </div>
+                  </section>
+                </div>
+              </details>
+            </article>
+          </section>
+        </div>
+      </details>
+
+      <details class="dissemination-menu">
+        <summary>Disseminazione</summary>
+        <div class="dissemination-content">
+          <article class="panel">
+            <h2>Libri</h2>
+            <div class="books-grid" id="booksGrid"></div>
+          </article>
+          <article class="panel dissemination-articles-panel">
+            <h2>Articoli</h2>
+            <div class="article-list-wrap">
+              <table class="dissemination-articles-table">
+                <thead>
+                  <tr>
+                    <th>Data</th>
+                    <th>Titolo</th>
+                    <th>Autori</th>
+                    <th>Giornale</th>
+                  </tr>
+                </thead>
+                <tbody id="disseminationArticlesBody"></tbody>
+              </table>
+            </div>
+          </article>
+        </div>
+      </details>
+
+      <details class="network-menu">
+        <summary>Network</summary>
+        <div class="network-content">
+          <div class="network-stage" id="networkGraph"></div>
+        </div>
+      </details>
+
+      <div class="network-modal" id="networkModal" aria-hidden="true">
+        <div class="network-modal-card">
+          <button class="network-modal-close" id="networkModalClose" aria-label="Chiudi">×</button>
+          <div class="network-modal-body">
+            <img class="network-modal-image" id="networkModalImage" alt="Logo entità network" />
+            <div>
+              <h3 class="network-modal-title" id="networkModalTitle"></h3>
+              <p class="network-modal-text" id="networkModalText"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="featured-modal" id="featuredModal" aria-hidden="true">
+        <div class="featured-modal-card">
+          <button class="featured-modal-close" id="featuredModalClose" aria-label="Chiudi">×</button>
+          <h3 class="featured-modal-title" id="featuredModalTitle"></h3>
+          <div class="featured-modal-gallery" id="featuredModalGallery"></div>
+          <p class="featured-modal-text" id="featuredModalText"></p>
+        </div>
+      </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+    <script src="dashboard_data.js"></script>
+    <script>
+      const fallbackData = {
+        generated_at: null,
+        source_file: "",
+        status_counts: { completati: 0, in_lavorazione: 0 },
+        types: [],
+        type_counts: [],
+        team_members: [],
+        team_people: [],
+        team_role_labels: [],
+        team_role_counts: [],
+        network_groups: [],
+        featured_research: [],
+        dissemination_books: [],
+        dissemination_articles: [],
+        areas: [],
+        area_breakdown: { completati: [], in_lavorazione: [] },
+        research_details: { completati: [], in_lavorazione: [] }
+      };
+
+      const data = window.DASHBOARD_DATA || fallbackData;
+
+      const completed = Number(data.status_counts?.completati || 0);
+      const working = Number(data.status_counts?.in_lavorazione || 0);
+
+      function wrapLabel(label, maxCharsPerLine = 20) {
+        const words = String(label).split(" ");
+        const lines = [];
+        let currentLine = "";
+
+        words.forEach((word) => {
+          const candidate = currentLine ? `${currentLine} ${word}` : word;
+          if (candidate.length <= maxCharsPerLine) {
+            currentLine = candidate;
+          } else {
+            if (currentLine) {
+              lines.push(currentLine);
+            }
+            currentLine = word;
+          }
+        });
+
+        if (currentLine) {
+          lines.push(currentLine);
+        }
+
+        return lines;
+      }
+
+      function escapeHtml(value) {
+        return String(value)
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll("\"", "&quot;")
+          .replaceAll("'", "&#39;");
+      }
+
+      function renderResearchTable(targetId, rows) {
+        const tbody = document.getElementById(targetId);
+        if (!tbody) return;
+
+        if (!rows || rows.length === 0) {
+          tbody.innerHTML =
+            '<tr><td colspan="4">Nessun elemento disponibile</td></tr>';
+          return;
+        }
+
+        tbody.innerHTML = rows
+          .map(
+            (row) => `
+              <tr>
+                <td>${escapeHtml(row.titolo || "-")}</td>
+                <td>${escapeHtml(row.autori || "-")}</td>
+                <td>${escapeHtml(row.area || "-")}</td>
+                <td>${escapeHtml(row.venue || "-")}</td>
+              </tr>
+            `
+          )
+          .join("");
+      }
+
+      function renderTeamGallery(members) {
+        const container = document.getElementById("teamGallery");
+        if (!container) return;
+
+        if (!members || members.length === 0) {
+          container.innerHTML = "<p>Nessuna foto team disponibile.</p>";
+          return;
+        }
+
+        const cards = members
+          .map(
+            (member) => `
+                <article class="team-card">
+                  <img class="team-photo" src="${encodeURI(member.foto || "")}" alt="${escapeHtml(member.nome || "Foto membro team")}" />
+                  <p class="team-name">${escapeHtml(member.nome || "-")}</p>
+                  <p class="team-role">${escapeHtml(member.ruolo || "-")}</p>
+                  <p class="team-position">${escapeHtml(member.posizione || "-")}</p>
+                </article>
+              `
+          )
+          .join("");
+
+        container.innerHTML = `<div class="team-gallery-track">${cards}</div>`;
+      }
+
+      function renderTeamTable(rows) {
+        const tbody = document.getElementById("teamTableBody");
+        if (!tbody) return;
+
+        if (!rows || rows.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="4">Nessun elemento disponibile</td></tr>';
+          return;
+        }
+
+        tbody.innerHTML = rows
+          .map(
+            (row) => `
+              <tr>
+                <td>${escapeHtml(row.nome || "-")}</td>
+                <td>${escapeHtml(row.ruolo || "-")}</td>
+                <td>${escapeHtml(row.istituzione || "-")}</td>
+                <td>${escapeHtml(row.posizione || "-")}</td>
+              </tr>
+            `
+          )
+          .join("");
+      }
+
+      function renderNetworkGraph(groups) {
+        const container = document.getElementById("networkGraph");
+        if (!container) return;
+
+        if (!groups || groups.length === 0) {
+          container.innerHTML = "<p>Nessun dato network disponibile.</p>";
+          return;
+        }
+
+        const rows = groups
+          .map((group, groupIndex) => {
+            const entityCards = (group.entities || [])
+              .map((entity, entityIndex) => {
+                const firstLetter = (entity.nome || "?").trim().charAt(0).toUpperCase() || "?";
+                const media = entity.image
+                  ? `<img class="network-entity-image" src="${encodeURI(entity.image)}" alt="${escapeHtml(entity.nome || "Entità")}" />`
+                  : `<div class="network-entity-placeholder">${escapeHtml(firstLetter)}</div>`;
+                return `
+                  <article
+                    class="network-entity"
+                    id="entityNode-${groupIndex}-${entityIndex}"
+                    data-network-name="${escapeHtml(entity.nome || "-")}"
+                    data-network-image="${escapeHtml(entity.image || "")}"
+                    data-network-description="${escapeHtml(entity.descrizione || "Descrizione non disponibile.")}"
+                    role="button"
+                    tabindex="0"
+                    aria-label="Apri descrizione ${escapeHtml(entity.nome || "entità")}"
+                  >
+                    ${media}
+                    <p class="network-entity-name">${escapeHtml(entity.nome || "-")}</p>
+                  </article>
+                `;
+              })
+              .join("");
+
+            return `
+              <section class="network-row">
+                <div class="network-area-node" data-area="${escapeHtml(group.area || "")}" id="areaNode-${groupIndex}">${escapeHtml(group.area || "-")}</div>
+                <div class="network-entities">${entityCards}</div>
+              </section>
+            `;
+          })
+          .join("");
+
+        container.innerHTML = `<div class="network-layout">${rows}</div>`;
+        bindNetworkEntityCards();
+      }
+
+      function renderFeaturedResearch(items) {
+        const container = document.getElementById("featuredResearchGrid");
+        if (!container) return;
+        if (!items || items.length === 0) {
+          container.innerHTML = "<p>Nessuna ricerca in evidenza disponibile.</p>";
+          return;
+        }
+
+        container.innerHTML = items
+          .map((item, index) => {
+            const thumb = (item.immagini && item.immagini[0]) || "";
+            const media = thumb
+              ? `<img class="featured-research-thumb" src="${encodeURI(thumb)}" alt="${escapeHtml(item.titolo || "Ricerca")}" />`
+              : `<div class="featured-research-thumb"></div>`;
+            return `
+              <article class="featured-research-card" data-featured-index="${index}" role="button" tabindex="0" aria-label="Apri ricerca ${escapeHtml(item.titolo || "in evidenza")}">
+                ${media}
+                <p class="featured-research-title">${escapeHtml(item.titolo || "-")}</p>
+              </article>
+            `;
+          })
+          .join("");
+
+        bindFeaturedResearchCards(items);
+      }
+
+      function renderDisseminationBooks(books) {
+        const container = document.getElementById("booksGrid");
+        if (!container) return;
+        if (!books || books.length === 0) {
+          container.innerHTML = "<p>Nessun libro disponibile.</p>";
+          return;
+        }
+
+        container.innerHTML = books
+          .map((book) => {
+            const media = book.immagine
+              ? `<img class="book-cover" src="${encodeURI(book.immagine)}" alt="${escapeHtml(book.titolo || "Copertina libro")}" />`
+              : `<div class="book-cover-placeholder">${escapeHtml(book.titolo || "Libro")}</div>`;
+            return `
+              <article class="book-card">
+                ${media}
+                <div class="book-body">
+                  <p class="book-title">${escapeHtml(book.titolo || "-")}</p>
+                  <p class="book-meta"><strong>Autori:</strong> ${escapeHtml(book.autori || "-")}</p>
+                  <p class="book-meta"><strong>Anno:</strong> ${escapeHtml(book.anno || "-")}</p>
+                  <p class="book-meta"><strong>Editore:</strong> ${escapeHtml(book.editore || "-")}</p>
+                </div>
+              </article>
+            `;
+          })
+          .join("");
+      }
+
+      function renderDisseminationArticles(articles) {
+        const tbody = document.getElementById("disseminationArticlesBody");
+        if (!tbody) return;
+        if (!articles || articles.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="4">Nessun articolo disponibile.</td></tr>';
+          return;
+        }
+
+        tbody.innerHTML = articles
+          .map(
+            (article) => `
+              <tr>
+                <td>${escapeHtml(article.data || "-")}</td>
+                <td>
+                  <a
+                    class="article-title-link"
+                    href="${escapeHtml(article.link || "#")}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    ${escapeHtml(article.titolo || "-")}
+                  </a>
+                </td>
+                <td>${escapeHtml(article.autori || "-")}</td>
+                <td>${escapeHtml(article.giornale || "-")}</td>
+              </tr>
+            `
+          )
+          .join("");
+      }
+
+      function bindFeaturedResearchCards(items) {
+        const cards = document.querySelectorAll(".featured-research-card");
+        cards.forEach((card) => {
+          const open = () => {
+            const index = Number(card.dataset.featuredIndex || 0);
+            const item = items[index];
+            if (item) openFeaturedModal(item);
+          };
+          card.addEventListener("click", open);
+          card.addEventListener("keydown", (event) => {
+            if (event.key === "Enter" || event.key === " ") {
+              event.preventDefault();
+              open();
+            }
+          });
+        });
+      }
+
+      function openFeaturedModal(item) {
+        const modal = document.getElementById("featuredModal");
+        const title = document.getElementById("featuredModalTitle");
+        const gallery = document.getElementById("featuredModalGallery");
+        const text = document.getElementById("featuredModalText");
+        if (!modal || !title || !gallery || !text) return;
+
+        title.textContent = item.titolo || "-";
+        text.textContent = item.descrizione || "Descrizione non disponibile.";
+        gallery.innerHTML = (item.immagini || [])
+          .map(
+            (img, i) =>
+              `<img class="featured-modal-image" src="${encodeURI(img)}" alt="${escapeHtml((item.titolo || "Ricerca") + " - immagine " + String(i + 1))}" />`
+          )
+          .join("");
+        modal.classList.add("show");
+        modal.setAttribute("aria-hidden", "false");
+      }
+
+      function closeFeaturedModal() {
+        const modal = document.getElementById("featuredModal");
+        if (!modal) return;
+        modal.classList.remove("show");
+        modal.setAttribute("aria-hidden", "true");
+      }
+
+      function bindNetworkEntityCards() {
+        const cards = document.querySelectorAll(".network-entity");
+        cards.forEach((card) => {
+          const open = () =>
+            openNetworkModal(
+              card.dataset.networkName || "-",
+              card.dataset.networkDescription || "Descrizione non disponibile.",
+              card.dataset.networkImage || ""
+            );
+
+          card.addEventListener("click", open);
+          card.addEventListener("keydown", (event) => {
+            if (event.key === "Enter" || event.key === " ") {
+              event.preventDefault();
+              open();
+            }
+          });
+        });
+      }
+
+      function openNetworkModal(name, description, imagePath) {
+        const modal = document.getElementById("networkModal");
+        const title = document.getElementById("networkModalTitle");
+        const text = document.getElementById("networkModalText");
+        const image = document.getElementById("networkModalImage");
+        if (!modal || !title || !text || !image) return;
+
+        title.textContent = name;
+        text.textContent = description;
+        if (imagePath) {
+          image.src = encodeURI(imagePath);
+          image.style.display = "block";
+        } else {
+          image.removeAttribute("src");
+          image.style.display = "none";
+        }
+        modal.classList.add("show");
+        modal.setAttribute("aria-hidden", "false");
+      }
+
+      function closeNetworkModal() {
+        const modal = document.getElementById("networkModal");
+        if (!modal) return;
+        modal.classList.remove("show");
+        modal.setAttribute("aria-hidden", "true");
+      }
+
+      const fontFamily = "Manrope, sans-serif";
+      Chart.defaults.font.family = fontFamily;
+      Chart.defaults.font.size = 14;
+      Chart.defaults.color = "#32405f";
+
+      const valueLabelsPlugin = {
+        id: "valueLabels",
+        afterDatasetsDraw(chart) {
+          const { ctx } = chart;
+          ctx.save();
+          ctx.fillStyle = "#152b5b";
+          ctx.textAlign = "center";
+          ctx.textBaseline = "bottom";
+          ctx.font = "700 14px Manrope, sans-serif";
+
+          chart.data.datasets.forEach((dataset, datasetIndex) => {
+            const meta = chart.getDatasetMeta(datasetIndex);
+            if (meta.hidden) return;
+            meta.data.forEach((bar, index) => {
+              const value = dataset.data[index];
+              if (value === null || value === undefined || Number.isNaN(Number(value))) return;
+              ctx.fillText(String(value), bar.x, bar.y - 6);
+            });
+          });
+          ctx.restore();
+        }
+      };
+      Chart.register(valueLabelsPlugin);
+
+      new Chart(document.getElementById("statusChart"), {
+        type: "bar",
+        data: {
+          labels: ["Completati", "In lavorazione"],
+          datasets: [
+            {
+              data: [completed, working],
+              backgroundColor: ["#1f3f83", "#c9a96a"],
+              borderRadius: 8,
+              maxBarThickness: 70
+            }
+          ]
+        },
+        options: {
+          maintainAspectRatio: false,
+          layout: { padding: { top: 18 } },
+          plugins: {
+            legend: { display: false }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              ticks: { precision: 0, font: { size: 15 } },
+              grid: { color: "rgba(31, 63, 131, 0.12)" }
+            },
+            x: {
+              ticks: { font: { size: 15 } },
+              grid: { display: false }
+            }
+          }
+        }
+      });
+
+      new Chart(document.getElementById("areaChart"), {
+        type: "bar",
+        data: {
+          labels: data.areas,
+          datasets: [
+            {
+              label: "Totale articoli",
+              data: data.areas.map((_, index) => {
+                const c = Number(data.area_breakdown?.completati?.[index] || 0);
+                const w = Number(data.area_breakdown?.in_lavorazione?.[index] || 0);
+                return c + w;
+              }),
+              backgroundColor: "#1f3f83",
+              borderRadius: 6,
+              maxBarThickness: 52
+            }
+          ]
+        },
+        options: {
+          maintainAspectRatio: false,
+          layout: { padding: { top: 18 } },
+          plugins: {
+            legend: { display: false }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              ticks: { precision: 0, font: { size: 15 } },
+              grid: { color: "rgba(31, 63, 131, 0.1)" }
+            },
+            x: {
+              ticks: {
+                autoSkip: false,
+                maxRotation: 0,
+                minRotation: 0,
+                font: { size: 15 },
+                callback: (_, index) => wrapLabel(data.areas[index] || "")
+              },
+              grid: { display: false }
+            }
+          }
+        }
+      });
+
+      new Chart(document.getElementById("typeChart"), {
+        type: "bar",
+        data: {
+          labels: data.types || [],
+          datasets: [
+            {
+              data: data.type_counts || [],
+              backgroundColor: ["#1f3f83", "#c9a96a", "#5e79b4", "#9db0db", "#314a8a"],
+              borderRadius: 8,
+              maxBarThickness: 62
+            }
+          ]
+        },
+        options: {
+          maintainAspectRatio: false,
+          layout: { padding: { top: 18 } },
+          plugins: {
+            legend: { display: false }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              ticks: { precision: 0, font: { size: 15 } },
+              grid: { color: "rgba(31, 63, 131, 0.12)" }
+            },
+            x: {
+              ticks: {
+                autoSkip: false,
+                maxRotation: 0,
+                minRotation: 0,
+                font: { size: 15 },
+                callback: (_, index) => wrapLabel((data.types || [])[index] || "", 14)
+              },
+              grid: { display: false }
+            }
+          }
+        }
+      });
+
+      new Chart(document.getElementById("teamRoleChart"), {
+        type: "bar",
+        data: {
+          labels: data.team_role_labels || [],
+          datasets: [
+            {
+              data: data.team_role_counts || [],
+              backgroundColor: ["#1f3f83", "#c9a96a"],
+              borderRadius: 8,
+              maxBarThickness: 70
+            }
+          ]
+        },
+        options: {
+          maintainAspectRatio: false,
+          layout: { padding: { top: 18 } },
+          plugins: {
+            legend: { display: false }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              ticks: { precision: 0, font: { size: 15 } },
+              grid: { color: "rgba(31, 63, 131, 0.12)" }
+            },
+            x: {
+              ticks: { font: { size: 15 } },
+              grid: { display: false }
+            }
+          }
+        }
+      });
+
+      renderResearchTable(
+        "tableCompletedBody",
+        data.research_details?.completati || []
+      );
+      renderResearchTable(
+        "tableWorkingBody",
+        data.research_details?.in_lavorazione || []
+      );
+      renderTeamGallery(data.team_members || []);
+      renderTeamTable(data.team_people || []);
+      renderNetworkGraph(data.network_groups || []);
+      renderFeaturedResearch(data.featured_research || []);
+      renderDisseminationBooks(data.dissemination_books || []);
+      renderDisseminationArticles(data.dissemination_articles || []);
+
+      const networkModal = document.getElementById("networkModal");
+      const networkModalClose = document.getElementById("networkModalClose");
+      if (networkModalClose) {
+        networkModalClose.addEventListener("click", closeNetworkModal);
+      }
+      if (networkModal) {
+        networkModal.addEventListener("click", (event) => {
+          if (event.target === networkModal) {
+            closeNetworkModal();
+          }
+        });
+      }
+
+      const featuredModal = document.getElementById("featuredModal");
+      const featuredModalClose = document.getElementById("featuredModalClose");
+      if (featuredModalClose) {
+        featuredModalClose.addEventListener("click", closeFeaturedModal);
+      }
+      if (featuredModal) {
+        featuredModal.addEventListener("click", (event) => {
+          if (event.target === featuredModal) {
+            closeFeaturedModal();
+          }
+        });
+      }
+    </script>
+  </body>
+</html>
