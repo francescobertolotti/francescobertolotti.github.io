@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Information, Data, and Complexity</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="page-bg"></div>
+    <header class="site-header">
+      <h1>Data, Information, Complexity, and AI</h1>
+      <p class="subtitle">An Interactive Textbook to Understand the Principles of Intelligent and Complex Systems</p>
+      <div class="view-mode" role="group" aria-label="Reading mode">
+        <span class="view-mode-label">View</span>
+        <button type="button" data-view-mode="slide" aria-pressed="false">Slide</button>
+        <button type="button" data-view-mode="book" aria-pressed="false">Textbook</button>
+      </div>
+    </header>
+    <main class="layout">
+      <aside class="toc-card" aria-label="Chapter index">
+        <h2>Chapters</h2>
+        <nav>
+          <ul id="chapter-list"></ul>
+        </nav>
+      </aside>
+
+      <article class="chapter-card">
+        <div id="chapter-content">
+          <p>Loading chapter...</p>
+        </div>
+      </article>
+    </main>
+
+    <footer class="site-footer">
+    </footer>
+
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
