@@ -1,3 +1,4 @@
+import { mountIntroductionBlocks } from './components/introduction.js';
 import { mountShannonBlocks } from './components/shannon.js';
 
 const chapterListEl = document.getElementById('chapter-list');
@@ -182,6 +183,7 @@ function parseLines(lines) {
   const out = [];
   let inList = false;
   let i = 0;
+  const structuredBlocks = new Set(['figure', 'figure-step', 'embed']);
 
   while (i < lines.length) {
     const line = lines[i];
@@ -222,13 +224,41 @@ function parseLines(lines) {
       continue;
     }
 
+    if (trimmed.startsWith(':::')) {
+      const blockStartMatch = trimmed.match(/^:::(figure|figure-step|embed)\s*$/);
+      if (blockStartMatch && structuredBlocks.has(blockStartMatch[1])) {
+        if (inList) {
+          out.push('</ul>');
+          inList = false;
+        }
+
+        const blockName = blockStartMatch[1];
+        i += 1;
+        const structuredLines = [];
+        while (i < lines.length && lines[i].trim() !== ':::') {
+          structuredLines.push(lines[i]);
+          i += 1;
+        }
+        if (i < lines.length && lines[i].trim() === ':::') i += 1;
+
+        const config = parseStructuredBlock(structuredLines);
+        const encodedConfig = encodeURIComponent(JSON.stringify(config));
+        out.push(
+          `<div data-block="${escapeHtml(blockName)}" data-config="${escapeHtml(encodedConfig)}"></div>`
+        );
+        continue;
+      }
+    }
+
     if (trimmed.startsWith(':::') && trimmed.endsWith(':::')) {
       if (inList) {
         out.push('</ul>');
         inList = false;
       }
       const blockName = trimmed.slice(3, -3).trim();
-      out.push(`<div data-block="${escapeHtml(blockName)}"></div>`);
+      if (blockName) {
+        out.push(`<div data-block="${escapeHtml(blockName)}"></div>`);
+      }
       i += 1;
       continue;
     }
@@ -296,6 +326,30 @@ function parseLines(lines) {
   return out;
 }
 
+function parseStructuredBlock(lines) {
+  const config = { fields: {}, body: '' };
+  const bodyLines = [];
+  let fieldsClosed = false;
+
+  lines.forEach((rawLine) => {
+    const line = rawLine.trimEnd();
+    const fieldMatch = line.match(/^([a-z][a-z0-9-]*):\s*(.*)$/i);
+
+    if (!fieldsClosed && fieldMatch) {
+      const key = fieldMatch[1].toLowerCase();
+      const value = fieldMatch[2].trim();
+      config.fields[key] = value;
+      return;
+    }
+
+    fieldsClosed = true;
+    bodyLines.push(rawLine);
+  });
+
+  config.body = bodyLines.join('\n').trim();
+  return config;
+}
+
 function inlineMarkdown(text) {
   return escapeHtml(text)
     .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
@@ -356,7 +410,7 @@ function applyViewMode() {
 
 function getSavedViewMode() {
   const saved = localStorage.getItem('viewMode');
-  return saved === 'book' ? 'book' : 'slide';
+  return saved === 'slide' ? 'slide' : 'book';
 }
 
 function renderCurrentChapterView() {
@@ -370,6 +424,7 @@ function renderCurrentChapterView() {
   }
 
   mountShannonBlocks(chapterContentEl);
+  mountIntroductionBlocks(chapterContentEl);
   applyViewMode();
 }
 

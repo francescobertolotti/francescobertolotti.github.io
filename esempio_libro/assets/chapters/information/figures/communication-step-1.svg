@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="250" viewBox="0 0 900 250">
+  <rect width="900" height="250" fill="#f6fbf6" />
+  <g font-family="Georgia, serif" font-size="30" fill="#213429">
+    <rect x="130" y="85" width="220" height="90" rx="6" fill="#ffffff" stroke="#9fbea4" stroke-width="2" />
+    <text x="240" y="140" text-anchor="middle">Source</text>
+
+    <rect x="550" y="85" width="220" height="90" rx="6" fill="#ffffff" stroke="#9fbea4" stroke-width="2" />
+    <text x="660" y="140" text-anchor="middle">Destination</text>
+  </g>
+  <line x1="350" y1="130" x2="550" y2="130" stroke="#486d50" stroke-width="4" />
+  <polygon points="550,130 536,123 536,137" fill="#486d50" />
+  <text x="450" y="105" text-anchor="middle" font-family="Georgia, serif" font-size="22" fill="#2e4735">
+    Message flow
+  </text>
+</svg>

@@ -9,6 +9,8 @@
   --rule: #d7cfc2;
   --accent: #8c1d1d;
   --panel: #fbf8f2e8;
+  --interactive-bg: #e7f3e8;
+  --interactive-bg-soft: #f1f8ef;
 }
 
 * {
@@ -205,6 +207,16 @@ h1 {
   animation: rise 450ms ease;
 }
 
+.chapter-card:fullscreen {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.chapter-card:-webkit-full-screen {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
 #chapter-content {
   font-size: 1.08rem;
 }
@@ -278,10 +290,108 @@ a:hover {
 
 .shannon-box {
   border: 1px solid var(--rule);
-  background: #f8f3ea;
+  background: var(--interactive-bg);
   border-radius: 3px;
   padding: 1rem;
   margin: 1.1rem 0;
+}
+
+.media-block {
+  border-color: #bfd6c2;
+}
+
+.media-block.layout-wide .media-figure img {
+  width: 100%;
+}
+
+.media-badge {
+  margin: 0 0 0.45rem;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #35543c;
+  font-weight: 700;
+}
+
+.media-figure {
+  margin: 0;
+}
+
+.media-figure img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border: 1px solid #bfd6c2;
+  background: #f8fcf8;
+}
+
+.embed-frame-wrap {
+  width: 100%;
+  overflow: hidden;
+  border: 1px solid #bfd6c2;
+  background: #ffffff;
+}
+
+.embed-frame {
+  display: block;
+  width: 100%;
+  min-height: 240px;
+  border: 0;
+  background: #ffffff;
+}
+
+.media-caption {
+  margin-top: 0.4rem;
+  color: #334136;
+  font-size: 0.9rem;
+}
+
+.media-error {
+  margin: 0;
+  color: #7c2d12;
+}
+
+.figure-step-sequence .media-caption {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.step-controls {
+  margin-top: 0.55rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.step-btn {
+  border: 1px solid var(--rule);
+  background: #f9f3e7;
+  color: #262626;
+  padding: 0.2rem 0.5rem;
+  border-radius: 2px;
+  font-family: 'Libre Caslon Text', serif;
+  font-size: 0.88rem;
+  cursor: pointer;
+}
+
+.step-btn:hover {
+  background: #eee4d5;
+}
+
+.step-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.step-counter {
+  font-size: 0.88rem;
+  color: #334136;
+}
+
+.step-global-caption {
+  font-size: 0.86rem;
+  color: #4a594e;
 }
 
 .expand-point {
@@ -296,7 +406,7 @@ a:hover {
   padding: 0.68rem 0.85rem;
   font-family: 'Cormorant Garamond', serif;
   font-size: 1.24rem;
-  font-weight: 600;
+  font-weight: 700;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -440,6 +550,194 @@ input[type='range'] {
   height: 10px;
   border-radius: 2px;
   background: linear-gradient(90deg, #525252, #2d2d2d);
+}
+
+.binary-riddle .binary-note {
+  margin-top: 0;
+  color: #3d3832;
+}
+
+.binary-controls {
+  border: 1px solid var(--rule);
+  background: var(--interactive-bg-soft);
+  padding: 0.7rem;
+  border-radius: 3px;
+}
+
+.binary-actions {
+  margin-top: 0.55rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.binary-btn {
+  border: 1px solid var(--rule);
+  background: #f9f3e7;
+  color: #262626;
+  padding: 0.25rem 0.55rem;
+  border-radius: 2px;
+  font-family: 'Libre Caslon Text', serif;
+  font-size: 0.88rem;
+  cursor: pointer;
+}
+
+.binary-btn:hover {
+  background: #eee4d5;
+}
+
+.binary-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.binary-answer,
+.binary-metric {
+  margin: 0.65rem 0 0;
+}
+
+.binary-remaining {
+  margin-top: 0.6rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.32rem;
+}
+
+.num-chip {
+  border: 1px solid var(--rule);
+  background: #fbfefb;
+  border-radius: 2px;
+  padding: 0.08rem 0.36rem;
+  font-size: 0.82rem;
+  min-width: 1.6rem;
+  text-align: center;
+}
+
+.intro-simulation .convergence-note,
+.intro-simulation .convergence-explain {
+  margin: 0 0 0.75rem;
+  color: #334136;
+}
+
+.convergence-controls {
+  border: 1px solid #bfd6c2;
+  background: var(--interactive-bg-soft);
+  padding: 0.75rem;
+  border-radius: 3px;
+}
+
+.convergence-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-top: 0.55rem;
+}
+
+.convergence-btn {
+  border: 1px solid var(--rule);
+  background: #f9f3e7;
+  color: #262626;
+  padding: 0.25rem 0.55rem;
+  border-radius: 2px;
+  font-family: 'Libre Caslon Text', serif;
+  font-size: 0.88rem;
+  cursor: pointer;
+}
+
+.convergence-btn:hover {
+  background: #eee4d5;
+}
+
+.convergence-chart-wrap {
+  position: relative;
+  margin-top: 0.85rem;
+  border: 1px solid #bfd6c2;
+  background: #fbfefb;
+  padding: 0.55rem;
+}
+
+.convergence-chart {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.convergence-band {
+  fill: #dcefd9;
+}
+
+.convergence-axis {
+  stroke: #4a594e;
+  stroke-width: 0.45;
+}
+
+.convergence-grid {
+  stroke: #bfd6c2;
+  stroke-width: 0.25;
+}
+
+.convergence-target {
+  stroke: #35543c;
+  stroke-width: 0.45;
+  stroke-dasharray: 1.4 1.4;
+}
+
+.convergence-line {
+  fill: none;
+  stroke: #242424;
+  stroke-width: 1.25;
+  vector-effect: non-scaling-stroke;
+}
+
+.convergence-axis-label,
+.convergence-tick-label {
+  fill: #4a594e;
+  font-family: 'Libre Caslon Text', serif;
+  font-size: 1.25px;
+}
+
+.convergence-x-label {
+  text-anchor: end;
+}
+
+.convergence-empty {
+  display: none;
+  position: absolute;
+  inset: 50% auto auto 50%;
+  width: min(80%, 22rem);
+  margin: 0;
+  transform: translate(-50%, -50%);
+  color: #4a594e;
+  text-align: center;
+  font-size: 0.95rem;
+}
+
+.convergence-chart-wrap.is-empty .convergence-empty {
+  display: block;
+}
+
+.convergence-chart-wrap.is-empty .convergence-line {
+  display: none;
+}
+
+.convergence-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 0.55rem;
+  margin-top: 0.75rem;
+}
+
+.convergence-stats p {
+  margin: 0;
+  border: 1px solid #bfd6c2;
+  background: #fbfefb;
+  padding: 0.48rem 0.55rem;
+  font-size: 0.92rem;
+}
+
+.intro-simulation .convergence-explain {
+  margin-top: 0.75rem;
+  font-size: 0.95rem;
 }
 
 .site-footer {

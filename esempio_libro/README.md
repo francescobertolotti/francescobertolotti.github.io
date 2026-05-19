@@ -6,7 +6,7 @@ This project is designed to be **easy to write in**: content lives in Markdown f
 
 - Edit chapters in `chapters/*.md`
 - To add a chapter, create a new `.md` file and register it in `chapters/chapters.json`
-- Start from `chapters/00-template.md` when creating a new chapter
+- Start from `chapters/chapter-template.md` when creating a new chapter
 - Write all content in English
 
 ## Useful basic syntax
@@ -23,8 +23,20 @@ In chapter text you can insert special lines:
 
 - `:::entropy-slider:::`
 - `:::coin-entropy:::`
+- `:::binary-riddle:::`
+- `:::coin-convergence:::`
 
 When the page loads, these tags become interactive widgets.
+
+## Editorial media blocks (frozen fields)
+
+You can also use structured blocks with frozen fields:
+
+- `figure`: `src` required, optional `alt`, `caption`, `layout`
+- `figure-step`: `frames` (recommended) or `src`, optional `alt`, `caption`, `layout`, `step-captions`
+- `embed`: `src` required, optional `title`, `caption`, `height`, `layout`
+
+See [CHEAT_SHEET.md](/Users/janalopi/Library/Mobile%20Documents/com~apple~CloudDocs/AAA%20ACCADEMIA/2026-202X%20RTDa%20Cattolica/Base%20libro/CHEAT_SHEET.md) for exact templates.
 
 ## Dual teaching mode (slide + textbook)
 

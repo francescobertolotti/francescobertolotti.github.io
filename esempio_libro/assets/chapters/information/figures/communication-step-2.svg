@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="260" viewBox="0 0 900 260">
+  <rect width="900" height="260" fill="#f6fbf6" />
+  <g font-family="Georgia, serif" font-size="26" fill="#213429">
+    <rect x="60" y="90" width="170" height="85" rx="6" fill="#ffffff" stroke="#9fbea4" stroke-width="2" />
+    <text x="145" y="142" text-anchor="middle">Source</text>
+
+    <rect x="270" y="90" width="170" height="85" rx="6" fill="#e7f3e8" stroke="#6fa07a" stroke-width="3" />
+    <text x="355" y="142" text-anchor="middle">Encoder</text>
+
+    <rect x="470" y="90" width="170" height="85" rx="6" fill="#e7f3e8" stroke="#6fa07a" stroke-width="3" />
+    <text x="555" y="142" text-anchor="middle">Decoder</text>
+
+    <rect x="680" y="90" width="170" height="85" rx="6" fill="#ffffff" stroke="#9fbea4" stroke-width="2" />
+    <text x="765" y="142" text-anchor="middle">Destination</text>
+  </g>
+  <g stroke="#486d50" stroke-width="3.5" fill="none">
+    <line x1="230" y1="132" x2="270" y2="132" />
+    <line x1="440" y1="132" x2="470" y2="132" />
+    <line x1="640" y1="132" x2="680" y2="132" />
+  </g>
+  <g fill="#486d50">
+    <polygon points="270,132 258,126 258,138" />
+    <polygon points="470,132 458,126 458,138" />
+    <polygon points="680,132 668,126 668,138" />
+  </g>
+  <text x="450" y="58" text-anchor="middle" font-family="Georgia, serif" font-size="24" fill="#2e4735">
+    Step 2: add coding stages
+  </text>
+</svg>
