@@ -533,25 +533,6 @@ input[type='range'] {
   font-size: 1.02rem;
 }
 
-.bar-wrap {
-  display: grid;
-  gap: 0.46rem;
-  margin-top: 0.72rem;
-}
-
-.bar-line {
-  display: grid;
-  grid-template-columns: 70px 1fr auto;
-  gap: 0.52rem;
-  align-items: center;
-}
-
-.bar {
-  height: 10px;
-  border-radius: 2px;
-  background: linear-gradient(90deg, #525252, #2d2d2d);
-}
-
 .binary-riddle .binary-note {
   margin-top: 0;
   color: #3d3832;
@@ -691,13 +672,18 @@ input[type='range'] {
 
 .convergence-axis-label,
 .convergence-tick-label {
-  fill: #4a594e;
+  fill: #151515;
   font-family: 'Libre Caslon Text', serif;
-  font-size: 1.25px;
+  font-size: 1.65px;
 }
 
 .convergence-x-label {
   text-anchor: end;
+}
+
+.convergence-tick {
+  stroke: #151515;
+  stroke-width: 0.35;
 }
 
 .convergence-empty {

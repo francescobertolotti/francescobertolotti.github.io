@@ -17,7 +17,7 @@ Before definitions, we can observe a simple regularity: repeated trials often ma
 :::embed
 src: assets/chapters/introduction/websites/Preferential Attachment.html
 title: Preferential attachment
-height: 620
+height: 760
 caption: A small embedded HTML page used as an interactive example.
 layout: wide
 :::

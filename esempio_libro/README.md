@@ -22,7 +22,6 @@ This project is designed to be **easy to write in**: content lives in Markdown f
 In chapter text you can insert special lines:
 
 - `:::entropy-slider:::`
-- `:::coin-entropy:::`
 - `:::binary-riddle:::`
 - `:::coin-convergence:::`
 

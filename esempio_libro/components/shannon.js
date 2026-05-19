@@ -15,11 +15,6 @@ export function mountShannonBlocks(root) {
       return;
     }
 
-    if (block === 'embed') {
-      mountEmbedBlock(el, config);
-      return;
-    }
-
     if (block === 'binary-riddle') {
       mountBinaryRiddle(el);
       return;
@@ -28,10 +23,6 @@ export function mountShannonBlocks(root) {
     if (block === 'entropy-slider') {
       mountEntropySlider(el);
       return;
-    }
-
-    if (block === 'coin-entropy') {
-      mountCoinEntropy(el);
     }
   });
 }
@@ -102,90 +93,6 @@ function mountFigureStepBlock(el, config) {
   });
 }
 
-function mountEmbedBlock(el, config) {
-  const fields = config.fields || {};
-  const src = fields.src || '';
-  if (!src) {
-    el.className = 'shannon-box media-block';
-    el.innerHTML = `<p class="media-error">Embed missing required field: <code>src</code>.</p>`;
-    return;
-  }
-
-  const title = fields.title || 'Embedded page';
-  const caption = fields.caption || '';
-  const height = normalizeEmbedHeight(fields.height);
-  const layout = normalizeLayout(fields.layout || 'wide');
-
-  el.className = `shannon-box media-block embed-block layout-${layout}`;
-  el.innerHTML = `
-    <p class="media-badge">Embed</p>
-    <div class="embed-frame-wrap">
-      <iframe
-        class="embed-frame"
-        src="${escapeHtml(src)}"
-        title="${escapeHtml(title)}"
-        style="height: ${height}px"
-        loading="lazy"
-        sandbox="allow-scripts allow-same-origin"
-      ></iframe>
-    </div>
-    ${caption ? `<p class="media-caption">${escapeHtml(caption)}</p>` : ''}
-  `;
-
-  setupResponsiveEmbed(el.querySelector('.embed-frame'), height);
-}
-
-function setupResponsiveEmbed(iframe, baseHeight) {
-  if (!iframe) return;
-
-  const fitToFrame = () => {
-    try {
-      const doc = iframe.contentDocument;
-      if (!doc || !doc.body) return;
-
-      const html = doc.documentElement;
-      const body = doc.body;
-      body.style.transform = '';
-      body.style.transformOrigin = 'top left';
-      body.style.width = '';
-      body.style.margin = '0';
-      html.style.overflowX = 'hidden';
-      body.style.overflowX = 'hidden';
-
-      const contentWidth = Math.max(
-        html.scrollWidth,
-        body.scrollWidth,
-        html.offsetWidth,
-        body.offsetWidth
-      );
-      const frameWidth = iframe.clientWidth || contentWidth;
-      const scale = contentWidth > 0 ? Math.min(1, frameWidth / contentWidth) : 1;
-
-      body.style.width = `${contentWidth}px`;
-      body.style.transform = `scale(${scale})`;
-
-      const contentHeight = Math.max(
-        html.scrollHeight,
-        body.scrollHeight,
-        html.offsetHeight,
-        body.offsetHeight
-      );
-      iframe.style.height = `${Math.max(baseHeight, Math.ceil(contentHeight * scale) + 16)}px`;
-    } catch {
-      iframe.style.height = `${baseHeight}px`;
-    }
-  };
-
-  iframe.addEventListener('load', () => {
-    [0, 250, 1000].forEach((delay) => window.setTimeout(fitToFrame, delay));
-  });
-
-  if ('ResizeObserver' in window) {
-    const observer = new ResizeObserver(fitToFrame);
-    observer.observe(iframe);
-  }
-}
-
 function mountFigureStepSequence(el, { frames, stepCaptions, caption, layout }) {
   el.className = `shannon-box media-block figure-step-block figure-step-sequence layout-${layout}`;
   el.innerHTML = `
@@ -250,12 +157,6 @@ function renderMediaBlock(el, { typeClass, layout, src, alt, caption, badge }) {
 
 function normalizeLayout(layout) {
   return layout === 'wide' ? 'wide' : 'inline';
-}
-
-function normalizeEmbedHeight(height) {
-  const numericHeight = Number(height);
-  if (!Number.isFinite(numericHeight)) return 520;
-  return Math.min(1200, Math.max(240, numericHeight));
 }
 
 function parseCsvList(value) {
@@ -410,44 +311,4 @@ function range(start, end) {
 
 function randomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-function mountCoinEntropy(el) {
-  el.className = 'shannon-box';
-  el.innerHTML = `
-    <h4>Interactive: entropy of a biased coin</h4>
-    <label>Heads probability p(H): <span class="head-value">0.50</span></label>
-    <input class="head-slider" type="range" min="0.01" max="0.99" step="0.01" value="0.50" />
-    <p class="metric">H(X) = <strong class="entropy-value">1.000</strong> bit</p>
-    <div class="bar-wrap">
-      <div class="bar-line"><span>Heads</span><div class="bar bar-h"></div><span class="label-h">50%</span></div>
-      <div class="bar-line"><span>Tails</span><div class="bar bar-t"></div><span class="label-t">50%</span></div>
-    </div>
-  `;
-
-  const slider = el.querySelector('.head-slider');
-  const headValue = el.querySelector('.head-value');
-  const entropyValue = el.querySelector('.entropy-value');
-  const barH = el.querySelector('.bar-h');
-  const barT = el.querySelector('.bar-t');
-  const labelH = el.querySelector('.label-h');
-  const labelT = el.querySelector('.label-t');
-
-  const render = () => {
-    const p = Number(slider.value);
-    const q = 1 - p;
-    const h = -p * Math.log2(p) - q * Math.log2(q);
-
-    headValue.textContent = p.toFixed(2);
-    entropyValue.textContent = h.toFixed(3);
-
-    barH.style.width = `${p * 100}%`;
-    barT.style.width = `${q * 100}%`;
-
-    labelH.textContent = `${Math.round(p * 100)}%`;
-    labelT.textContent = `${Math.round(q * 100)}%`;
-  };
-
-  slider.addEventListener('input', render);
-  render();
 }

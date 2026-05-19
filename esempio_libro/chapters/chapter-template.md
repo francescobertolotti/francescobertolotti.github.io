@@ -24,8 +24,6 @@ Add one concise implication or use case.
 
 Add a concise example.
 
-:::coin-entropy:::
-
 ## Notes
 
 - Keep sentences short.
