@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simulating social network with LLM agents: an analysis of information propagation and echo chambers</title>
+    <style>
+      :root {
+        --paper: #f5f0e4;
+        --paper-deep: #e5dcc8;
+        --ink: #161616;
+        --muted: #595349;
+        --line: #1e1e1e;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        color: var(--ink);
+        background:
+          linear-gradient(to bottom, rgba(229, 220, 200, 0.35), rgba(245, 240, 228, 0.98)),
+          var(--paper);
+        font-family: Georgia, "Times New Roman", serif;
+      }
+
+      main {
+        padding: 1rem 1rem 1.4rem;
+      }
+
+      h1, h2, h3 {
+        line-height: 1.15;
+        margin: 1.15rem 0 0.55rem;
+      }
+
+      h1:first-child, h2:first-child, h3:first-child {
+        margin-top: 0;
+      }
+
+      h2 {
+        font-size: 1.3rem;
+      }
+
+      h3 {
+        font-size: 1.02rem;
+      }
+
+      p, li {
+        line-height: 1.62;
+      }
+
+      p {
+        margin: 0 0 0.8rem;
+      }
+
+      ul {
+        margin: 0.25rem 0 0.95rem 1.2rem;
+        padding: 0;
+      }
+
+      li + li {
+        margin-top: 0.35rem;
+      }
+
+      code {
+        padding: 0.06rem 0.28rem;
+        border: 1px solid rgba(30, 30, 30, 0.18);
+        background: rgba(255, 255, 255, 0.45);
+        font-family: "SFMono-Regular", Menlo, Consolas, monospace;
+        font-size: 0.92em;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+<h2>Introduction</h2>
+<p>The paper studies whether LLM agents can simulate information propagation and echo-chamber formation in social networks. The concrete case is Twitter discussion around Roe v. Wade, chosen as a politically polarizing topic with clear opinion structure. The authors use GPT-4o agents equipped with memory, reflection, and chain-of-thought modules to imitate more human-like social behavior. They compare different network topologies to understand how structure changes diffusion, attitude scores, and polarization dynamics. The paper is motivated both by social science and by practical concerns about information management on online platforms.</p>
+<h2>Related Work</h2>
+<p>The literature review connects three strands: LLM-based agents, agent-based modeling, and social network simulation. The authors cite work such as GPT-3, generative agents, AgentVerse, and HiSim to justify using cognitively richer language agents. Their main positioning claim is that previous work showed LLM agents can behave plausibly, but did not focus enough on social-network mechanisms such as echo chambers. This paper therefore aims to bring LLM agents into a more network-analytic setting with explicit topology comparisons.</p>
+<h2>Methodology</h2>
+<p>The core method integrates HiSim and AgentVerse with GPT-4o-based agents that have memory, reflection, and chain-of-thought components. Memory stores past interactions, reflection updates strategies based on experience, and chain-of-thought supports more explicit reasoning. The framework uses Twitter-like actions such as posting, retweeting, liking, and commenting. This is meant to make diffusion depend on locally visible content and accumulated interaction history rather than on abstract opinion updating alone. Methodologically, the paper treats cognitive modules as the main source of increased realism.</p>
+<h2>Experimental Design</h2>
+<p>The experiments compare scale-free and small-world networks, with 15 agents over 10 timesteps and each timestep representing half a day. Agents are initialized with profile descriptions and initial opinions generated from the topic setting. At each round, agents interact with neighbors, then update their stance and a continuous 0-1 attitude score. The design also includes independent agents as a control group to separate network influence from isolated agent bias. The main observables are interaction patterns, clustering structure, average attitude, and opinion diversity.</p>
+<h2>Results: Echo Chambers</h2>
+<p>The paper argues that small-world networks show weaker echo-chamber effects than the alternative structures considered here. Their clustering coefficient is lower, which the authors interpret as fewer tightly closed conversational pockets. Using an echo-chamber score based on polarization, stance expectation, and homogeneous interaction, the small-world network again looks less trapped in like-minded interaction. The interpretation is that random long-range connections keep discussion more mixed and reduce homogeneous reinforcement. Scale-free networks, by contrast, are more exposed to concentration around influential hubs.</p>
+<h2>Results: Attitude and Opinion Diversity</h2>
+<p>Average attitude behaves differently across topologies. In small-world networks, attitude scores keep fluctuating rather than settling near neutrality, suggesting persistent interaction among diverse views. In scale-free networks, attitudes become more neutral when central nodes stop updating, which shows how dependent the whole system is on a few hubs. Opinion diversity also remains higher in the small-world case, while scale-free networks drift more strongly toward dominant opinions. The control group of isolated agents changes little, which supports the claim that network structure, not just initial agent stance, drives the observed dynamics.</p>
+<h2>Discussion</h2>
+<p>The paper reads small-world structure as comparatively healthier for public discourse because it sustains variation and reduces strong echo-chamber closure. It reads scale-free structure as efficient for spread but fragile in epistemic terms, because central nodes can dominate or freeze the dynamics. This leads to a broader claim that topology matters as much as agent cognition when simulating online opinion formation. The applied implication is that platform design and information governance should pay attention to network structure, not only content moderation.</p>
+<h2>Pros</h2>
+<ul>
+<li>The paper makes a clean comparison between network topologies, which gives the results an interpretable structural dimension.</li>
+<li>It does more than generate agent dialogue: it ties the simulation to concrete network metrics such as clustering, echo-chamber score, attitude, and diversity.</li>
+<li>The independent-agent control is a useful design choice because it helps isolate the effect of connectivity from the intrinsic bias of single agents.</li>
+<li>The Roe v. Wade case is substantively appropriate for testing polarization and information spread, so the scenario is not arbitrary.</li>
+</ul>
+<h2>Cons</h2>
+<ul>
+<li>The simulation is very small, with only 15 agents and 10 timesteps, so the claims about social-network dynamics remain fragile at scale.</li>
+<li>The paper relies heavily on GPT-4o-generated attitudes and updates, but provides limited external validation against real user-level behavior.</li>
+<li>The cognitive modules are presented as realism-enhancing, yet the paper does not separately test how much each module actually changes outcomes.</li>
+<li>The argument that small-world networks reduce echo chambers may be specific to this setup, topic, and metric design rather than a general result.</li>
+</ul>
+    </main>
+  </body>
+</html>

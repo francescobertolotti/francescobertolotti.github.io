@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simulating cooperative prosocial behavior with multi-agent llms: Evidence and mechanisms for ai agents to inform policy decisions</title>
+    <style>
+      :root {
+        --paper: #f5f0e4;
+        --paper-deep: #e5dcc8;
+        --ink: #161616;
+        --muted: #595349;
+        --line: #1e1e1e;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        color: var(--ink);
+        background:
+          linear-gradient(to bottom, rgba(229, 220, 200, 0.35), rgba(245, 240, 228, 0.98)),
+          var(--paper);
+        font-family: Georgia, "Times New Roman", serif;
+      }
+
+      main {
+        padding: 1rem 1rem 1.4rem;
+      }
+
+      h1, h2, h3 {
+        line-height: 1.15;
+        margin: 1.15rem 0 0.55rem;
+      }
+
+      h1:first-child, h2:first-child, h3:first-child {
+        margin-top: 0;
+      }
+
+      h2 {
+        font-size: 1.3rem;
+      }
+
+      h3 {
+        font-size: 1.02rem;
+      }
+
+      p, li {
+        line-height: 1.62;
+      }
+
+      p {
+        margin: 0 0 0.8rem;
+      }
+
+      ul {
+        margin: 0.25rem 0 0.95rem 1.2rem;
+        padding: 0;
+      }
+
+      li + li {
+        margin-top: 0.35rem;
+      }
+
+      code {
+        padding: 0.06rem 0.28rem;
+        border: 1px solid rgba(30, 30, 30, 0.18);
+        background: rgba(255, 255, 255, 0.45);
+        font-family: "SFMono-Regular", Menlo, Consolas, monospace;
+        font-size: 0.92em;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+<h2>Introduction</h2>
+<p>The paper studies whether multi-agent LLM systems can simulate cooperative prosocial behavior. The main domain is the Public Goods Game, a standard experimental model of cooperation and free-riding. The authors ask whether LLM agents can reproduce human behavioral effects observed in lab studies. They also test whether LLM agents can generalize effects from non-PGG experiments to PGG simulations. Finally, they examine whether LLM agents can show “unbounded” real-world behaviors outside laboratory-style games. The key real-world examples are classroom cheating and shopping-cart return behavior. The main result is that LLM agents reproduce the direction of human effects, but often exaggerate effect sizes. The paper argues that LLM simulations may help policymakers explore possible behavioral responses to social policies. However, the authors stress that these simulations are imperfect and require careful interpretation.</p>
+<h2>Public Goods Game Background</h2>
+<p>The Public Goods Game models cooperation in shared-resource situations. Each player receives an endowment and privately decides how much to contribute to a public pool. The public pool is multiplied and then redistributed equally among all players. Collective contribution benefits the group, but individual free-riding can increase personal payoff. Human experiments usually show partial cooperation in one-shot games. In repeated games, contributions tend to decline over time. Prior studies show that priming, transparency, and endowment inequality can change contribution levels. Positive framing and public contribution visibility usually increase cooperation. Unequal endowments can reduce cooperation among richer participants.</p>
+<h2>Related Work</h2>
+<p>The paper connects to work using LLMs to replicate human-subject experiments. Previous studies found that single LLMs can reproduce many psychology and economics results. Multi-agent LLM systems have also been used in economic games, negotiations, auctions, and role-playing simulations. The authors argue that existing work mostly studies bounded settings with constrained choices. Real-world policy problems are more open-ended because people can cheat, coordinate privately, persuade, or game the system. Generative-agent architectures are relevant because they allow memory, planning, movement, and communication. The paper extends this literature by testing both bounded lab-like behavior and more open-ended real-world behavior. Its main focus is prosocial cooperation, especially under policy-relevant interventions. The aim is not perfect human replication, but useful directional simulation.</p>
+<h2>Research Questions</h2>
+<p>RQ1 asks whether multi-agent LLM systems can replicate human behavior in PGG lab experiments. The three tested effects are game-name priming, contribution transparency, and unequal endowments. RQ2 asks whether LLM agents can transfer effects from non-PGG experiments into PGG simulations. This tests whether the system is only repeating known PGG results or applying broader behavioral mechanisms. RQ3 asks whether multi-agent LLMs can simulate richer real-world behaviors with unbounded action spaces. The paper also asks which simulation mechanisms are needed for such behaviors to emerge. The authors expect positive results for bounded lab replication. The open-ended scenarios are treated more exploratorily. The overall goal is to assess whether LLM-agent simulations can inform policy design.</p>
+<h2>Multi-Agent Architecture</h2>
+<p>The experiments use an open-source multi-agent simulation architecture implemented in Python. The LLM backbone is GPT-4o-mini. The simulation world contains locations, events, and agents. Agents have names, public biographies, private biographies, plans, and memories. Locations determine who can talk to whom and who can observe events. Events are generated when agents move, speak, or act. Agents observe events, store memories, update plans, and then act. This architecture allows agents to react to social context rather than only answer static prompts. For the PGG, the system includes player agents and a moderator agent.</p>
+<h2>Public Goods Game Implementation</h2>
+<p>The PGG simulations usually include 3 or 4 player agents plus one moderator. Players have visible public biographies describing their endowment and game role. Private biographies are used for hidden experimental conditions such as priming. The simulation includes a game room and often a contribution room. Players move to the contribution room to privately tell the moderator their contribution. The moderator records contributions and later announces payoffs. The payoff multiplier is 1.6, and the public pool is split evenly among players. Turn-taking is implemented through agent plans rather than a hard-coded turn system. Contribution amounts are extracted from logs using scripts and manually verified.</p>
+<h2>Study 1: Game-Name Priming</h2>
+<p>The first PGG replication tests positive and negative priming through the game name. Human subjects contributed more when the game was called the “Teamwork Game.” They contributed less when it was called the “Taxation Game.” The LLM simulation implements this by adding the game name to each agent’s private biography. Ten one-shot four-player PGGs are simulated with two agents in each priming condition. LLM agents contribute more under “Teamwork” than under “Taxation.” The difference is statistically significant. The direction matches human behavior. However, the effect size is exaggerated relative to the human experiment.</p>
+<h2>Study 1: Transparency</h2>
+<p>The second replication tests whether public contribution visibility increases cooperation. Human studies show that transparency increases average PGG contribution by about 6%. The simulation implements transparency by removing the private contribution room. Agents make contributions in the public game room, where other agents can observe them. The transparent and non-transparent conditions are compared across ten simulations. LLM agents contribute about 60% of their endowment with transparency. They contribute about 35% without transparency. The direction matches human behavior. The simulated effect is much larger than the human effect.</p>
+<h2>Study 1: Unequal Endowments</h2>
+<p>The third replication tests whether unequal endowments affect contribution behavior. Human studies show that poorer and middle-endowment players contribute similarly across equal and unequal settings. Richer players contribute less when endowments are unequal. The simulation compares equal endowments of $20, $50, and $80 with a mixed $20-$50-$80 condition. LLM agents with $20 show similar contribution across equal and unequal settings. LLM agents with $50 also show no statistically significant difference. LLM agents with $80 contribute much less in the unequal condition. The chart on page 8 shows this pattern for both humans and LLM agents. The result supports directional replication of human endowment effects.</p>
+<h2>Study 2: Transfer from Non-PGG Priming</h2>
+<p>Study 2 tests whether LLM agents can transfer effects from other cooperation games into PGG simulations. The first transfer experiment uses priming sentences from a solidarity-game study. Positive priming uses sentences about unity, family, sharing, and caring. Negative priming uses sentences about usefulness, profit, and making a deal. These priming methods had not been directly tested in PGG studies. In the LLM PGG simulation, unity-primed agents contribute about 65%. Proportionality-primed agents contribute about 30%. The chart on page 8 shows this large difference. The result suggests that LLM agents apply broader cooperation mechanisms, not only memorized PGG findings.</p>
+<h2>Study 2: Priming Over Time</h2>
+<p>The second transfer experiment studies whether priming effects fade over repeated rounds. Human competition-game studies show that priming can fade over time. The authors combine this with the PGG priming effect. They simulate five-round PGGs with “Teamwork” and “Taxation” priming. Teamwork-primed agents contribute about 75% in round 1 and about 55% in round 5. Taxation-primed agents contribute about 30% in round 1 and about 45% in round 5. Both conditions move closer to 50% over time. The chart on page 9 shows this fading priming effect. The authors interpret this as evidence of cross-context transfer rather than simple literature parroting.</p>
+<h2>Study 3: In-the-Wild Scenarios</h2>
+<p>Study 3 tests whether LLM agents can simulate open-ended real-world behavior. The authors focus on two examples: classroom late-policy behavior and shopping-cart return behavior. These scenarios are less bounded than lab games. Agents are not simply choosing a contribution from a fixed menu. They can move, talk, make plans, and react to social context. The goal is to see whether realistic behaviors emerge without being directly specified. The classroom case studies cheating as a negative form of cooperation. The shopping-cart case studies whether personal constraints reduce prosocial action. The main result is that additional simulation mechanisms are needed for realistic behavior to appear.</p>
+<h2>Classroom Scenario</h2>
+<p>The classroom simulation includes one professor and three students. Students have different traits, such as over-achiever, procrastinator, or work-life-balance orientation. The professor announces assignments and a late policy. The tested late policies are lenient, medium, and harsh. The tested perturbations are no perturbation, a midterm, and a midterm plus a difficult assignment. In the basic one-room setup, students never suggest cheating. This likely happens because the professor is always present. The authors then add separate locations: classroom, professor office, and student work room. This creates private student communication.</p>
+<h2>Classroom Results</h2>
+<p>With multiple rooms, cheating emerges in some conditions. Under the lenient late policy, cheating never appears. Under the medium late policy, cheating appears only when perturbations are present. Under the harsh late policy, cheating appears under all perturbation conditions. The strongest cheating frequency occurs under harsh late policy plus two perturbations. The chart on page 11 shows cheating rates across late-policy and perturbation conditions. The key mechanism is private communication. Students need a space where they can coordinate without the professor hearing. The result suggests that communication architecture is essential for simulating unbounded social behavior.</p>
+<h2>Shopping-Cart Scenario</h2>
+<p>The shopping-cart simulation includes one shopper agent in a parking lot. The shopper has a cart and must decide what to do with it before leaving. The two tested constraints are being far from the receptacle and having a child. The basic setup only states these conditions in general terms. This is not enough to strongly reduce cart-return behavior. The authors then introduce “stake-prompting.” Stake-prompting clarifies why the condition matters. For example, the shopper is “parked across the parking lot” or has a “five-month-old child.” This gives the agent enough context to understand effort, urgency, and risk.</p>
+<h2>Shopping-Cart Results</h2>
+<p>Without stake-prompting, shopper agents often return the cart despite personal constraints. With stake-prompting, agents return the cart less frequently. The chart on page 12 shows lower return rates when stakes are made explicit. This result matches the expectation that external pressures reduce prosocial action. The mechanism is not simply adding more detail. It clarifies what is at stake for the agent in the situation. The authors argue that LLM simulations need enough contextual specificity for realistic reasoning. Vague descriptions may produce overly prosocial or sanitized behavior. This is one of the paper’s main lessons for open-ended policy simulation.</p>
+<h2>Mechanisms for Unbounded Behavior</h2>
+<p>The paper identifies two mechanisms that help unbounded behavior emerge. The first is communication structure. Private communication enables coordination that would not occur in public. This is necessary for classroom cheating to appear. The second is stake-prompting. Agents need concrete information about incentives, costs, and risks. This is necessary for shopping-cart non-return behavior to appear. The authors suggest that these mechanisms may generalize beyond the two case studies. However, they also state that more mechanisms must be discovered for richer real-world simulations.</p>
+<h2>Policy-Relevance Discussion</h2>
+<p>The paper argues that imperfect simulations can still help policymakers. They may be useful for exploring possible outcomes before implementing policies. Even if exact magnitudes are wrong, the direction and relative strength of effects may still be informative. Simulations can help identify unintended consequences and negative externalities. They can also support prospection, meaning structured thinking about possible futures. The authors frame simulations as aids to human reasoning rather than replacements for evidence. They may also function as boundary objects across different policy stakeholders. For example, a simulation can help transportation, legal, and emergency-planning teams discuss the same intervention. The practical value is exploratory, not predictive certainty.</p>
+<h2>Limitations</h2>
+<p>The simulations often capture the direction of human effects but not their magnitude. Effect sizes are frequently exaggerated compared with human studies. Most tested interventions are simple, while real policies often combine multiple interacting mechanisms. Many human experiments used as reference points come from WEIRD populations. It is unclear whether LLM agents can simulate underrepresented groups, children, marginalized communities, or cultural variation. LLM behavior changes over time as models are updated. RLHF may make agents too rational or too stereotypically role-played compared with real humans. Naive persona prompting can produce caricatures rather than accurate cognitive models. The paper therefore recommends caution when using LLM simulations for policy.</p>
+<h2>Overall Interpretation</h2>
+<p>The paper shows that multi-agent LLM simulations can reproduce several qualitative patterns of human prosocial behavior. They replicate PGG effects from priming, transparency, and unequal endowments. They also transfer priming effects from non-PGG settings and reproduce fading priming over time. The real-world case studies show that open-ended behavior is possible, but not automatic. Cheating requires private communication channels. Shopping-cart non-return requires clear contextual stakes. The main contribution is methodological: identifying when LLM-agent simulations need richer mechanisms. The paper is optimistic but careful. LLM simulations may support policy ideation, but they are not yet calibrated behavioral forecasting tools.</p>
+<h2>Pros</h2>
+<p>* The paper tests LLM-agent behavior against specific human PGG findings, rather than relying only on qualitative plausibility.</p>
+<p>* The three Study 1 replications are well chosen because they cover framing, social pressure, and inequality as distinct cooperation mechanisms.</p>
+<p>* Study 2 is valuable because it tests transfer across experimental contexts, reducing the risk that LLM agents merely repeat known PGG results.</p>
+<p>* The classroom case identifies a concrete mechanism: private communication is necessary for cheating to emerge in the simulation.</p>
+<p>* The shopping-cart case identifies another concrete mechanism: agents need explicit contextual stakes to produce less prosocial behavior under pressure.</p>
+<h2>Cons</h2>
+<p>* The simulations often exaggerate effect sizes, so they are better for directional reasoning than quantitative policy prediction.</p>
+<p>* The main model is GPT-4o-mini, so the results may not generalize across LLM families, model sizes, or future model versions.</p>
+<p>* The number of simulation runs is relatively small in several experiments, especially the open-ended case studies.</p>
+<p>* The real-world scenarios are illustrative but narrow, so more domains are needed before claiming broad policy usefulness.</p>
+<p>* Some mechanisms are manually added after initial failure, which raises the risk that simulations reproduce researcher expectations rather than unexpected human behavior.</p>
+    </main>
+  </body>
+</html>

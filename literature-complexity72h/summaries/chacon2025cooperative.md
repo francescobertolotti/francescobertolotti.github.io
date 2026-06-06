@@ -1,0 +1,203 @@
+## Introduction
+
+The paper studies resilience in cooperative AI multi-agent systems.
+Resilience is defined as the ability of a system to withstand, adapt to, and recover from disruptive events.
+The authors argue that resilience is well studied in many fields, but not clearly defined in cooperative AI.
+Cooperative AI systems involve humans, machines, or both acting collectively to improve joint welfare.
+Such systems operate in dynamic environments and can be affected by failures, adversarial agents, or environmental changes.
+The paper proposes a formal definition of “cooperative resilience.”
+It also introduces a quantitative methodology to measure this property.
+The method is tested in Melting Pot 2.0, using both RL-based agents and LLM-augmented agents.
+The experiments focus on resource sustainability in a social dilemma environment.
+
+## Defining Cooperative Resilience
+
+The authors review resilience definitions across ecology, engineering, psychology, economics, network science, and dynamical systems.
+They identify three key questions: who is resilient, what resilience means, and what disruption the system faces.
+In cooperative AI, the resilient entity is a system of interacting humans, machines, or both.
+The disruptive event is any event that threatens joint welfare.
+The proposed definition includes five actions: anticipate, prepare, resist, recover, and transform.
+Anticipation and preparation refer to pre-disruption capabilities.
+Resistance and recovery describe how the system behaves during and after disruption.
+Transformation captures whether the system changes its behavior after disruption.
+The concept is tied to collective welfare, not only to individual agent performance.
+
+## Measuring Cooperative Resilience
+
+The authors propose a four-stage methodology for measuring cooperative resilience.
+The method assumes that disruptive events have a probability of occurrence and a magnitude of impact.
+Each specific realization of disruption defines a scenario.
+The metric compares normal system behavior with behavior under disruption.
+It is designed to capture both immediate performance loss and recovery dynamics.
+The methodology also rewards systems that improve after repeated disruptions.
+This reflects the idea that resilience includes learning and transformation.
+The final score combines several welfare-related variables into one cooperative resilience measure.
+The method is intended to be adaptable across different cooperative AI contexts.
+
+## Stage I: Performance and Reference Curves
+
+The first stage defines variables related to collective well-being.
+Examples include resource availability, resource distribution, resource sustainability, and agent welfare.
+Each variable is measured over time under normal conditions and disruptive conditions.
+The normal-condition trajectory is called the reference curve.
+The disruptive-condition trajectory is called the performance curve.
+The reference curve is not necessarily ideal; it is only the comparison baseline.
+Agent-level measures can be aggregated into collective measures.
+For example, equality in resource access can be measured with a Gini-based index.
+At the end of this stage, each welfare variable has a reference and performance curve.
+
+## Stage II: Summary Metrics in Time Windows
+
+The second stage analyzes each disruptive event within a specific time window.
+The method identifies the time of incident occurrence, the time of maximum failure, and the recovery time.
+It then compares the performance curve with the reference curve inside this window.
+The failure profile measures how fast and how strongly the system degrades.
+The recovery profile measures how well the system stabilizes after the disruption.
+Values close to 1 mean that disrupted behavior is close to reference behavior.
+Values below 1 indicate worse-than-reference performance.
+Values above 1 indicate performance better than the reference curve.
+This produces a resilience value for each variable and each disruptive event.
+
+## Stage III: Time-Window Assembly
+
+The third stage combines resilience values across successive disruptive events.
+The goal is to represent how resilience changes over time.
+If the system performs worse after later disruptions, the metric penalizes it.
+If the system improves after repeated disruptions, the metric rewards it.
+This implements the transformation component of cooperative resilience.
+The system is considered more resilient if it learns from previous disruptions.
+The method therefore does not only measure recovery after one event.
+It also measures whether the system becomes better prepared for future events.
+At the end of this stage, each welfare variable receives one resilience value across all disruptions.
+
+## Stage IV: Variable Assembly
+
+The fourth stage combines the resilience values of all welfare variables.
+The authors argue that simple averaging may hide poor performance in one important dimension.
+For this reason, they use the harmonic mean to combine variables.
+The harmonic mean penalizes low values more strongly than the arithmetic mean.
+This is appropriate because all welfare variables are considered relevant.
+A system with high resource availability but very poor equality should not be considered fully resilient.
+The final output is a single cooperative resilience score.
+This score aggregates agents, disruptive events, time windows, and welfare variables.
+The score is meant to support comparison between systems and scenarios.
+
+## Case Studies
+
+The authors test the methodology in Melting Pot 2.0.
+They use the Common Harvest Open scenario.
+In this environment, agents collect apples from trees.
+Apples regenerate depending on how many apples remain on the tree.
+If all apples are consumed from a tree, the tree disappears.
+This creates a social dilemma between individual consumption and collective sustainability.
+The authors compare RL-based agents and LLM-augmented agents.
+They introduce two types of disruptive events: apple disappearance and unsustainable bots.
+The goal is to measure how collective welfare changes under these disruptions.
+
+## Reinforcement Learning-Based Agents
+
+The RL agents are trained with Proximal Policy Optimization.
+Each agent has its own independent policy and neural network.
+The reward is 1 when an apple is eaten and 0 otherwise.
+Agents can move, rotate, and use a laser beam that relocates other agents.
+The agents are trained for 1,280,000 steps.
+The disruptive events are not explicitly included in training.
+However, agents may implicitly learn how to behave when apple availability is low.
+The RL approach is optimized around resource collection.
+This gives RL agents strong performance in some environmental disruption scenarios.
+
+## LLM-Augmented Agents
+
+The LLM agents use GPT-4 as the decision-making component.
+An adapter converts visual observations from Melting Pot into text descriptions.
+The architecture is inspired by generative agents.
+It includes memory, perception, planning, reflection, and action modules.
+Each module is implemented through prompts.
+The agents use Chain-of-Thought-style reasoning, except in the action module.
+The action module uses the SELF-DISCOVER prompting technique.
+Unlike RL agents, LLM agents are not trained in the environment.
+They rely on pre-existing world knowledge and textual reasoning to select actions.
+
+## First Disruptive Event: Apple Disappearance
+
+The first disruption suddenly removes apples from the environment.
+The probability of occurrence is fixed at specific time points.
+The magnitude is controlled by the probability that each apple disappears.
+The authors test three magnitudes and one, two, or three disruptive events.
+This creates nine experimental scenarios.
+The welfare variables are apples per capita, trees per capita, cumulative Gini equality, and collective hunger.
+The results show that higher disruption magnitude and more disruptions generally reduce resilience.
+This effect is stronger for LLM agents than for RL agents.
+RL agents generally outperform LLM agents in this type of environmental disruption.
+
+## Results for Apple Disappearance
+
+The resilience maps show that RL agents usually maintain higher cooperative resilience.
+This is likely because RL agents were trained across many episodes with varying apple availability.
+LLM agents tend to harvest apples rapidly and do not fully understand long-term resource depletion.
+In some cases, resilience increases after more repeated disruptions.
+The authors interpret this as a transformation effect captured by the metric.
+The system may improve its response after experiencing previous disruptions.
+Some results are counterintuitive: larger disruptions do not always produce lower resilience.
+This suggests that system resilience depends on agent dynamics and environmental conditions.
+The proposed metric captures adaptive behavior that simpler resource-count metrics would miss.
+
+## Second Disruptive Event: Unsustainable Bots
+
+The second disruption introduces bots with unsustainable harvesting behavior.
+These bots consume resources without following cooperative sustainability policies.
+The bots are introduced at a standardized time point.
+The magnitude of disruption is represented by how long the bots remain active.
+The authors test three bot durations.
+Longer bot presence reduces resilience in both RL and LLM systems.
+This occurs because bots reduce apple availability, tree survival, and equality of resource access.
+The same welfare variables are used as in the apple disappearance experiments.
+This disruption represents an internal social disruption rather than an environmental shock.
+
+## Results for Unsustainable Bots
+
+In the bot experiments, LLM agents show higher resilience than RL agents.
+This differs from the apple disappearance experiments.
+The authors suggest that LLM agents adapt better to social disruption caused by bots.
+RL agents continue their resource consumption policy after the bots leave.
+LLM agents show a change in behavior after the bots leave, moving closer to expected behavior.
+This suggests that LLM agents may adjust strategies based on external social influences.
+The cooperative resilience metric captures this adaptive response.
+The result shows that different agent architectures may be resilient to different disruption types.
+It also suggests that LLM-based systems may have advantages in socially adaptive contexts.
+
+## Discussion of the Results
+
+The experiments show that cooperative resilience is a complex system-level property.
+It depends on disruption magnitude, disruption frequency, agent architecture, and welfare variables.
+Traditional metrics based only on resources consumed are insufficient.
+The proposed metric captures resistance, recovery, and transformation.
+It also reveals unexpected patterns, such as resilience improving after repeated disruptions.
+The RL approach is stronger when disruptions affect environmental resource availability.
+The LLM approach can be stronger when disruptions involve social behavior.
+The authors emphasize that the results are preliminary.
+More experiments are needed to understand how cooperative resilience emerges.
+
+## Pros
+
+* The paper gives a clear definition of cooperative resilience tailored to cooperative AI systems.
+
+* The proposed metric is conceptually rich because it includes anticipation, preparation, resistance, recovery, and transformation.
+
+* The methodology compares disrupted behavior with reference behavior, making resilience measurable over time.
+
+* The case studies are useful because they test both environmental disruption and social disruption.
+
+* The comparison between RL and LLM agents shows that different AI architectures may be resilient in different ways.
+
+## Cons
+
+* The experimental validation is limited to one Melting Pot scenario, so generalization remains uncertain.
+
+* The LLM agents rely heavily on prompt-based architecture, and their behavior may change with different prompt designs.
+
+* The final resilience score depends on selected welfare variables, aggregation functions, and time-window choices.
+
+* The RL and LLM agents differ strongly in training and action timing, making direct comparison difficult.
+
+* The results are preliminary and need more scenarios, more disruption types, and possibly human-agent experiments.

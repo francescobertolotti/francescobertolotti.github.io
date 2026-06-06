@@ -1,0 +1,324 @@
+## Introduction
+
+The paper studies when multi-agent LLM systems become true collectives rather than simple collections of independent agents.
+The central problem is how to measure **emergent coordination** in a rigorous and data-driven way.
+The author proposes an information-theoretic framework based on partial information decomposition and time-delayed mutual information.
+The goal is to detect whether agents provide useful joint information that cannot be reduced to individual behavior alone.
+The empirical setting is a group guessing task where agents must collectively match a hidden target number.
+Agents cannot communicate directly and only receive group-level feedback: “too high” or “too low.”
+The paper tests three interventions: plain prompting, persona prompting, and persona plus theory-of-mind prompting.
+The main finding is that prompt design can steer LLM groups from loose aggregates toward more stable and differentiated collectives.
+The paper is about structural emergence, not about attributing human-like cognition or consciousness to LLM agents.
+
+## Research Questions
+
+The paper is organized around three research questions.
+RQ1 asks whether multi-agent LLM systems possess the capacity for emergence.
+RQ2 asks what functional advantages arise when multi-agent systems exhibit emergence.
+RQ3 asks whether prompts, roles, and reasoning structures can steer coordination regimes.
+The author focuses on conditional cross-agent synergy rather than proving that teams outperform solo agents.
+The key issue is whether agents contribute complementary information under a multi-agent constraint.
+The paper also asks whether role differentiation can become stable and goal-relevant.
+This connects LLM multi-agent systems with theories of collective intelligence in human groups.
+The framework is designed to distinguish useful synergy from accidental temporal coupling.
+This is important because high performance alone does not explain how a group is internally coordinated.
+
+## Group Guessing Task
+
+The empirical task is a “group binary search” game.
+Each agent privately proposes an integer.
+The sum of all agents’ guesses must match a hidden target number.
+Agents do not know the guesses of the other agents.
+Agents also do not know the size of the group.
+After each round, the whole group receives only one feedback signal: the group guess was too high or too low.
+The task is difficult because identical individual strategies can create oscillation.
+Success requires agents to become complementary: some must systematically guess higher or lower than others.
+The diagram on page 3 shows the task structure: private guesses, summed group output, and binary group feedback.
+
+## Experimental Interventions
+
+The paper tests three prompting conditions.
+The **Plain** condition gives only the task instructions.
+The **Persona** condition assigns each agent a specific persona with name, gender, age, occupation, traits, and values.
+The **Persona + ToM** condition adds an instruction to think about what other agents might do.
+The ToM prompt also asks agents to consider how their own action may affect the group outcome.
+This is meant to introduce a form of social reasoning.
+The interventions are designed to test whether identity and theory-of-mind-like reasoning change coordination.
+The paper does not treat personas as real psychology.
+They are prompt-level tools for inducing stable differentiation among agents.
+
+## Information Decomposition Framework
+
+The paper uses information decomposition to measure emergent structure.
+The basic idea is that a group may contain information about future states that no individual agent contains alone.
+This kind of information is called synergy.
+Redundancy means that agents provide overlapping information.
+Unique information means that one agent contributes information not found in others.
+The framework distinguishes differentiated versus undifferentiated agents, independent versus complementary information, and aligned versus incidental structure.
+The figure on page 3 summarizes this conceptual space.
+The central methodological claim is that emergent coordination can be quantified rather than only described qualitatively.
+This allows the paper to test whether multi-agent systems are integrated collectives or loose aggregates.
+
+## Emergence Capacity Criterion
+
+The first test is called **emergence capacity**.
+It measures whether pairs of agents jointly predict their future joint state better than either agent alone.
+The method uses partial information decomposition of time-delayed mutual information.
+For each pair of agents, the current states are used as sources and the future joint state is used as the target.
+The synergy component is extracted from this decomposition.
+A positive value means the pair has predictive information that exists only jointly.
+The group-level value is the median synergy across all unordered agent pairs.
+This criterion detects pairwise dynamical synergy.
+Its advantage is that it does not require defining a whole-system macro variable.
+
+## Practical Emergence Criterion
+
+The second test is called the **practical criterion**.
+It asks whether the macro-level signal predicts its own future better than the sum of individual microstates does.
+The macro signal is the group error: the sum of all guesses minus the target.
+The microstate is each agent’s deviation from its equal-share contribution.
+A positive practical criterion suggests emergent dynamical synergy at the group level.
+This test is broader than the pairwise emergence capacity criterion.
+It can detect higher-order effects without fixing the order of interaction.
+However, it can be penalized by redundancy among agents.
+For this reason, the paper uses multiple complementary measures rather than relying on one score.
+
+## Coalition Test
+
+The third test studies coalitions of three agents.
+It measures how much a triplet of agents predicts the future macro signal.
+The paper computes the mutual information between the triplet’s current state and the future group error.
+It then compares the full triplet with the most informative pair inside the triplet.
+The resulting measure, called (G_3), captures whether the triplet contains information not reducible to any pair.
+If (G_3>0), the group has beyond-pair structure.
+This test localizes whether macro predictability depends on larger coalitions.
+It also helps distinguish stable group-level coordination from pairwise alignment.
+The paper finds that ToM mainly induces strong pairwise alignment rather than irreducible triplet complexity.
+
+## Falsification and Robustness Tests
+
+The paper uses several null models to avoid mistaking noise for emergence.
+Row-wise shuffling breaks identity-linked structure.
+Column-wise time-shift surrogates preserve individual dynamics while disrupting cross-agent alignment.
+These tests help localize whether structure comes from stable agent identities or dynamic coordination.
+The paper also uses Fisher’s method to combine p-values across independent groups.
+Bias-corrected estimates are computed to address autocorrelation and finite-sample issues.
+Additional tests use time-demeaned data and functional null models without between-agent synergy.
+This is important because entropy estimation can produce false positives in small samples.
+The overall method is stronger than simply reporting group success rates.
+
+## Entropy Estimation
+
+The paper pays careful attention to entropy estimation.
+Small samples create upward bias in information measures, especially when many outcome bins are empty.
+The author uses quantile binning to reduce dimensionality.
+The main analysis uses two bins, with sensitivity tests using three bins.
+Jeffreys’ prior is used to smooth probability estimates and avoid zero-count problems.
+The Miller–Madow correction is also used as a robustness check.
+The paper uses Williams–Beer PID with (I_{min}) redundancy in the main setup.
+It also reports tests using a more conservative redundancy measure.
+These details matter because the paper’s conclusions depend on reliable information-theoretic estimation.
+
+## Agent Differentiation Test
+
+The paper also tests differentiation with hierarchical mixed models.
+This provides a non-information-theoretic check.
+The dependent variable is each agent’s deviation from its equal-share contribution.
+The first model includes only time effects.
+The second adds agent-level random intercepts.
+The third adds agent-level random slopes over time.
+The comparison tests whether agents develop stable person-specific contribution patterns.
+A significant improvement means that agents differ consistently in their role or learning trajectory.
+This test helps distinguish real role differentiation from shared group oscillation.
+
+## Preliminary Experiments
+
+The preliminary experiments test whether GPT-4.1 agents can solve the task under different group sizes and temperatures.
+Group size varies from 3 to 15.
+Temperature varies from 0 to 1 in steps of 0.1.
+The full grid contains 7,150 group experiments.
+The task becomes harder as group size increases.
+Each additional group member reduces the odds of success by about 8%.
+Higher temperature improves success, with a unit increase in temperature increasing the odds of success by about 50%.
+The surface plot on page 3 shows this sensitivity to group size and temperature.
+The main experiments therefore use a difficult setting: 10 agents and temperature 1.
+
+## Main Experimental Setup
+
+The main experiments use groups of 10 GPT-4.1 agents.
+The author runs 200 independent group experiments per treatment condition.
+There are 600 main experiments in total.
+The tested conditions are Plain, Persona, and Persona + ToM.
+The main outcome is not only whether the group succeeds.
+The paper focuses more on internal coordination structure.
+The same general analysis is later replicated with LLaMA-3.1-8B, LLaMA-3.1-70B, Gemini 2.0 Flash, and Qwen3.
+GPT-4.1 is accessed through the OpenAI API.
+Other models are accessed through different local or API-based inference systems.
+
+## Group Success Results
+
+Average group success does not differ significantly across the three GPT-4.1 interventions.
+The bar chart on page 7 shows similar success rates for Plain, Persona, and Persona + ToM.
+This is important because similar success can hide very different internal coordination.
+The paper therefore argues that performance alone is insufficient for understanding multi-agent systems.
+Two groups can achieve similar success while relying on different internal structures.
+The main contribution is to measure those structures directly.
+This also prevents overinterpreting win-rate improvements as proof of emergence.
+The result supports the need for information-theoretic diagnostics.
+The paper’s core finding is not simply that ToM improves success, but that it changes how coordination is organized.
+
+## Emergent Synergy Results
+
+The practical emergence criterion is positive across conditions.
+The joint Fisher tests are highly significant overall and within each treatment condition.
+Bias-corrected practical emergence estimates are also above zero in all conditions.
+The page 7 violin plot shows significant positive practical emergence for Plain, Persona, and Persona + ToM.
+The emergence capacity criterion also shows evidence of dynamical synergy.
+This supports the claim that multi-agent LLM systems have capacity for emergence.
+However, the type and functional quality of emergence differs across prompting conditions.
+Plain groups can show emergence-like temporal structure without stable useful differentiation.
+The ToM prompt produces more goal-directed and stable coordination.
+
+## Dynamical Mechanisms
+
+The paper then asks where emergence is located inside the group.
+The triplet mutual information (I_3) is near zero in Plain and Persona conditions.
+In the ToM condition, (I_3) becomes significantly positive.
+This means ToM creates a more predictable macro-state.
+The paper interprets this as a transition from a disordered “gaseous” state to a more stable collective regime.
+The author also computes Total Stability, defined as (I_3) normalized by macro-signal entropy.
+Total Stability is near zero in Plain and Persona but sharply positive in ToM.
+The figure on page 8 shows this contrast clearly.
+This is one of the paper’s strongest pieces of evidence that ToM changes collective dynamics.
+
+## Pairwise Alignment Versus Higher-Order Complexity
+
+The paper finds that ToM stability is mainly supported by pairwise alignment.
+The triadic information gain (G_3) is around zero in Persona and ToM.
+This means that triplets do not add much beyond the best pair.
+The Plain condition shows a small positive (G_3), but with near-zero stability.
+The paper interprets this as transient stochastic structure rather than sustained coordination.
+In ToM groups, agents converge on shared schemes or Schelling points.
+Because agents only receive group-level feedback, they coordinate through the aggregate signal.
+This resembles mean-field coupling rather than local pair-specific coordination.
+The system becomes stable and integrated, but not deeply higher-order in the triplet sense.
+
+## Identity-Linked Differentiation
+
+The mixed-model analysis shows that agent differentiation increases across interventions.
+Plain groups show some differentiation, but this is mostly attributed to noise or transient drift.
+Persona prompting creates more stable identity-linked behavioral differences.
+Persona + ToM produces the strongest differentiation.
+The page 8 plot shows the highest fraction of groups with significant differentiation in the ToM condition.
+The reasoning traces often refer to persona-specific experience.
+For example, some agents justify their guesses using occupational or personal background cues.
+The paper argues that ToM turns small persona-induced differences into self-reinforcing roles.
+This provides a basis for complementarity and stable alignment.
+
+## Functional Role of Emergence
+
+The paper tests whether synergy and redundancy predict performance.
+Individually, higher synergy alone does not predict success.
+Higher redundancy alone also does not predict success.
+However, the interaction between synergy and redundancy is significant.
+Performance improves when both are present together.
+The estimated interaction coefficient is (\beta=0.24), with (p=0.014).
+In marginal terms, redundancy amplifies the benefit of synergy by about 27%, and synergy amplifies the benefit of redundancy by about 27%.
+This means groups need both shared alignment and differentiated complementary contributions.
+The finding closely matches theories of effective human teamwork.
+
+## Mediation Analysis
+
+The paper also uses causal mediation analysis.
+The goal is to test whether ToM improves performance indirectly by increasing synergy.
+The mediation effect is marginally significant.
+The average causal mediation effect is 0.034, with a 95% confidence interval close to zero and (p=0.053).
+This is not strong enough to claim definitive causal proof.
+However, it is consistent with the interpretation that ToM improves performance through synergy.
+The author is careful because synergy, redundancy, and performance are co-dependent.
+This makes causal interpretation difficult.
+The result is suggestive rather than conclusive.
+
+## Experiments with Other Models
+
+The paper replicates the analysis with LLaMA-3.1-8B, LLaMA-3.1-70B, Gemini 2.0 Flash, and Qwen3.
+High-capability models show robust evidence of emergent synergy.
+LLaMA-70B, Gemini, and Qwen3 perform similarly to GPT-4.1 in broad terms.
+They also show stronger differentiation and emergence in Persona and ToM conditions than in Plain.
+The smaller LLaMA-8B performs worse.
+It often fails to break oscillatory cycles and does not develop strong goal-directed cross-agent synergy.
+This suggests that emergence depends partly on model capability.
+The results also suggest that ToM-like reasoning ability is important for functional coordination.
+The model comparison extends the paper beyond one proprietary model.
+
+## Qwen3 Failure Mode
+
+Qwen3 shows a specific failure mode.
+The paper calls it **paralysis under coordination ambiguity**.
+Qwen3 agents can enter long or infinite reasoning loops when trying to reconcile local binary-search logic with noisy group feedback.
+The appendix classifies these failures as mutual mental-modeling traps and related reasoning problems.
+This is important because reasoning models are not automatically better in multi-agent contexts.
+More explicit reasoning can create self-reinforcing loops.
+The finding connects to recent work on circular reasoning in reasoning models.
+It suggests that multi-agent coordination may require controlled reasoning, not just longer reasoning.
+This is one of the paper’s most interesting model-specific insights.
+
+## Related Work
+
+The paper situates itself in multi-agent LLM systems, collective intelligence, and information theory.
+Recent multi-agent LLM systems often report performance gains in software engineering, healthcare, and reasoning tasks.
+However, many studies explain gains through vague “greater-than-the-sum” language.
+This paper argues that such claims need formal tests.
+Human group research shows that groups perform well when members contribute complementary information while remaining aligned.
+Too much similarity creates redundancy without novelty.
+Too much differentiation creates fragmentation without coordination.
+The paper extends these ideas to LLM collectives.
+Its main difference from win-rate-based evaluations is that it measures internal coordination structure directly.
+
+## Design Implications
+
+The paper suggests that prompt design can act as a control parameter for multi-agent systems.
+Plain prompting can produce temporal coupling, but not necessarily goal-aligned collectivity.
+Personas create stable identity-linked differentiation.
+Adding ToM instructions creates stronger alignment and more stable collective dynamics.
+Useful multi-agent systems should therefore balance differentiation and integration.
+Role prompts alone may be insufficient if agents do not reason about others.
+Theory-of-mind-like prompting can help agents coordinate their roles around the group objective.
+However, too much reasoning may also cause loops in some models, as seen with Qwen3.
+This suggests that multi-agent orchestration should tune both role diversity and social reasoning depth.
+
+## Limitations
+
+The paper studies one task: a group binary-search guessing game.
+This task is well suited to measuring complementarity, but it is still minimal and artificial.
+The paper does not prove team-over-solo superiority.
+It focuses instead on conditional synergy inside a multi-agent setting.
+Some information-theoretic measures are limited to pairwise order (k=2), so higher-order synergy may be missed.
+Entropy estimation remains difficult despite many corrections and robustness checks.
+The link between synergy, redundancy, and performance is statistically challenging because these variables co-emerge.
+More tasks are needed to test whether the same coordination regimes appear elsewhere.
+The author also notes that evidence of synergy should not be interpreted as consciousness or sophisticated cognition.
+
+## Pros
+
+* The paper provides a rigorous information-theoretic framework for measuring emergence instead of relying on vague “more than the sum of parts” claims.
+
+* The group guessing task is well chosen because it makes pure redundancy harmful and requires complementary roles for success.
+
+* The distinction between Plain, Persona, and Persona + ToM prompting is specific and useful for understanding how prompt design changes collective structure.
+
+* The paper uses strong falsification logic, including row-wise and column-wise surrogate tests to separate identity-locked structure from dynamic alignment.
+
+* The Qwen3 analysis is valuable because it shows that reasoning models can fail through coordination ambiguity and self-reinforcing mental-modeling loops.
+
+## Cons
+
+* The empirical task is narrow and artificial, so it is unclear whether the same emergence measures predict performance in richer collaborative tasks.
+
+* The paper does not establish that multi-agent groups outperform solo agents; it focuses on synergy conditional on using a group.
+
+* Some measures are limited to pairwise or triplet structures, which may miss higher-order coordination in larger groups.
+
+* The performance effects are suggestive but not always strong; the mediation effect of ToM through synergy is only marginally significant.
+
+* The framework is mathematically careful but complex, which may make it harder for practitioners to apply without specialized information-theory expertise.

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>A Guide to Large Language Models in Modeling and Simulation: From Core Techniques to Critical Challenges</title>
+    <style>
+      :root {
+        --paper: #f5f0e4;
+        --paper-deep: #e5dcc8;
+        --ink: #161616;
+        --muted: #595349;
+        --line: #1e1e1e;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        color: var(--ink);
+        background:
+          linear-gradient(to bottom, rgba(229, 220, 200, 0.35), rgba(245, 240, 228, 0.98)),
+          var(--paper);
+        font-family: Georgia, "Times New Roman", serif;
+      }
+
+      main {
+        padding: 1rem 1rem 1.4rem;
+      }
+
+      h1, h2, h3 {
+        line-height: 1.15;
+        margin: 1.15rem 0 0.55rem;
+      }
+
+      h1:first-child, h2:first-child, h3:first-child {
+        margin-top: 0;
+      }
+
+      h2 {
+        font-size: 1.3rem;
+      }
+
+      h3 {
+        font-size: 1.02rem;
+      }
+
+      p, li {
+        line-height: 1.62;
+      }
+
+      p {
+        margin: 0 0 0.8rem;
+      }
+
+      ul {
+        margin: 0.25rem 0 0.95rem 1.2rem;
+        padding: 0;
+      }
+
+      li + li {
+        margin-top: 0.35rem;
+      }
+
+      code {
+        padding: 0.06rem 0.28rem;
+        border: 1px solid rgba(30, 30, 30, 0.18);
+        background: rgba(255, 255, 255, 0.45);
+        font-family: "SFMono-Regular", Menlo, Consolas, monospace;
+        font-size: 0.92em;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+<h2>Introduction</h2>
+<p>The paper is a practical guide on how to use LLMs in Modeling and Simulation workflows. It argues that many apparently simple LLM practices can create hidden scientific problems. Examples include over-prompting, assuming temperature 0 gives determinism, using RAG without optimization, and fine-tuning before testing what the model already knows. The target audience is not AI experts, but M&amp;S researchers, practitioners, commissioners, and end-users. The paper treats LLMs as components of larger pipelines, not as isolated prompt-response systems. These pipelines include data retrieval, core inference, experimentation, evaluation, deployment, monitoring, governance, privacy, and risk controls. The main message is that LLMs should be used through principled design, diagnostics, and empirical evaluation. The author emphasizes that “working” outputs are not enough for scientific reliability.</p>
+<h2>Core Elements of LLMs</h2>
+<p>The paper focuses on three core elements: prompts, decoding hyperparameters, and knowledge augmentation. Prompts define tasks, constraints, examples, and expected output formats. Hyperparameters, especially temperature, shape how probability distributions are turned into generated text. Knowledge augmentation adds external or specialized knowledge through methods such as RAG, LoRA, adapters, or selection-based routing. These elements are not simple technical details; they affect reproducibility, transparency, cost, latency, and performance. The paper argues that defaults are often used without justification. This is risky in M&amp;S because simulation studies usually require careful parameter control and sensitivity analysis. LLM-based workflows should therefore be treated like experimental systems, not casual software tools.</p>
+<h2>Prompt Engineering</h2>
+<p>The paper criticizes trial-and-error prompting and recommends explicit, structured prompt design. Tasks should be decomposed into smaller prompts rather than handled through one broad instruction. For example, extracting a conceptual model from text should be split into finding concepts, identifying relationships, and characterizing relationship polarity. Each task prompt should be followed by a validation prompt. Longer prompts and more examples do not always improve performance; they can create ambiguity or reduce accuracy. The format of the input matters: the same graph may be easier or harder for an LLM depending on whether it is represented as edges, neighbors, matrices, or tags. Role prompting can help in social simulation, but it must be phrased carefully to avoid refusal or inappropriate identity claims. The author also recommends structured outputs, regular expressions, or simpler LLMs for parsing when outputs are not machine-readable.</p>
+<h2>Prompt Representation and Communication</h2>
+<p>The paper argues that prompts should be communicated more systematically in scientific work. Many papers simply place prompts in boxes or repositories, which makes reuse and interpretation difficult. A better approach is to describe prompt structure formally, using declarative decorators or grammar-like notation. This can make the role of each prompt component clearer. Prompt representation matters for reproducibility because readers need to know why a prompt was built in a certain way. The paper also notes that prompt optimization is increasingly automated. Tools can search for better prompts or compress prompts to reduce cost. This changes the human role from writing every prompt manually to defining objectives and constraints for optimization.</p>
+<h2>Hyperparameters</h2>
+<p>The paper explains that decoding hyperparameters control how an LLM selects tokens during inference. Temperature is the most common example, but other parameters include top-p, top-k, penalties, and reasoning depth in newer models. Different providers use different default temperatures, so not reporting temperature harms reproducibility. Setting temperature to 0 does not guarantee deterministic output. The optimal temperature depends on the task, the model, and the simulation parameter being varied. In the author’s examples, the best temperature changes across GPT versions, context-window sizes, and applications. Some models react strongly to temperature, while others are almost insensitive. The paper recommends systematic hyperparameter optimization, using line charts or heatmaps when appropriate.</p>
+<h2>Knowledge Augmentation: RAG</h2>
+<p>RAG adds external contextual knowledge to the prompt at inference time. It does not change model weights; it changes what the model sees. The paper stresses that contextual knowledge does not simply override the model’s internal knowledge. Parametric and contextual knowledge coexist, and the model may over-rely on irrelevant or conflicting retrieved material. RAG is useful in M&amp;S for grounding outputs in policies, mission documents, simulation states, domain literature, or prior agent interactions. However, RAG can also degrade performance if retrieval is noisy, chunks are poorly designed, or context is badly integrated. Important RAG design choices include chunk size, overlap, embedding model, retrieval method, top-k value, reranking, metadata, and context ordering. The author argues that RAG should be optimized and evaluated, not treated as a simple drag-and-drop solution.</p>
+<h2>Preparing a Corpus for RAG</h2>
+<p>The paper identifies three important corpus-preparation steps: chunking, de-duplication, and metadata enrichment. Chunking splits documents into smaller semantically coherent units. Good chunking improves retrieval precision and reduces context-window overload. De-duplication removes repeated or near-repeated text, preventing some sources from dominating retrieval. Metadata enrichment adds structured descriptors to chunks. Metadata can support filtering, reranking, interpretability, and traceability. These steps are especially important when the corpus combines overlapping reports or heterogeneous documents. The broader point is that RAG quality depends on corpus engineering, not only on the LLM.</p>
+<h2>Knowledge Augmentation: LoRA, Adapters, and Selection Methods</h2>
+<p>LoRA modifies the model’s parametric pathway by adding trainable low-rank components to selected transformations. Unlike RAG, LoRA is persistent and specializes model behavior for stable tasks or domains. In M&amp;S, LoRA can be useful for enforcing modeling conventions, such as causal loop diagram style or agent-based modeling terminology. LoRA is not mainly for injecting scenario-specific facts; RAG is better for that. Adapters add auxiliary parameterized mechanisms and can support task-specific transformations. Selection-based methods route computation through different parts of the model without necessarily adding parameters. The paper compares these methods by persistence, control mechanism, interpretability, risk, and suitability for changing scenarios. A key warning is that combining LoRAs can create interference if their assumptions or conventions conflict.</p>
+<h2>Why LLMs Are Non-Deterministic</h2>
+<p>The paper argues that non-determinism has many sources and should not be reduced to temperature. Sampling can introduce stochasticity, but inference implementation can also change outputs. Quantization changes numerical precision and can make token sampling diverge. Attention optimizations can change the order of numerical operations and therefore rounding behavior. Key-value cache management can affect long-context prompts. Centralized API routing may send calls to different providers or model implementations. Model names may also be unstable because providers can silently update or forward deprecated models. The author emphasizes that “same prompt, same model name” does not always mean the same computational system.</p>
+<h2>Evaluating Non-Determinism</h2>
+<p>The paper recommends evaluating non-determinism before trying to reduce it. Some applications may tolerate variability if cost and latency are more important. However, this should be an informed decision based on measured effects. Simple averages and confidence intervals may be insufficient because LLM performance can be multimodal or heavy-tailed. Best-case runs can hide catastrophic worst-case failures. The paper proposes using repeated runs, metrics such as WorstAcc@N, BestAcc@N, ΔAcc, and Total Agreement Rate. Design of Experiments can decompose variance across simulation parameters, LLM design choices, and stochastic effects. In one case study, most variability in a sophisticated model-merging task came from non-determinism, not from controllable prompt design factors.</p>
+<h2>Mitigating Non-Determinism</h2>
+<p>Mitigation should begin only after identifying that non-determinism is actually problematic. If variability comes from dynamic routing, one solution is to fix the provider rather than allowing automatic routing. If variability comes from model updates, one can use dated model IDs or self-host open-weight models. If variability comes from sampling, decoding settings and structured output methods may help. If variability comes from task ambiguity, decomposition and validation prompts can reduce instability. The paper stresses that mitigation strategies have trade-offs in cost, latency, access, and model quality. A practical solution may be to report variability rather than eliminate it. For M&amp;S, the main requirement is to make variability visible and scientifically interpretable.</p>
+<h2>Risks of LLMs as a One-Stop Shop</h2>
+<p>The paper criticizes the use of LLMs as universal substitutes for expert scientific work. One example is using LLMs to generate citations or summarize literature without critical reading. Even when references are real, they may not support the claims they are attached to. This can create automated confirmation bias. The same problem applies to data analysis or code generation. An LLM may produce an answer or script that appears correct but is unstable, low-quality, or insecure. In M&amp;S, an LLM may generate a simulation model that “works” superficially but fails methodologically. The author argues that scientific standards require more than surface-level correctness.</p>
+<h2>Translating Rather Than Delegating</h2>
+<p>The paper recommends using LLMs as translators or mediators between humans and specialized tools. Many tasks already have better tools than LLMs, such as model checkers, test generators, solvers, or simulation libraries. The LLM should not replace these tools when they are more reliable. Instead, it can translate informal modeler requirements into the formal input required by specialized tools. This translation is not just syntax conversion. The LLM can help fill implicit assumptions that humans often omit but formal tools require. For example, an evacuation requirement may need to be expanded into state-based abstractions or temporal logic. The paper stresses that any inferred assumptions must be disclosed to the modeler.</p>
+<h2>Architectures for Integrating LLMs in Workflows</h2>
+<p>The paper describes several architectures for combining LLMs with specialized tools. In a tool-embedded architecture, the LLM is a backend assistant inside a modeling environment. In a translator-pair architecture, two LLMs translate between user needs and tool requirements through natural language. This can create latency, cost, and semantic drift. A single-LLM front-end architecture can work when there is only one specialized tool. However, it may suffer from interface bleeding, where users must still understand the hidden tool. For many tools, the author favors a shared LLM backbone augmented with reusable lightweight modules such as LoRAs. This multi-tenant architecture can support many users and tasks more efficiently.</p>
+<h2>Discussion: Multimodal LLMs</h2>
+<p>The paper notes that M&amp;S has mostly used LLMs as text processors. However, newer multimodal models can process images, audio, or video. Potential M&amp;S applications include reading UML diagrams, analyzing simulation outputs, and learning from slide decks. The author notes that current results are mixed. In one example, video input did not clearly improve analysis over image batches, and text was more robust. The paper therefore treats multimodal LLMs as promising but not yet mature for routine M&amp;S use. Future research should systematically evaluate when visual or video inputs improve modeling and simulation workflows. The key message is that multimodality should be tested, not assumed beneficial.</p>
+<h2>Discussion: Design by Subtraction and Unlearning</h2>
+<p>The paper argues that most LLM workflows are designed by addition. When a model fails, practitioners add more prompt instructions, more context, fine-tuning, or RAG. This can patch errors without addressing their source. Design by subtraction instead asks what the model should forget or stop associating. In conceptual modeling, LLMs can violate basic requirements such as temporal consistency, causal correctness, grounding, and structural cohesion. Unlearning may help remove problematic associations or training examples. Exact unlearning through data deletion can be expensive and may damage other abilities. Approximate unlearning offers alternatives, but it is still underexplored in M&amp;S.</p>
+<h2>Reflection and Exploration</h2>
+<p>The paper ends with practical exploration questions rather than only theoretical discussion. One exercise asks users to test whether more reasoning actually improves results. Another asks users to think critically about what “open” means for open models. A third explores how LLMs can be used inside RAG pipelines, not only as final generators. Another exercise asks users to probe what an LLM already knows before adding RAG or LoRA. The paper also asks readers to consider when fine-tuning may harm guardrails. These exercises reinforce the paper’s main practical message. Modelers should diagnose, test, and justify LLM design choices before adding complexity.</p>
+<h2>Pros</h2>
+<p>* The paper is highly practical and directly useful for M&amp;S researchers who use LLMs without being AI specialists.</p>
+<p>* It gives strong warnings against common mistakes, especially over-prompting, unreported defaults, naive RAG use, and assuming temperature 0 gives determinism.</p>
+<p>* The discussion of non-determinism is especially valuable because it connects LLM variability with simulation methodology and Design of Experiments.</p>
+<p>* The distinction between delegating to LLMs and using them as translators for specialized tools is conceptually strong and methodologically important.</p>
+<p>* The paper covers both current techniques and emerging directions, including RAG, LoRA, multimodal models, architecture design, and unlearning.</p>
+<h2>Cons</h2>
+<p>* The paper is broad and practical, so it does not provide a single controlled empirical benchmark for all recommendations.</p>
+<p>* Some examples come from the author’s experience and selected studies, which makes the guide useful but partly opinion-driven.</p>
+<p>* The paper focuses mainly on methodological guidance, so readers looking for formal theory or quantitative comparison may find it less conclusive.</p>
+<p>* Many recommendations depend on rapidly changing LLM technology, so some details may become outdated quickly.</p>
+<p>* The discussion of unlearning and multimodal LLMs is promising but still preliminary for M&amp;S applications.</p>
+    </main>
+  </body>
+</html>

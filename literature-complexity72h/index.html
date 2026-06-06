@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Complexity 72h | LLM and Complexity</title>
+    <meta
+      name="description"
+      content="An interactive paper archive on LLMs, complexity, and agentic systems, filterable by category and keyword."
+    />
+    <link rel="stylesheet" href="style.css" />
+    <script defer src="data/papers.js"></script>
+    <script defer src="app.js"></script>
+  </head>
+  <body>
+    <header class="masthead">
+      <p class="eyebrow">Complexity 72h</p>
+      <h1>An Interactive background on LLM and Complexity</h1>
+      <p class="intro">
+        An incomplete tool created by Francesco Bertolotti to get the basics
+        regarding Agentic Complex Systems <span class="nowrap">and LLM</span>
+      </p>
+    </header>
+
+    <main class="page">
+      <section class="controls" aria-label="Filters">
+        <div class="control-block">
+          <label for="search-input">Search</label>
+          <input
+            id="search-input"
+            type="search"
+            placeholder="Title, author, source, keyword..."
+            autocomplete="off"
+          />
+        </div>
+
+        <div class="control-block">
+          <label for="sort-select">Sort</label>
+          <select id="sort-select">
+            <option value="year-desc">Newest first</option>
+            <option value="year-asc">Oldest first</option>
+            <option value="title-asc">Title A-Z</option>
+          </select>
+        </div>
+
+        <div class="control-block status-block" aria-live="polite">
+          <span id="results-count">0 paper</span>
+          <button id="reset-filters" type="button">Reset filters</button>
+        </div>
+      </section>
+
+      <section class="category-strip" aria-labelledby="category-title">
+        <h2 id="category-title">Categories</h2>
+        <div id="category-filters" class="category-filters"></div>
+      </section>
+
+      <section class="keyword-strip" aria-labelledby="keyword-title">
+        <div class="filter-header">
+          <h2 id="keyword-title">Keywords</h2>
+          <p class="filter-note">
+            Select one or more keywords. This filter combines with the category
+            filter.
+          </p>
+        </div>
+        <div id="keyword-filters" class="category-filters"></div>
+      </section>
+
+      <section class="legend" aria-label="Legend">
+        <p>
+          Titles and PDF links open the local file directly. Categories come
+          from your original BibTeX files, and keyword filtering uses the
+          OpenAlex keywords stored in the dataset when available. Summary opens
+          a popup with the study notes in Markdown format.
+        </p>
+      </section>
+
+      <section class="list-header" aria-hidden="true">
+        <span>Year</span>
+        <span>Paper</span>
+        <span>Actions</span>
+      </section>
+
+      <section id="paper-list" class="paper-list" aria-label="Paper list"></section>
+    </main>
+
+    <div id="summary-modal" class="summary-modal" hidden>
+      <div class="summary-backdrop" data-close-summary="true"></div>
+      <section
+        class="summary-panel"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="summary-modal-title"
+      >
+        <header class="summary-header">
+          <div class="summary-heading">
+            <p class="summary-label">Summary</p>
+            <h2 id="summary-modal-title">Paper summary</h2>
+          </div>
+          <button id="summary-close" type="button" class="summary-close">
+            Close
+          </button>
+        </header>
+
+        <div id="summary-content" class="summary-content" aria-live="polite"></div>
+      </section>
+    </div>
+  </body>
+</html>

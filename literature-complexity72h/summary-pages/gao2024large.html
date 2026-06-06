@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Large language models empowered agent-based modeling and simulation: A survey and perspectives</title>
+    <style>
+      :root {
+        --paper: #f5f0e4;
+        --paper-deep: #e5dcc8;
+        --ink: #161616;
+        --muted: #595349;
+        --line: #1e1e1e;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        color: var(--ink);
+        background:
+          linear-gradient(to bottom, rgba(229, 220, 200, 0.35), rgba(245, 240, 228, 0.98)),
+          var(--paper);
+        font-family: Georgia, "Times New Roman", serif;
+      }
+
+      main {
+        padding: 1rem 1rem 1.4rem;
+      }
+
+      h1, h2, h3 {
+        line-height: 1.15;
+        margin: 1.15rem 0 0.55rem;
+      }
+
+      h1:first-child, h2:first-child, h3:first-child {
+        margin-top: 0;
+      }
+
+      h2 {
+        font-size: 1.3rem;
+      }
+
+      h3 {
+        font-size: 1.02rem;
+      }
+
+      p, li {
+        line-height: 1.62;
+      }
+
+      p {
+        margin: 0 0 0.8rem;
+      }
+
+      ul {
+        margin: 0.25rem 0 0.95rem 1.2rem;
+        padding: 0;
+      }
+
+      li + li {
+        margin-top: 0.35rem;
+      }
+
+      code {
+        padding: 0.06rem 0.28rem;
+        border: 1px solid rgba(30, 30, 30, 0.18);
+        background: rgba(255, 255, 255, 0.45);
+        font-family: "SFMono-Regular", Menlo, Consolas, monospace;
+        font-size: 0.92em;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+<h2>Introduction</h2>
+<p>The paper surveys how large language models can empower agent-based modeling and simulation. Agent-based modeling studies complex systems by simulating individual agents and their interactions. Traditional agents often rely on fixed rules, equations, stochastic models, or limited machine learning models. The authors argue that LLM agents can improve simulation because they support language, reasoning, planning, adaptation, and communication. The survey is interdisciplinary and covers simulation, LLM agents, social science, economics, physical systems, cyber systems, and hybrid systems. The paper organizes recent work into four domains: social, physical, cyber, and hybrid. It also discusses major challenges: environment perception, human alignment, action generation, evaluation, scalability, robustness, and ethics. The main goal is to explain why LLM agents are useful for simulation and how this emerging field should develop. The paper also provides a repository of representative papers and code.</p>
+<h2>Background: Agent-Based Modeling and Simulation</h2>
+<p>Agent-based simulation models complex systems from the bottom up. The main components are agents, environment, and interactions. Agents represent individuals or entities with attributes, states, behaviors, and decision-making rules. The environment defines the space, resources, constraints, and external conditions in which agents act. Interactions can occur between agents or between agents and the environment. The value of ABMS is that macro-level patterns can emerge from local micro-level interactions. This makes ABMS useful in economics, sociology, ecology, biology, traffic, urban planning, and engineering. The authors emphasize that realistic ABMS requires agents with autonomy, social ability, reactivity, and pro-activeness. Agents should also show bounded rationality, because real humans do not make perfectly rational decisions.</p>
+<h2>Traditional ABMS Methodologies and Limitations</h2>
+<p>Traditional ABMS methods include predefined rules, symbolic equations, stochastic models, and machine learning models. Rule-based models are interpretable but often too rigid for complex environments. Symbolic equations can explain mechanisms but may oversimplify human behavior. Stochastic models capture uncertainty but often lack rich reasoning and adaptation. Machine learning models improve prediction but can be hard to interpret and generalize. The authors argue that traditional agents often rely on reactive architectures. These agents can respond to local conditions but struggle with long-term planning and complex tasks. A major limitation is that specific agents must often be redesigned for each environment. Existing methods also struggle to combine description, explanation, prediction, and scenario exploration in one framework.</p>
+<h2>Why LLM Agents Are Useful for ABMS</h2>
+<p>LLM agents can understand and generate language, which is central to human behavior. They can act without explicit rules in every situation. They can make plans, use tools, communicate, and adapt to changing contexts. They can represent heterogeneous personas through prompting, in-context learning, or fine-tuning. They can simulate human-like communication between individuals, groups, and institutions. They can also explain their own actions in natural language, which improves interpretability. The authors argue that LLMs offer a new paradigm for simulation with human-level or near-human-like intelligence. This does not mean LLM agents are perfect simulations of humans. Rather, they provide more flexible and expressive agents than many traditional ABMS approaches.</p>
+<h2>Critical Abilities of LLM Agents</h2>
+<p>The paper identifies four critical abilities of LLM agents for ABMS. The first is perception: agents must understand information from the environment and from other agents. The second is reasoning and decision-making: agents must choose suitable actions under constraints and uncertainty. The third is adaptive learning and evolution: agents must change behavior as the environment changes. The fourth is heterogeneity and personalization: agents must represent different preferences, roles, and internal characteristics. LLMs support perception mainly through language and, increasingly, multimodal input. They support reasoning through prompt-based planning, task decomposition, and world knowledge. They support adaptation through in-context learning, memory, and reflection. They support heterogeneity through role prompts, personal profiles, and fine-tuned behavior.</p>
+<h2>Environment Construction and Interface</h2>
+<p>The first design challenge is building an environment that LLM agents can perceive and interact with. The environment may be virtual, such as a sandbox world, game, software company, or recommender system. It may also be real, such as websites, cities, social media platforms, or economic systems. Most current systems use text as the main interface between agent and environment. The environment state, rules, observations, and actions are often converted into natural language. Agents may also use tools to interact with complex environments beyond pure text. Agent-agent communication is usually text-based and can represent human-like social communication. The authors note that multimodal models and tool-use systems can make environments more realistic. A good interface is essential because poor environment representation can distort simulated behavior.</p>
+<h2>Human Alignment and Personalization</h2>
+<p>LLM agents must be aligned with human knowledge, domain rules, and values. Without alignment, agents may make unrealistic, irrational, or unsafe decisions. Prompt engineering can provide task instructions, background knowledge, examples, and role descriptions. Fine-tuning can add domain-specific knowledge or expert feedback. Personalization is also important because ABMS requires heterogeneous agents. Prompts can specify preferences, professions, relationships, personalities, and social roles. Fine-tuning can also adapt agents to different user preferences or demographic patterns. The authors emphasize that alignment and personalization are both opportunities and challenges. They are necessary for realism, but they can also introduce bias or over-control the simulation.</p>
+<h2>Action Generation: Planning, Memory, and Reflection</h2>
+<p>LLM agents generate actions through mechanisms inspired by human cognition. Planning decomposes complex goals into smaller subgoals and sequential steps. Memory stores past experiences, observations, skills, and interactions for later use. Reflection allows agents to evaluate past actions and revise future behavior. These mechanisms are used in systems such as Generative Agents, Voyager, GITM, Reflexion, and social simulations. Planning improves long-term action coherence. Memory helps agents preserve continuity and adapt to historical context. Reflection supports self-improvement and behavioral adjustment. The authors argue that planning, memory, and reflection strongly influence simulation quality, independently of the base LLM.</p>
+<h2>Evaluation of LLM Agents</h2>
+<p>The paper divides evaluation into accuracy, explainability, and ethics. Accuracy can be evaluated at the micro level or macro level. Micro-level evaluation checks whether individual agents behave like real individuals. Macro-level evaluation checks whether population-level patterns match real-world data. Examples include opinion dynamics, information diffusion, economic regularities, and web-browsing performance. Explainability can be evaluated by asking agents to justify their actions. These explanations can be compared with human data, theory, or domain knowledge. Ethical evaluation checks for bias, unfairness, harmful outputs, misinformation, and offensive content. The authors stress that LLM-based ABMS needs stronger ethical evaluation than traditional ABMS because agents are more expressive and autonomous.</p>
+<h2>Recent Advances: Overview of Domains</h2>
+<p>The survey classifies recent LLM-ABMS research into four domains: social, physical, cyber, and hybrid. Social simulations include social networks, games, collaboration, economic systems, markets, and individual behavior. Physical simulations include navigation, traffic, wireless networks, vehicle drivers, and sandbox environments. Cyber simulations include web browsing, recommender systems, and online behavior. Hybrid simulations combine physical, social, and cyber components. Examples include epidemic spreading, urban environments, macroeconomics, war simulation, and generative sandbox societies. The paper notes that most existing works include memory mechanisms. About half include planning, about half include reflection, and many include real-world evaluation. Ethical evaluation is present in a smaller but still significant subset of works.</p>
+<h2>Social Domain: Social Science and Collective Behavior</h2>
+<p>Social-domain work studies how LLM agents simulate human interaction, communication, and collective dynamics. Examples include social network dynamics, information propagation, opinion change, collaboration, and group behavior. The S3 system simulates social media users, emotions, attitudes, and interactions using real-world data. Other studies simulate epidemic spread, social deduction games, cooperation and defection, and online forum behavior. Some works show that LLM agents can reproduce human-like social phenomena such as conformity and wisdom of crowds. Other works show that LLMs can reproduce or amplify human communication biases. The authors treat social simulation as one of the most active and promising areas for LLM-based ABMS. However, they also note that realism depends heavily on good data, careful prompts, and validation against real social patterns. Social simulations are powerful but especially sensitive to bias and ethical risks.</p>
+<h2>Social Domain: Cooperative Tasks and Economic Systems</h2>
+<p>LLM agents are also used to simulate collaboration and organization. Examples include ChatDev, MetaGPT, CAMEL, AgentVerse, ChatEval, COLA, and other multi-agent task-solving systems. These systems assign roles to agents and coordinate them through communication and planning. The paper also reviews economic simulations, including individual behavior, market behavior, auctions, consumption markets, and game theory. LLMs can simulate consumers, workers, firms, bidders, or strategic players. These simulations can reproduce some economic regularities and decision patterns. However, the authors emphasize that economic realism requires careful grounding in real data and domain theory. LLM agents may sound plausible while still making unrealistic economic decisions. Thus, economic LLM-ABMS needs strong validation at both individual and aggregate levels.</p>
+<h2>Physical Domain</h2>
+<p>Physical-domain simulations involve agents interacting with physical or spatial environments. Examples include navigation behavior, wireless network users, vehicle drivers, and sandbox game agents. LLM agents can use natural language to interpret maps, instructions, goals, and environmental constraints. They can also use tools to act in simulated physical worlds. In sandbox games such as Minecraft-like environments, LLM agents can plan, use tools, and build skill libraries. These tasks test whether LLM agents can connect language, planning, perception, and action. The physical domain is challenging because environments often require precise spatial reasoning and real-time response. LLMs may need multimodal perception or external control modules to perform well. The authors suggest that LLMs are promising but not sufficient alone for many physical simulations.</p>
+<h2>Cyber Domain</h2>
+<p>Cyber-domain simulations focus on digital environments. Examples include web browsing, online content interaction, and recommender systems. Web agents simulate human behavior on websites by reading pages, choosing actions, and completing tasks. Recommender-system agents simulate users who browse, click, like, comment, or provide feedback. These simulations are useful because much human behavior now occurs in digital environments. LLM agents can represent user preferences and interact through natural language or platform actions. They can also help test recommender systems before deployment. However, cyber simulations raise risks related to manipulation, misinformation, and artificial traffic. The authors imply that cyber-domain LLM agents require careful governance and validation.</p>
+<h2>Hybrid Domain</h2>
+<p>Hybrid simulations combine physical, social, and cyber environments. Examples include epidemic spreading, urban behavior, macroeconomic systems, war simulation, and sandbox social life. Hybrid domains are more realistic but also more difficult to model. They require agents to reason across multiple layers of reality. For example, an urban simulation may include mobility, social networks, economic behavior, and online information. Generative Agents is presented as a key example of sandbox social life with memory, planning, and social interaction. Other systems simulate macroeconomic behavior or city-scale human actions. Hybrid simulations are important because many real-world systems are not purely social, physical, or cyber. The authors suggest that hybrid ABMS is a major future direction for LLM agents.</p>
+<h2>Open Problems: Scaling Up</h2>
+<p>A central open problem is scaling LLM-based simulations to large populations. LLM agents are computationally expensive, especially when each agent has memory, planning, and reflection. Large-scale simulations may require thousands or millions of agents. This creates problems in cost, latency, context length, and coordination. The paper suggests that efficient inference, agent simplification, and hierarchical simulation may be needed. Another challenge is maintaining diversity and realism at scale. If all agents rely on the same LLM, population behavior may become too homogeneous. Scaling also makes evaluation harder because emergent behavior becomes more complex. The authors see scalable simulation as essential for practical LLM-ABMS.</p>
+<h2>Open Problems: Open Simulation Platforms</h2>
+<p>The authors argue that the field needs open simulation platforms. Current works often use custom environments, prompts, datasets, and evaluation protocols. This makes results hard to reproduce and compare. Open platforms could standardize environments, agent interfaces, tasks, and metrics. They could also support reusable benchmark scenarios across domains. Open platforms would make it easier to compare different LLMs and agent architectures. They would also help researchers test robustness, ethical risks, and emergent behaviors. The authors present this as important because the field is new and quickly evolving. Without shared infrastructure, progress may remain fragmented.</p>
+<h2>Open Problems: Robustness</h2>
+<p>Robustness is a major concern for LLM-agent simulations. Small prompt changes can produce large behavioral changes. Agents may hallucinate, misunderstand rules, or behave inconsistently across runs. Memory systems can retrieve irrelevant information or forget important context. Multi-agent interactions can amplify small individual errors into large population-level artifacts. Robustness should be tested across prompts, models, seeds, environments, and evaluation settings. The authors also emphasize the need for better interpretability of LLM agents. Researchers should understand not only what agents do, but why they do it. Robustness is necessary before LLM-ABMS can support reliable scientific or policy conclusions.</p>
+<h2>Open Problems: Ethical Risks</h2>
+<p>LLM-based simulations introduce serious ethical risks. Agents may reproduce biases related to gender, race, culture, language, or social class. They may generate harmful, offensive, manipulative, or misleading content. Simulations of social systems can normalize stereotypes or discriminatory assumptions. If LLM agents are used in policy or organizational decision-making, flawed simulations could cause real harm. There are also privacy risks when simulations use real human data. The authors argue that ethical evaluation should be built into LLM-ABMS from the beginning. Bias, fairness, safety, and harmful output detection should be evaluated systematically. Ethical risks are not secondary; they are central to the reliability of this research area.</p>
+<h2>Pros</h2>
+<p>* The paper gives a broad and useful map of LLM-based agent-based modeling and simulation across social, physical, cyber, and hybrid domains.</p>
+<p>* The discussion of agent capabilities is strong because it connects ABMS requirements with LLM abilities such as perception, reasoning, memory, and adaptation.</p>
+<p>* The paper clearly identifies key design components: environment interface, human alignment, personalization, action generation, and evaluation.</p>
+<p>* The survey is valuable for researchers because it organizes a rapidly growing literature and provides a repository of representative works.</p>
+<p>* The emphasis on open problems is useful, especially scaling, open platforms, robustness, interpretability, and ethical risks.</p>
+<h2>Cons</h2>
+<p>* The paper is very broad, so some domains and individual studies are summarized only at a high level.</p>
+<p>* Because it is a survey, it does not empirically validate whether LLM agents actually improve ABMS in a controlled benchmark.</p>
+<p>* The discussion sometimes presents LLM agents as highly human-like, but this assumption remains contested and needs stronger validation.</p>
+<p>* The taxonomy is useful but not always sharply separated, because social, cyber, physical, and hybrid domains often overlap.</p>
+<p>* The paper could provide a more critical comparison between LLM-based ABMS and traditional ABMS in terms of scientific validity and reproducibility.</p>
+    </main>
+  </body>
+</html>

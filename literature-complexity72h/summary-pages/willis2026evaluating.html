@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Evaluating Collective Behaviour of Hundreds of LLM Agents</title>
+    <style>
+      :root {
+        --paper: #f5f0e4;
+        --paper-deep: #e5dcc8;
+        --ink: #161616;
+        --muted: #595349;
+        --line: #1e1e1e;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        color: var(--ink);
+        background:
+          linear-gradient(to bottom, rgba(229, 220, 200, 0.35), rgba(245, 240, 228, 0.98)),
+          var(--paper);
+        font-family: Georgia, "Times New Roman", serif;
+      }
+
+      main {
+        padding: 1rem 1rem 1.4rem;
+      }
+
+      h1, h2, h3 {
+        line-height: 1.15;
+        margin: 1.15rem 0 0.55rem;
+      }
+
+      h1:first-child, h2:first-child, h3:first-child {
+        margin-top: 0;
+      }
+
+      h2 {
+        font-size: 1.3rem;
+      }
+
+      h3 {
+        font-size: 1.02rem;
+      }
+
+      p, li {
+        line-height: 1.62;
+      }
+
+      p {
+        margin: 0 0 0.8rem;
+      }
+
+      ul {
+        margin: 0.25rem 0 0.95rem 1.2rem;
+        padding: 0;
+      }
+
+      li + li {
+        margin-top: 0.35rem;
+      }
+
+      code {
+        padding: 0.06rem 0.28rem;
+        border: 1px solid rgba(30, 30, 30, 0.18);
+        background: rgba(255, 255, 255, 0.45);
+        font-family: "SFMono-Regular", Menlo, Consolas, monospace;
+        font-size: 0.92em;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+<h2>Introduction</h2>
+<p>The paper asks how model developers and system designers should evaluate the collective behaviour of large populations of LLM agents. Its focus is social dilemmas, where individually successful behaviour can still damage group welfare. The authors want two things at once: a self-play test for developers, and a population-level selection test for designers. To do this, they again ask models to generate fixed strategies rather than choosing one action at a time. This keeps the games strategically rich while making large-scale simulation tractable.</p>
+<h2>Social Dilemma Games</h2>
+<p>The benchmark uses three repeated normal-form games with different dilemma structures. The Public Goods Game captures linear free-riding incentives. The Collective Risk Dilemma captures threshold coordination, where too little cooperation triggers group failure. The Common Pool Resource game adds dynamic state, because the shared resource can be depleted and future payoffs depend on past extraction. Together, these games test different kinds of tension between private benefit and collective welfare.</p>
+<h2>Strategy Generation and Analysis</h2>
+<p>The models are asked to generate strategies under two high-level attitudes: <code>Collective</code> and <code>Exploitative</code>. For each model and each attitude, the authors create 512 strategies and convert them into fixed algorithms. They then analyse behavioural diversity with PCA over action responses to many possible game histories. This reveals not only how different two models are, but also whether the prompt labels genuinely separate their behaviours. A useful result is that some models show strong internal variation without clean alignment to the requested attitude.</p>
+<h2>Self-Play Evaluation</h2>
+<p>In self-play, the authors mix different proportions of Collective and Exploitative strategies for group sizes from 4 up to 256. The outcome metric is mean normalised social welfare over repeated samples. DeepSeek is the most robust model in the Public Goods Game, because it can maintain decent welfare even with exploitative prompting. Gemini and GPT usually need a majority of Collective users before welfare improves substantially. In the Collective Risk Dilemma, too much cooperation can also be harmful, because optimal welfare often requires only about half the population to cooperate.</p>
+<h2>Failure Modes Across Games</h2>
+<p>The results are especially informative in the Common Pool Resource game, where early selfish play can irreversibly damage the shared stock. Claude’s Collective strategies are the only ones that reach optimal outcomes there across all group sizes. At the same time, GPT performs catastrophically in some larger-group settings because some strategies assume rota-based coordination that the game does not actually permit. This is a useful failure mode: the strategy sounds socially organised, but collapses when other agents do not follow the imagined schedule. The paper therefore shows that high-level prosocial prompts are not enough if the resulting strategy is structurally unrealistic.</p>
+<h2>Cultural Evolution Simulations</h2>
+<p>The second evaluation layer models user selection through a simple cultural evolution process in a population of 512 agents. Each user has a gene defined by model choice and attitude, and poorly performing users copy better-performing genes with mutation. Across most games and group sizes, Exploitative genes dominate the long-run population. Only the Common Pool Resource game with small groups reaches a stable Collective equilibrium with any regularity. Claude is especially important here, because its aggressive strategies are often favoured even when they produce poor collective welfare.</p>
+<h2>Interpretation</h2>
+<p>The central message is double-edged. More capable reasoning models are necessary for the best cooperative outcomes in hard settings. Yet those same models can also produce the strongest exploitative strategies, creating competitive pressure toward bad equilibria. The paper therefore argues that evaluation should include systemic selection effects, not only isolated capability scores. Its proposed mitigation is to embed stronger collective-welfare biases into default model behaviour.</p>
+<h2>Pros</h2>
+<ul>
+<li>The paper contributes two complementary evaluation lenses, one for self-play robustness and one for population-level selection pressure.</li>
+<li>Using three different dilemma structures is a real strength, because it prevents the conclusions from being tied to one narrow game.</li>
+<li>Scaling the simulations to hundreds of agents makes the work much more relevant for deployed multi-agent ecosystems than small toy tournaments.</li>
+<li>The cultural evolution module is especially valuable, because it shows how individually successful exploitative policies can spread even when they lower social welfare.</li>
+</ul>
+<h2>Cons</h2>
+<ul>
+<li>Fixed strategies make the simulations scalable and inspectable, but they remove communication and adaptation that would matter in real agent societies.</li>
+<li>The games are still highly stylized, with binary actions and known horizons, so the equilibrium pressures may differ in richer environments.</li>
+<li>The attitude labels are intentionally underdefined, which is realistic, but it also makes cross-model comparisons partly depend on each model’s latent interpretation.</li>
+<li>The evolutionary process is simple and useful, yet it remains a strong abstraction of how humans actually choose, switch, or regulate autonomous agents.</li>
+</ul>
+    </main>
+  </body>
+</html>

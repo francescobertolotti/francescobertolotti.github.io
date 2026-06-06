@@ -1,0 +1,179 @@
+## Introduction
+
+The paper surveys research on LLM-based social agents in game-theoretic scenarios.
+The authors argue that game-theoretic settings are useful because they test social intelligence in structured interaction.
+These settings require agents to understand the environment, infer other players’ behavior, and choose appropriate actions.
+The survey organizes the literature into three main components: Game Framework, Social Agent, and Evaluation Protocol.
+The Game Framework covers both choice-focused games and communication-focused games.
+The Social Agent component covers preferences, beliefs, reasoning, and their interaction in decision-making.
+The Evaluation Protocol component covers general and game-specific metrics.
+The paper also compares the performance of current agents across many games.
+Its goal is to identify progress, limitations, and future directions for socially intelligent LLM agents.
+
+## Game Framework
+
+The survey divides game-theoretic scenarios into two broad families.
+Choice-focusing games require agents to make strategic decisions with little or no communication.
+Communication-focusing games make language itself a strategic instrument.
+This distinction is important because LLMs have strong language abilities but still struggle with precise strategic reasoning.
+Choice-focused games test rationality, planning, payoff understanding, and adaptation.
+Communication-focused games test persuasion, deception, negotiation, alliance formation, and social reasoning.
+The authors argue that both types are needed for a complete evaluation of LLM social intelligence.
+The survey also notes that current experiments are often isolated and difficult to compare.
+A more unified evaluation framework is needed.
+
+## Choice-Focusing Games
+
+Choice-focusing games include classic games, poker, auctions, chess, and strategy games.
+Classic games include Prisoner’s Dilemma, Dictator Game, Ultimatum Game, Public Goods Game, Battle of the Sexes, and Rock-Paper-Scissors.
+These games are useful because they have clear mathematical foundations and controlled payoff structures.
+Studies show that LLM behavior is sensitive to prompts and instructions.
+Some models show human-like fairness and cooperation, while others are rigid, retaliatory, or inconsistent.
+Poker tests imperfect-information strategic reasoning, bluffing, risk management, and long-term planning.
+Auctions test bidding strategy, resource allocation, and mathematical reasoning under incomplete information.
+The survey emphasizes that LLMs often perform below optimal game-theoretic behavior.
+Data contamination is a concern because many classic games may appear in training data.
+
+## Communication-Focusing Games
+
+Communication-focusing games include negotiation, diplomacy, Werewolf, Avalon, Among Us, and other social deduction games.
+In these games, communication changes the strategic environment.
+Negotiation tests bargaining, persuasion, social tactics, incomplete information, and multi-turn adaptation.
+Diplomacy tests alliance formation, long-term planning, and mutually beneficial proposal generation.
+Werewolf and Avalon test hidden roles, deception, self-defense, suspicion, and team reasoning.
+These scenarios are especially suitable for LLMs because language is central to gameplay.
+However, evaluating only final outcomes is not enough because process dynamics are crucial.
+The authors argue that researchers should analyze dialogue, tactics, reasoning, and role consistency.
+LLM-RL hybrids are presented as promising tools for improving performance in these dynamic games.
+
+## Preference Module
+
+Preferences describe what agents value and how they trade off personal and collective outcomes.
+The survey distinguishes intrinsic preferences from prompted or role-played preferences.
+Some studies show that GPT-4 displays human-like social behaviors such as reciprocity, group identity sensitivity, and social learning.
+At the same time, models may be more fairness-oriented or more retaliatory than humans.
+Prompting can induce preferences such as fairness, selfishness, altruism, competitiveness, or cooperation.
+LLMs can often follow these prompted preferences in simple settings.
+However, preference-following becomes weaker in complex scenarios or with less common preferences.
+Adding persona details does not always produce consistent strategic behavior.
+The authors suggest that role-playing agents should be tested across languages, cultures, and social contexts.
+
+## Belief Module
+
+Beliefs represent what an agent treats as true about itself, other agents, and the game environment.
+The survey covers internal belief representations, belief enhancement, and belief revision.
+Some studies suggest that LLMs encode belief-like information in their internal activations.
+Other work evaluates beliefs behaviorally through false-belief and true-belief tasks.
+GPT-4 shows stronger belief-modeling ability than many smaller models.
+Explicit belief graphs and prompt-based belief states can improve interpretability and multi-agent collaboration.
+However, belief revision remains immature and unstable.
+LLMs can be persuaded into changing correct factual beliefs through repetition and rhetoric.
+This is a serious limitation in adversarial or manipulation-prone game scenarios.
+
+## Reasoning Module
+
+Reasoning is the process that maps preferences and beliefs into actions.
+The survey focuses on strategic reasoning in multi-agent, dynamic, and multi-round environments.
+Standard methods such as Chain-of-Thought and Tree-of-Thought are often used as baselines.
+Strategic reasoning requires Theory-of-Mind because agents must infer what others know, want, or intend.
+Some systems use first-order and second-order Theory-of-Mind reasoning to model opponents and teammates.
+Other systems combine LLMs with reinforcement learning to explore actions and evaluate future states.
+RL-style reasoning is useful when the game requires long-horizon exploration and adaptation.
+Hybrid approaches combine Theory-of-Mind with reinforcement learning-style search.
+The survey treats this hybrid direction as important for complex games.
+
+## Preference-Belief-Reasoning Interaction
+
+The paper emphasizes that preferences, beliefs, and reasoning should not be studied in isolation.
+Agent behavior depends on how these modules interact.
+Preferences determine goals, beliefs determine perceived reality, and reasoning determines strategic action.
+A model may have a cooperative preference but fail if its beliefs about others are wrong.
+A model may correctly infer others’ intentions but still choose poor actions because of weak planning.
+A model may reason well locally but fail when preferences are inconsistent over time.
+This triangular interaction is central to explaining LLM behavior in games.
+The survey suggests that future systems should explicitly model and evaluate these interactions.
+This would make agent behavior more interpretable and easier to improve.
+
+## Evaluation Protocol
+
+The survey divides evaluation into game-agnostic and game-specific metrics.
+Game-agnostic metrics are intended to compare agents across multiple games.
+Examples include win rate, total payoff, efficiency, fairness, cooperation rate, and rationality.
+Game-specific metrics are tailored to individual games and capture domain-specific success.
+For example, poker needs metrics for betting quality, risk control, and bluffing.
+Negotiation needs metrics for agreement, utility, fairness, and social behavior.
+Social deduction games need metrics for role identification, deception, persuasion, and team success.
+The authors argue that current metrics are too fragmented.
+More standardized metrics are needed to support horizontal comparison across studies.
+
+## Performance Assessment of Current Social Agents
+
+The survey summarizes agent performance across many game-theoretic scenarios.
+Most social agents achieve a relative score above 60%, suggesting basic gameplay ability.
+LLM-based agents often perform better in communication-focusing games than in choice-focusing games.
+This is likely because LLMs benefit from their strong natural language abilities.
+However, performance remains weak in Werewolf, auctions, and some poker games.
+In Texas No-Limit Hold’em, StarCraft II, and Jubensha, agents only slightly exceed passing thresholds.
+Unexpectedly, performance can also be poor in simple games such as Prisoner’s Dilemma and Diner’s Dilemma.
+This suggests that basic rational decision-making still needs improvement.
+In bargaining, negotiation, and persuasion, agents sometimes outperform humans in efficiency and fairness.
+
+## Research Gaps
+
+The survey identifies several major gaps in current research.
+First, experiments are scattered across many games, prompts, and metrics, making comparison difficult.
+Second, prompt sensitivity reduces robustness and makes results unstable.
+Third, data contamination may inflate performance on classic game-theoretic tasks.
+Fourth, many studies focus too much on final outcomes and not enough on process analysis.
+Fifth, belief revision and long-term strategic adaptation remain weak.
+Sixth, persona prompting does not reliably create stable preferences or expertise.
+Seventh, pluralistic settings with multiple cultures, languages, values, and norms are underexplored.
+These gaps limit the reliability of current evaluations of LLM social intelligence.
+
+## Future Directions
+
+The authors recommend building standardized and unified evaluation frameworks.
+They also recommend developing broad metrics that work across many game types.
+LLM agents should be tested in more diverse, realistic, and pluralistic games.
+Future work should explore multilingual, multicultural, and multi-value environments.
+MARL and reinforcement learning can help improve exploration, adaptation, and emergent coordination.
+Behavior pattern mining could reveal latent strategies, social roles, and influence structures.
+Causal analysis and graph-based methods may help explain inter-agent influence over time.
+Future systems should evaluate not only performance but also reasoning dynamics, role consistency, and Theory-of-Mind.
+The survey treats richer process-level evaluation as essential for understanding social agents.
+
+## Related Work
+
+The paper connects to broader surveys on LLM agents, social simulation, and strategic reasoning.
+It differs by focusing specifically on game-theoretic scenarios.
+Other surveys cover LLM agents in general, embodied agents, social simulation, or reinforcement learning.
+This survey narrows the focus to games as structured environments for social intelligence evaluation.
+It also emphasizes the relationship between game type, agent architecture, and evaluation metrics.
+The paper positions game-theoretic scenarios as a bridge between AI evaluation and social science.
+It highlights that games can test both individual reasoning and collective interaction.
+This makes them useful for studying future human-AI and AI-AI societies.
+The survey is therefore both a literature map and a methodological guide.
+
+## Pros
+
+* The paper provides a clear taxonomy that organizes a fragmented research area into game framework, social agent, and evaluation protocol.
+
+* The distinction between choice-focusing and communication-focusing games is useful for understanding where LLM agents currently perform better.
+
+* The preference-belief-reasoning structure is a strong conceptual tool for analyzing social-agent decision-making.
+
+* The survey does not only summarize results; it also identifies practical gaps such as prompt sensitivity, data contamination, and weak comparability.
+
+* The future directions are concrete, especially the emphasis on MARL integration, behavior mining, and pluralistic scenarios.
+
+## Cons
+
+* As a survey, the paper depends on heterogeneous results from many studies, so its performance comparisons are not always strictly controlled.
+
+* The 60% passing threshold is useful for overview, but it may oversimplify very different games and metrics.
+
+* The taxonomy is broad, but some categories overlap, especially between reasoning, belief modeling, and Theory-of-Mind.
+
+* The survey gives less attention to safety risks such as manipulation, collusion, and adversarial multi-agent dynamics than a dedicated safety review would.
+
+* Because the field is moving quickly, some benchmark and model comparisons may become outdated soon.

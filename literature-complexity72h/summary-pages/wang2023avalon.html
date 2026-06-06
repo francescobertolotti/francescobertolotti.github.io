@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Avalon&#x27;s game of thoughts: Battle against deception through recursive contemplation</title>
+    <style>
+      :root {
+        --paper: #f5f0e4;
+        --paper-deep: #e5dcc8;
+        --ink: #161616;
+        --muted: #595349;
+        --line: #1e1e1e;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        color: var(--ink);
+        background:
+          linear-gradient(to bottom, rgba(229, 220, 200, 0.35), rgba(245, 240, 228, 0.98)),
+          var(--paper);
+        font-family: Georgia, "Times New Roman", serif;
+      }
+
+      main {
+        padding: 1rem 1rem 1.4rem;
+      }
+
+      h1, h2, h3 {
+        line-height: 1.15;
+        margin: 1.15rem 0 0.55rem;
+      }
+
+      h1:first-child, h2:first-child, h3:first-child {
+        margin-top: 0;
+      }
+
+      h2 {
+        font-size: 1.3rem;
+      }
+
+      h3 {
+        font-size: 1.02rem;
+      }
+
+      p, li {
+        line-height: 1.62;
+      }
+
+      p {
+        margin: 0 0 0.8rem;
+      }
+
+      ul {
+        margin: 0.25rem 0 0.95rem 1.2rem;
+        padding: 0;
+      }
+
+      li + li {
+        margin-top: 0.35rem;
+      }
+
+      code {
+        padding: 0.06rem 0.28rem;
+        border: 1px solid rgba(30, 30, 30, 0.18);
+        background: rgba(255, 255, 255, 0.45);
+        font-family: "SFMono-Regular", Menlo, Consolas, monospace;
+        font-size: 0.92em;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+<h2>Introduction</h2>
+<p>The paper studies how LLM agents behave when other agents may intentionally deceive them. Its core claim is that most LLM-agent work assumes honest information flow, which is unrealistic for many social environments. To test this, the authors use Avalon, a hidden-role game built around misinformation, persuasion, and strategic inference. Avalon is a good benchmark here because agents must reason about private information, misleading speech, and how much to reveal publicly. The paper’s broader safety message is that social intelligence requires handling deception, not only cooperation.</p>
+<h2>Avalon as a Deceptive Environment</h2>
+<p>In Avalon, good and evil players have different private information and conflicting goals. Good players must infer hidden roles while avoiding unnecessary exposure, especially if they are Merlin or Percival. Evil players try to appear trustworthy, manipulate team selection, and sabotage quests without revealing themselves. The paper highlights three concrete challenges for LLMs in this setting: being misled by malicious content, exposing private information, and hiding deceptive intentions poorly. These are exactly the kinds of failures that simpler honest-information benchmarks often miss.</p>
+<h2>Recursive Contemplation</h2>
+<p>The proposed method is Recursive Contemplation, or ReCon. It has two stages: formulation contemplation and refinement contemplation. In the first stage, the agent reasons privately before speaking and performs a first-order perspective transition, meaning it infers what other players may believe from its own point of view. In the second stage, it revises both its private thought and its spoken content using a second-order perspective transition, meaning it asks how others may interpret its own speech. This separation between hidden thought and public utterance is central to the method.</p>
+<h2>Why ReCon Helps</h2>
+<p>Formulation contemplation is meant to stop the model from speaking too early or too literally. Refinement contemplation is meant to catch socially dangerous mistakes, such as revealing Merlin’s privileged knowledge too directly. The first-order transition mainly helps with role inference and suspicion tracking. The second-order transition mainly helps with self-presentation and camouflage. Together, these mechanisms aim to make LLM agents reason more like human players in a deceptive group game.</p>
+<h2>Experimental Evaluation</h2>
+<p>The paper evaluates ReCon through full Avalon games and a separate multi-dimensional analysis. Chain-of-Thought is the main baseline, and ReCon is tested on both ChatGPT and Claude to check whether the gains generalize across models. The end-to-end results show that ReCon outperforms the baseline by a large margin. Ablation studies also show that each component matters, rather than the improvement coming from one prompt trick alone. LLaMA-2 could not be evaluated properly in this setup because it struggled to maintain the required response format.</p>
+<h2>What the Ablations Show</h2>
+<p>The ablations indicate that formulation and refinement contemplation both contribute to stronger performance. First-order and second-order perspective transitions are especially important when ReCon plays on the good side, where inference and careful signalling matter most. Refinement contemplation is particularly helpful on the evil side, where agents must sound convincing without exposing deceptive intent. In the multi-dimensional evaluation, ReCon also beats the baseline on concealment, logic, contribution, persuasiveness, information quality, and creativity. The authors therefore argue that ReCon improves both strategic success and communication quality.</p>
+<h2>Interpretation</h2>
+<p>The paper presents ReCon as a cognition-inspired scaffold rather than a new model. Its main contribution is to show that explicit private reasoning and perspective-taking can improve LLM performance in socially adversarial settings. This matters beyond Avalon, because many real deployments involve negotiation, manipulation, hidden agendas, or misleading advice. At the same time, the paper also exposes current LLM limitations in safety, reasoning robustness, speech style control, and output formatting. It is best read as an important benchmark-and-scaffold paper for deceptive multi-agent interaction.</p>
+<h2>Pros</h2>
+<ul>
+<li>The paper chooses a genuinely hard social setting, where success depends on deception handling rather than on factual recall or polite cooperation.</li>
+<li>ReCon is conceptually clean: the split between internal thought and public speech makes the prompt design much more principled than generic reflection loops.</li>
+<li>The ablation study is strong, because it shows distinct roles for formulation, refinement, and first- versus second-order perspective-taking.</li>
+<li>The multi-dimensional evaluation is useful, since it checks not only win rate but also whether the quality of reasoning and communication actually improves.</li>
+</ul>
+<h2>Cons</h2>
+<ul>
+<li>The evaluation is still centered on one game, so it remains unclear how much of ReCon’s benefit transfers to other deceptive environments.</li>
+<li>Some of the multi-dimensional judgments rely on GPT-4-style evaluation, which may introduce model-specific judging bias.</li>
+<li>The method is prompt-heavy, so part of the gain may depend on careful scaffolding rather than on a stable underlying capability.</li>
+<li>The output-format failure on LLaMA-2 shows that the framework may be less portable to weaker or less instruction-following models.</li>
+</ul>
+    </main>
+  </body>
+</html>

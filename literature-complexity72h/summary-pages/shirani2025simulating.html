@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simulating and Experimenting with Social Media Mobilization Using LLM Agents</title>
+    <style>
+      :root {
+        --paper: #f5f0e4;
+        --paper-deep: #e5dcc8;
+        --ink: #161616;
+        --muted: #595349;
+        --line: #1e1e1e;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        color: var(--ink);
+        background:
+          linear-gradient(to bottom, rgba(229, 220, 200, 0.35), rgba(245, 240, 228, 0.98)),
+          var(--paper);
+        font-family: Georgia, "Times New Roman", serif;
+      }
+
+      main {
+        padding: 1rem 1rem 1.4rem;
+      }
+
+      h1, h2, h3 {
+        line-height: 1.15;
+        margin: 1.15rem 0 0.55rem;
+      }
+
+      h1:first-child, h2:first-child, h3:first-child {
+        margin-top: 0;
+      }
+
+      h2 {
+        font-size: 1.3rem;
+      }
+
+      h3 {
+        font-size: 1.02rem;
+      }
+
+      p, li {
+        line-height: 1.62;
+      }
+
+      p {
+        margin: 0 0 0.8rem;
+      }
+
+      ul {
+        margin: 0.25rem 0 0.95rem 1.2rem;
+        padding: 0;
+      }
+
+      li + li {
+        margin-top: 0.35rem;
+      }
+
+      code {
+        padding: 0.06rem 0.28rem;
+        border: 1px solid rgba(30, 30, 30, 0.18);
+        background: rgba(255, 255, 255, 0.45);
+        font-family: "SFMono-Regular", Menlo, Consolas, monospace;
+        font-size: 0.92em;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+<h2>Introduction</h2>
+<p>The paper introduces <strong>LLM-SocioPol</strong>, an LLM-based agent simulation framework for studying social media voter mobilization. The work is inspired by the 61-million-person Facebook experiment by Bond et al. on online political mobilization. The main question is how informational and social voting messages affect voting intentions and simulated turnout. The simulator combines U.S. Census demographics, a real Twitter follower network, and heterogeneous LLM agents. Each agent has demographic attributes, political stance, interests, close friends, and social media behavior. Agents can view feeds, like or reply to posts, follow or unfollow users, create posts, and update voting intention. The framework aims to study both direct treatment effects and peer spillovers under network interference. The main result is qualitative replication: social messages mobilize more than informational messages. The paper positions LLM-SocioPol as a bridge between real field experiments and flexible computational simulations.</p>
+<h2>Motivation</h2>
+<p>Online social networks changed how political mobilization messages spread through populations. Traditional voter mobilization studies often focus on direct contact, but social media creates large-scale peer exposure. The Facebook experiment showed that messages displaying friends’ voting behavior increased turnout more than purely informational messages. However, real-world experiments are hard to repeat and do not reveal all counterfactual outcomes. Network interference also makes causal estimation difficult because one user’s treatment can affect another user’s outcome. The paper argues that LLM-agent simulation can provide a controlled environment for testing such mechanisms. The goal is not to replace field experiments, but to create a repeatable testbed for mechanisms and designs. This is especially useful when real experiments are expensive, ethically constrained, or impossible to replicate. The simulator therefore aims to combine realism, experimental control, and counterfactual flexibility.</p>
+<h2>Related Literature</h2>
+<p>The paper builds on research about social influence, voter mobilization, and online contagion. It uses Bond et al. as the main empirical benchmark for social voting messages. It also connects to causal inference under network interference, where treatment effects can spread through social ties. This literature develops estimators and experimental designs, but validation is hard because only one real-world outcome is observed. The paper also connects to traditional agent-based modeling of diffusion and coordination. Classical ABMs are interpretable but often rely on stylized behavioral rules. LLM agents allow more context-dependent and natural-language-based behavior. However, prior work shows that LLM simulations can suffer from bias, demographic mismatch, and limited diversity. LLM-SocioPol addresses this by grounding agents in real demographic and network data.</p>
+<h2>LLM-SocioPol Overview</h2>
+<p>LLM-SocioPol is an agent-based social media simulator for online voter mobilization. The diagram on page 2 shows the complete pipeline: U.S. Census data and Twitter network data feed into profile enhancement, agent initialization, and a social media environment. Each agent receives demographic attributes, public profile information, interests, close friends, political stance, and an assigned LLM model tier. The core environment manages social network updates, content engagement, content creation, social influence, and voting-intention tracking. Agents interact over discrete pre-election rounds. In each session, an active agent sees a personalized feed and reports voting likelihood on a 0–4 scale. The final election-day step converts accumulated state and intention into a binary vote decision. This architecture lets the simulator track both micro-level behavioral trajectories and macro-level turnout effects. The example on page 2 shows a treated feed with peer voting cues and a representative user profile.</p>
+<h2>Population Initialization</h2>
+<p>The simulator initializes 20,000 users. Demographic profiles come from U.S. Census data. The demographic attributes include age, work class, education, marital status, occupation, relationship, race, sex, working hours, and native country. Social connections come from a real Twitter follower network. Each Census profile is randomly matched to a Twitter network node. Because this can create unrealistic profile-network combinations, the simulator refines profiles using additional LLM calls. Each user receives a public profile that exposes only limited demographic information to other agents. This reflects real social media, where users rarely see complete demographic data. The goal is to create a realistic but computationally manageable synthetic population.</p>
+<h2>Profile Enhancement</h2>
+<p>Profile enhancement adds three key elements: updated connections, interests, and close friends. GPT-4.1-Nano is used to let each user revise follow relationships based on demographic compatibility and public profiles. The same step asks agents to select two to four interests. Agents also designate one to seven close friends. Close friends are used to distinguish strong ties from ordinary followed users. The model therefore creates three social categories: not followed, followed, and close friend. This is important because the original Facebook experiment found strong-tie influence to be especially relevant. The process makes the network more socially meaningful than the raw Twitter graph alone. It also supports later analysis of weak-tie and strong-tie peer effects.</p>
+<h2>Political Stance and LLM Assignment</h2>
+<p>Each user receives a political stance attribute. This attribute combines ideological orientation and baseline turnout propensity. The stance is generated by Claude Sonnet 4 from demographic information and realistic political patterns. Examples include “consistent progressive voter,” “moderate swing voter,” and “conservative-leaning low-turnout.” This helps keep political behavior consistent across repeated LLM calls. Each user is then assigned to GPT-4.1, GPT-4.1-Mini, or GPT-4.1-Nano. The assignment is based on demographic proxies for political sophistication, such as education and occupation. More educated users or users in cognitively demanding jobs receive more capable models. This creates heterogeneous reasoning depth and susceptibility to mobilization.</p>
+<h2>Activity Sessions</h2>
+<p>The simulation treats user activity as intermittent rather than continuous. An activity session is a round in which an agent logs in and interacts with the platform. At each session, the system reconstructs the agent’s context from previous interactions. This is necessary because LLM calls are stateless unless memory is explicitly reintroduced. The context includes recent activity, previous content interactions, and the latest voting likelihood. The agent then receives a personalized content feed. After reading the feed, it chooses whether to like, reply, follow, unfollow, update voting likelihood, and choose next login time. The session structure mirrors irregular real-world social media use. It also allows activity frequency to evolve endogenously from agent behavior.</p>
+<h2>Content Feed</h2>
+<p>Each active agent receives up to five posts. The feed includes post text, author ID, public profile, follow status, engagement from followed users, total replies, and a representative reply. The paper emphasizes that posts should not appear as isolated text. Social context matters because users interpret posts differently depending on author identity and peer engagement. The feed is built in three stages: eligibility filtering, personalized sampling, and ranking. Candidate posts include interest-matched posts, followed-author posts, trending posts, and exploratory posts. Ranking prioritizes followed users, engagement by followed users, and total engagement. This design supports both topical relevance and social influence. It also makes peer visibility operational inside the simulation.</p>
+<h2>Agent Response Schema</h2>
+<p>Agents return a structured JSON response. For each post, the response specifies whether the agent does nothing, likes, or replies. If the agent replies, it must generate reply text. The response also includes follow or unfollow decisions for post authors. Each agent updates voting likelihood on a 0–4 scale. The agent also reports a next activity time. The prompt encourages realistic behavior, such as using likes more often than replies. Engagement is more likely for posts that align with values, appear earlier, come from followed users, or have peer engagement. The structured schema makes the simulation automatically parseable and analyzable.</p>
+<h2>Content Creation</h2>
+<p>The simulator includes optional content creation. In each activity session, a fixed fraction of active agents is randomly selected to create new posts. Generated posts reflect the agent’s persona, interests, and relevant social or political topics. These new posts enter the global content pool. They can later appear in other users’ feeds. This prevents the feed from becoming static or depleted. It also allows political and non-political content to circulate through the network. The mechanism supports endogenous information diffusion. It makes the simulated platform more like a living social media environment.</p>
+<h2>Event Loop</h2>
+<p>The simulation uses an event-driven loop. At initialization, each agent receives a random first login time. A warm-up period runs before treatment exposure so that activity patterns and content flows stabilize. In each loop, agents whose activity time has elapsed become active. They receive feeds, generate structured responses, and update their internal and external states. The system updates agent state, network topology, content pool, and scheduling state. Follow and unfollow decisions modify the social graph over time. New posts expand the information environment. The next activity time is computed from the agent’s reported timing plus random perturbation.</p>
+<h2>Election-Day Voting Inquiry</h2>
+<p>On election day, eligible agents receive a final voting inquiry. The prompt summarizes demographic profile, political stance, and most recent voting likelihood. The final prompt is deliberately minimal to avoid adding new persuasive content. Each agent outputs a binary value: 1 if it votes and 0 if it abstains. This final vote is the main turnout outcome. The vote reflects cumulative exposure, peer influence, treatment assignment, political stance, and prior engagement. The design separates pre-election intention dynamics from final turnout. This allows the paper to compare self-reported voting likelihood with simulated voting behavior. The results suggest that final intentions are a useful proxy for final turnout.</p>
+<h2>Experimental Conditions</h2>
+<p>The paper uses three basic treatment conditions. In the control condition, agents receive only the baseline voting-intention survey. In the informational condition, agents see the message: “VOTE OR BE SILENCED! One ballot = one voice. Use yours.” In the social condition, agents see the same message plus a count of likely voters and names of followed users who plan to vote. This social message mirrors the peer-cue logic of the Facebook experiment. The simulation also includes staggered rollout versions of the informational and social treatments. In these experimental rollout conditions, treatment expands to 20%, 40%, and 80% of users over three 10-round blocks. The design holds demographics, network structure, and feed ranking constant. This isolates the effect of mobilization message type.</p>
+<h2>Outcome Measures</h2>
+<p>The primary outcome is election-day voting turnout. This is recorded as a binary variable for each eligible agent. The paper also tracks voting likelihood during the pre-election period. Voting likelihood is measured on a five-point scale from 0 to 4. These repeated intention measures allow the authors to study mobilization dynamics over time. The paper estimates treatment effects using a Difference-in-Means estimator. It also computes ground-truth effects by comparing full-control and full-treatment simulation runs. This is possible because simulation allows counterfactual scenarios that real field experiments cannot observe. The comparison between estimator and ground truth reveals the effect of network interference.</p>
+<h2>Computational Scale</h2>
+<p>The paper runs five independent simulation iterations. Each iteration starts with 15 warm-up rounds without treatment. Each iteration then evaluates five scenarios: Control, Info, Social, Exp Info, and Exp Social. The simulations vary random seeds for LLM assignment, user activity timing, and treatment randomization. The implementation uses OpenAI APIs and Stanford’s computing infrastructure. Each implementation is parallelized across 128 CPU cores. A single iteration with five full scenario runs takes about 30 wall-clock hours. The full study uses about 19,200 CPU-hours and more than 3 million OpenAI API calls. This scale is a major practical feature of the paper.</p>
+<h2>Turnout Results</h2>
+<p>The turnout results qualitatively match the original Facebook experiment. The chart on page 15 shows that social messages produce the highest turnout. Average turnout is about 0.606 in Control, 0.618 in Info, and 0.662 in Social. The staggered rollout conditions are intermediate: about 0.613 for Exp Info and 0.636 for Exp Social. The social message increases turnout by about 5.6 percentage points across five runs. The informational message increases turnout by about 1.2 percentage points. The Difference-in-Means estimator reliably identifies positive social-message effects. It does not consistently detect informational-message effects in three of five iterations. This supports the main claim that peer cues are much more mobilizing than generic reminders.</p>
+<h2>Voting Intention Results</h2>
+<p>The paper also finds stronger effects on pre-election voting intentions. The chart on page 15 shows final normalized voting intentions around 0.577 in Control, 0.585 in Info, and 0.617 in Social. The staggered social condition reaches about 0.599, above the staggered informational condition. Social treatment raises intentions meaningfully, while informational treatment stays close to control. The chart on page 16 shows voting intentions over 31 pre-election periods. Intentions generally rise as election day approaches. A late decline appears in the final days, possibly reflecting stabilization or reduced engagement. The social condition remains consistently above the informational condition. This suggests that peer visibility affects not only final voting but also the trajectory of motivation.</p>
+<h2>Treatment Effects Over Time</h2>
+<p>The treatment-effect plots on page 16 compare informational and social messages over time. Informational-message effects fluctuate around zero throughout the campaign. Social-message effects increase steadily over time. The social effect rises from roughly 1.5 percentage points early to about 4 percentage points by period 30. The Difference-in-Means estimator follows the same upward trend. However, it consistently underestimates the true social-message effect. This underestimation indicates network interference and peer spillovers. The result is important because standard estimators capture direct effects but miss some indirect social influence. The paper therefore uses simulation to make hidden spillover effects observable.</p>
+<h2>Comparison with Bond et al.</h2>
+<p>The simulated qualitative pattern matches Bond et al.: social messages mobilize more than informational messages. However, the simulated effects are much larger. The paper reports a direct social-message effect of about 3.9% on turnout. Bond et al. reported a direct validated-turnout effect of about 0.39%. The simulated direct effect is therefore about an order of magnitude larger. The indirect-to-direct ratio is also different. Bond et al. found network contagion produced roughly 280,000 additional votes versus 60,000 direct votes. In LLM-SocioPol, the analogous network-to-direct ratio is closer to 0.4 to 1. Thus, the simulator matches direction but not real-world magnitude.</p>
+<h2>Explanation of Quantitative Differences</h2>
+<p>The paper gives several reasons for the magnitude gap. First, LLM-SocioPol exposes agents to campaign messages up to 30 days before the election. Bond et al. used an election-day intervention, so there was less time for effects to accumulate. Second, the simulated world is relatively isolated. Agents are not exposed to real-world distractions, competing campaigns, offline pressures, or resource constraints. This can amplify direct treatment effects. Third, LLM-SocioPol lacks offline social interactions. Real-world mobilization spreads through face-to-face communication and other channels beyond social media. This may explain why simulated spillovers are weaker relative to direct effects than in the real experiment.</p>
+<h2>Network Interference</h2>
+<p>A central contribution of the paper is its treatment of network interference. In real social platforms, one user’s treatment can affect untreated friends. This violates the standard assumption that units are independent. LLM-SocioPol can simulate both direct exposure and peer exposure. The social treatment includes names of followed users who are likely to vote. This creates a mechanism for social contagion through visible peer behavior. The underestimation by Difference-in-Means shows that standard estimators can miss indirect effects. The simulator can compute ground-truth effects because it can run full-treatment and full-control scenarios. This makes it useful for testing experimental designs and causal estimators under interference.</p>
+<h2>Interpretation of Results</h2>
+<p>The paper shows that LLM-agent simulations can reproduce important qualitative patterns from large-scale field experiments. Social proof is stronger than generic mobilization messaging. Peer cues affect both stated voting intention and final simulated turnout. The effect accumulates over time rather than appearing only at one moment. The simulator also shows that direct-effect estimators can underestimate total influence when spillovers are present. At the same time, the quantitative mismatch with Bond et al. is substantial. This means LLM-SocioPol should not be treated as a calibrated replacement for real experiments. Its main value is mechanism exploration, counterfactual testing, and experimental-design evaluation. It is strongest as a controlled sandbox for networked political mobilization.</p>
+<h2>Methodological Contribution</h2>
+<p>LLM-SocioPol integrates demographic realism, network realism, and LLM-based behavioral heterogeneity. The use of U.S. Census data improves representativeness compared with generic persona prompting. The Twitter follower network provides realistic topology and peer-exposure structure. The use of GPT-4.1, GPT-4.1-Mini, and GPT-4.1-Nano creates heterogeneous agent sophistication. Political stance assignment stabilizes agent behavior across rounds. The event-driven architecture creates irregular and endogenous platform participation. The simulator records round-by-round voting likelihood, content engagement, exposure, and network changes. This makes the framework useful for causal analysis, not only qualitative social simulation. The open code and data repository also improve reproducibility.</p>
+<h2>Limitations</h2>
+<p>The simulator reproduces qualitative patterns but not empirical effect magnitudes. Treatment effects are much larger than in the original Facebook experiment. Network spillovers are relatively weaker than in the real study. The world is online-only and excludes face-to-face communication. Agents lack real-world distractions, competing information, and offline constraints. Political stance is assigned algorithmically rather than learned from real user behavior. LLM agents may overreact to prompts or social cues compared with humans. The model uses Twitter topology but does not fully reproduce Facebook friendship structure. The system is computationally expensive, requiring millions of API calls.</p>
+<h2>Practical Uses</h2>
+<p>The simulator can be used to test alternative mobilization message designs before field deployment. It can help researchers compare informational, social, strong-tie, and weak-tie cues. It can support sensitivity analysis over treatment timing, treatment saturation, and network structure. It can be used to evaluate causal estimators under known ground-truth spillovers. It is useful for studying how voting intention evolves before election day. It can also help identify when standard estimators underestimate social effects. For political science, it provides a controlled environment for mechanism exploration. For computational social science, it demonstrates a scalable LLM-agent approach grounded in real data. For platform governance, it highlights how peer cues can shape offline behavior.</p>
+<h2>Overall Interpretation</h2>
+<p>The paper is best read as a high-fidelity simulation study, not as a calibrated electoral forecasting tool. Its strongest result is qualitative replication of a landmark online mobilization experiment. The social message consistently outperforms the informational message in turnout and voting intention. The framework also shows how network interference can make direct-effect estimates incomplete. The biggest weakness is quantitative mismatch with real-world effect sizes. This mismatch is not a minor issue, because policy conclusions depend on magnitudes. Still, the simulator is valuable because it enables repeated counterfactual experimentation. It is especially useful for studying designs that real platforms cannot or should not test at scale. The paper advances LLM-based computational social science by combining real data, dynamic networks, and experimental control.</p>
+<h2>Pros</h2>
+<p>* The simulator is strongly grounded: it combines U.S. Census demographics, real Twitter topology, and heterogeneous GPT-4.1 agent tiers rather than using generic personas only.</p>
+<p>* The experimental design closely mirrors Bond et al., making the qualitative comparison with a landmark 61-million-person Facebook study meaningful.</p>
+<p>* The event-driven architecture is specific and realistic: agents log in asynchronously, receive personalized feeds, update intentions, and change follow relations over time.</p>
+<p>* The results on page 15 and page 16 clearly show the key mechanism: social messages outperform informational messages for both turnout and voting intentions.</p>
+<p>* The comparison between Difference-in-Means and ground-truth simulation effects is useful because it reveals how network interference can hide part of the total effect.</p>
+<h2>Cons</h2>
+<p>* The simulated effects are much larger than Bond et al.’s real-world estimates, so the model is not yet quantitatively calibrated for empirical turnout prediction.</p>
+<p>* The online-only world omits offline discussion, canvassing, media exposure, and everyday distractions, which likely changes both direct effects and spillover dynamics.</p>
+<p>* Political stance and sophistication are assigned through model-based demographic rules, which may encode assumptions rather than measured individual political behavior.</p>
+<p>* The Twitter follower network is useful but not equivalent to Facebook friendship ties, especially for strong-tie mobilization dynamics.</p>
+<p>* The simulation is computationally expensive, with more than 3 million API calls, which may limit replication, sensitivity analysis, and large-scale extension.</p>
+    </main>
+  </body>
+</html>

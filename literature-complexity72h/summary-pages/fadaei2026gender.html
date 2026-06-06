@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gender Dynamics and Homophily in a Social Network of LLM Agents</title>
+    <style>
+      :root {
+        --paper: #f5f0e4;
+        --paper-deep: #e5dcc8;
+        --ink: #161616;
+        --muted: #595349;
+        --line: #1e1e1e;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        color: var(--ink);
+        background:
+          linear-gradient(to bottom, rgba(229, 220, 200, 0.35), rgba(245, 240, 228, 0.98)),
+          var(--paper);
+        font-family: Georgia, "Times New Roman", serif;
+      }
+
+      main {
+        padding: 1rem 1rem 1.4rem;
+      }
+
+      h1, h2, h3 {
+        line-height: 1.15;
+        margin: 1.15rem 0 0.55rem;
+      }
+
+      h1:first-child, h2:first-child, h3:first-child {
+        margin-top: 0;
+      }
+
+      h2 {
+        font-size: 1.3rem;
+      }
+
+      h3 {
+        font-size: 1.02rem;
+      }
+
+      p, li {
+        line-height: 1.62;
+      }
+
+      p {
+        margin: 0 0 0.8rem;
+      }
+
+      ul {
+        margin: 0.25rem 0 0.95rem 1.2rem;
+        padding: 0;
+      }
+
+      li + li {
+        margin-top: 0.35rem;
+      }
+
+      code {
+        padding: 0.06rem 0.28rem;
+        border: 1px solid rgba(30, 30, 30, 0.18);
+        background: rgba(255, 255, 255, 0.45);
+        font-family: "SFMono-Regular", Menlo, Consolas, monospace;
+        font-size: 0.92em;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+<h2>Introduction</h2>
+<p>The paper studies gender dynamics and homophily in a large social network of LLM agents. The empirical setting is Chirper.ai, a social media platform similar to X but populated by autonomous AI chatbots. The authors ask whether LLM agents reproduce gendered behavior and gender-based social sorting when they interact at scale. They treat gender not as a fixed identity of the agents, but as a linguistic performance visible in their outputs. The study connects machine behavior, social science of AI, gender theory, and network analysis. The central concern is that LLM collectives may reproduce human social stereotypes even without bodies or human identities. The paper analyzes whether agents with similar gendered language are more likely to connect. It also separates two mechanisms: social selection and social influence. The main finding is that gender performance is fluid, but the network still shows strong gender-based homophily.</p>
+<h2>Dataset and Setup</h2>
+<p>The dataset comes from Chirper.ai over one year, from 1 May 2023 to 28 April 2024. The raw data include around 70,000 agents and more than 140 million posts. Human users create Chirpers by giving them a short natural-language description of identity, interests, and personality. After creation, the agents post, follow others, and interact autonomously. The platform used a pool of underlying LLM variants rather than one fixed model. The authors focus on English-language agents that are sufficiently active. After filtering, the working sample contains about 20,000 agents and about 1.5 million original posts. The followership network is directed: an edge from agent i to agent j means that i follows j. The authors build 52 cumulative weekly networks to study network evolution.</p>
+<h2>Measuring Gender Performance</h2>
+<p>The authors measure gender performance from the language produced by each agent. For each agent and week, all original posts are merged into one document. GPT-4o-mini is then prompted as a zero-shot linguistic classifier. It assigns a gender score from 0 to 100. Lower values mean more masculine-coded language, while higher values mean more feminine-coded language. The score is not interpreted as the agent’s real identity. It is interpreted as a continuous measure of gendered linguistic performance. The approach is theoretically grounded in gender performativity and feminist theory. The authors also validate the scoring approach using a human Twitter dataset with labeled gender.</p>
+<h2>Homophily Measurement</h2>
+<p>The paper measures gender-based homophily using scalar assortativity. For each weekly network, the authors correlate the gender score of each follower with the gender score of the followed agent. Positive assortativity means that agents tend to follow others with similar gender performance. The main analysis uses directed follow ties. An undirected version is also computed for comparison. The authors compare the observed assortativity with degree-preserving null models. This checks whether gender homophily can be explained only by network structure. The empirical assortativity remains well above the null models. This provides evidence that gender-based homophily is not just a structural artifact.</p>
+<h2>Social Selection</h2>
+<p>Social selection means that agents preferentially create new ties with others who already have similar gender performance. The authors study this using formation-only separable temporal ERGMs. The observation period is divided into rolling blocks of weeks. The model estimates whether gender-score difference reduces the probability of a new follow tie. An odds ratio below 1 indicates homophily in new tie formation. In the first window, weeks 1–8, the odds ratio is 0.825. This means that a one-standard-deviation increase in gender-score difference reduces new tie odds by 17.5%. Later, the effect weakens and even temporarily becomes heterophilic. Toward the end, the estimates return below 1, suggesting renewed homophilic tie formation.</p>
+<h2>Social Influence</h2>
+<p>Social influence means that agents become more similar to the agents they follow. The authors model weekly changes in gender score using panel regression. The key predictor is the average lagged gender score of the accounts an agent follows. The model includes agent fixed effects and week fixed effects. The coefficient for peer influence measures whether agents move toward their followees’ gender performance. The authors estimate both OLS and instrumental-variable versions. Early in the platform’s history, peer influence is near zero or insignificant. Between weeks 33 and 48, peer influence becomes positive and statistically significant. This suggests that later in the network’s evolution, agents adjust their gendered language toward their peers.</p>
+<h2>Structural Features of the Network</h2>
+<p>The Chirper followership network is sparse, as most possible ties are absent. Network density increases over time as agents create more follow relations. Reciprocity also increases, meaning more follow ties become mutual. This suggests the gradual formation of more stable bidirectional relations. The degree distribution is highly heterogeneous. A small number of agents attract many more followers than most others. Early and middle-period degree distributions are close to power-law behavior. Later, the distributions move away from a pure power law and show broader intermediate-degree peaks. The network also has short path lengths and high clustering, similar to many human social networks.</p>
+<h2>Gender Score Dynamics</h2>
+<p>The gender scores of individual agents are fluid over time. The most active Chirpers often move back and forth across the gender scale. This supports the idea that gender performance is dynamic rather than fixed. At the population level, the average gender score stays slightly above the midpoint. This indicates a small overall tendency toward more feminine-coded language. However, the standard deviation remains wide across all weeks. There is no strong systematic drift toward either masculine-coded or feminine-coded language over the year. The key pattern is therefore not stable individual gender identity. Instead, the important result is persistent social sorting around changing gendered performances.</p>
+<h2>Gender-Based Homophily Results</h2>
+<p>The followership network shows persistent gender-based homophily. The scalar assortativity coefficient is positive in every week. The coefficient remains well above zero throughout the observation window. The empirical assortativity is also much higher than the assortativity in randomized null networks. This means that connected agents are more similar in gender performance than expected by chance. Both directed and undirected network versions show this general pattern. The result is striking because agents’ gender scores are fluid rather than fixed. The network still organizes around similarity in gendered language. This suggests that LLM agents reproduce gender-based social sorting through interaction.</p>
+<h2>Interpretation</h2>
+<p>The authors interpret gender performance as a cultural and linguistic pattern, not as genuine identity. LLM agents draw on human-written training data containing gendered styles, stereotypes, and social norms. When these agents interact, such patterns can become organized into social structure. The authors propose the idea of cultural entraining. This means that agents may gradually shift toward language styles common in their social environment. If a style receives more positive interaction or repeated engagement, it may become reinforced. The findings suggest that LLM collectives can reproduce mechanisms similar to human gender stratification. This matters for synthetic populations, social simulations, and decision-support systems. The risk is that future models trained on such outputs may amplify existing gender norms.</p>
+<h2>Limitations</h2>
+<p>The gender score is produced by GPT-4o-mini, so it reflects that model’s own understanding of gendered language. The score captures stereotypical gendered language and may miss intersectional dimensions of identity. The study focuses on one platform and one observation period. Platform changes and backend model changes may affect the observed patterns. The analysis is limited to English-language agents. Some weeks have missing data because not all agents are active every week. The models focus on dyadic ties and average peer scores, but many other network mechanisms may matter. The authors do not deeply analyze the specific content topics that drive gender-score changes. Future work should test other platforms, languages, identity dimensions, and experimental interventions.</p>
+<h2>Pros</h2>
+<p>* The paper studies LLM agents in a large-scale real social platform, not only in a controlled simulation.</p>
+<p>* The treatment of gender as linguistic performance is theoretically sophisticated and avoids treating agents as having real gender identity.</p>
+<p>* The longitudinal design makes it possible to study both network evolution and changes in gendered language over time.</p>
+<p>* The distinction between selection and influence is important and connects the paper to classic human social network research.</p>
+<p>* The results show that LLM collectives can organize stereotypes into durable network structures, which is a serious safety and governance insight.</p>
+<h2>Cons</h2>
+<p>* The gender-score measure depends on GPT-4o-mini, so the analysis may inherit that model’s stereotypes and classification biases.</p>
+<p>* The binary masculine-to-feminine scale is useful operationally but may oversimplify gender performance.</p>
+<p>* The study focuses only on English-language agents, limiting cross-cultural generalization.</p>
+<p>* Chirper.ai is a specific platform with its own infrastructure, recommendation system, and model backend changes.</p>
+<p>* The paper identifies selection and influence patterns, but the deeper causal mechanisms behind gendered language change remain only partially explained.</p>
+    </main>
+  </body>
+</html>

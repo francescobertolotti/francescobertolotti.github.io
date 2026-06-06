@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Llm-driven social influence for cooperative behavior in multi-agent systems</title>
+    <style>
+      :root {
+        --paper: #f5f0e4;
+        --paper-deep: #e5dcc8;
+        --ink: #161616;
+        --muted: #595349;
+        --line: #1e1e1e;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        color: var(--ink);
+        background:
+          linear-gradient(to bottom, rgba(229, 220, 200, 0.35), rgba(245, 240, 228, 0.98)),
+          var(--paper);
+        font-family: Georgia, "Times New Roman", serif;
+      }
+
+      main {
+        padding: 1rem 1rem 1.4rem;
+      }
+
+      h1, h2, h3 {
+        line-height: 1.15;
+        margin: 1.15rem 0 0.55rem;
+      }
+
+      h1:first-child, h2:first-child, h3:first-child {
+        margin-top: 0;
+      }
+
+      h2 {
+        font-size: 1.3rem;
+      }
+
+      h3 {
+        font-size: 1.02rem;
+      }
+
+      p, li {
+        line-height: 1.62;
+      }
+
+      p {
+        margin: 0 0 0.8rem;
+      }
+
+      ul {
+        margin: 0.25rem 0 0.95rem 1.2rem;
+        padding: 0;
+      }
+
+      li + li {
+        margin-top: 0.35rem;
+      }
+
+      code {
+        padding: 0.06rem 0.28rem;
+        border: 1px solid rgba(30, 30, 30, 0.18);
+        background: rgba(255, 255, 255, 0.45);
+        font-family: "SFMono-Regular", Menlo, Consolas, monospace;
+        font-size: 0.92em;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+<h2>Introduction</h2>
+<p>The paper studies how LLM-driven narratives can promote cooperative behavior in multi-agent systems. The authors focus on indirect influence rather than direct policy intervention. The main example is rural repopulation, where agents may be nudged toward supporting or adopting rural living. The framework combines game theory, network dynamics, and LLM-generated persuasive narratives. LLMs are treated as social influencers that generate subtle, adaptive messages. The goal is to make cooperation emerge through social proof and network effects. The paper argues that this approach can be more scalable and cost-effective than traditional policy tools. The central claim is that LLM-guided influence can create self-sustaining cooperative ecosystems. The study validates the idea through simulations using GPT-4o and GPT-4o-mini.</p>
+<h2>Related Work</h2>
+<p>The paper builds on research about cooperation in multi-agent systems. Traditional approaches often use fixed incentives or rule-based strategies. These methods can be rigid and may not adapt well to heterogeneous social environments. The paper also draws from network science, especially small-world and scale-free network models. Network position is important because central agents can spread influence more effectively. The work also connects to narrative-driven persuasion and computational social science. Recent LLMs make it possible to generate adaptive, context-aware persuasive content. The paper’s contribution is to combine narrative generation, social influence, and game-theoretic modeling. It positions LLMs as dynamic tools for shaping cooperation in agent populations.</p>
+<h2>Methodology: Game Theory and Social Influence</h2>
+<p>The model considers a population of agents that can choose between action and inaction. Action means actively promoting the cooperative goal, such as rural repopulation. Inaction means not acting directly, while still being exposed to LLM-guided social influence. Each agent’s utility combines a direct payoff and an indirect payoff from social influence. The indirect payoff depends on how many other agents cooperate. The LLM influence is modeled through a sigmoid function. This function captures the idea that cooperation can grow slowly at first and then accelerate after a threshold. The model uses parameters for influence strength and growth steepness. These parameters represent different narrative strategies and different levels of persuasive power.</p>
+<h2>Nash Equilibrium and Evolutionarily Stable Strategies</h2>
+<p>The paper extends Nash equilibrium to include LLM-driven influence. An equilibrium occurs when no agent can improve its utility by changing strategy alone. The key idea is that LLM influence can make both action and inaction compatible with cooperation. Agents may remain inactive but still contribute to cooperation by allowing social influence to operate. The paper also uses the concept of Evolutionarily Stable Strategy. A cooperative strategy becomes stable if it cannot be invaded by alternative strategies. When LLM influence is strong enough, cooperation can become evolutionarily stable. This means that subtle social influence can support cooperation without coercive policy enforcement. The theoretical model frames LLMs as background social forces rather than direct decision makers.</p>
+<h2>Practical Implementation Strategy</h2>
+<p>The authors implement the framework in a Python simulation. Agents have individual parameters such as direct benefit, influence sensitivity, and action threshold. Agents are connected in a social network with several neighbors. Network position is measured using eigenvector centrality. The LLM generates narrative content in JSON format. The generated output includes a narrative, an influence score, an influence type, and reasoning. The influence score updates the agent’s accumulated influence and sensitivity. The simulation runs over multiple time steps. Feedback loops monitor sentiment, network clustering, and migration-related trends.</p>
+<h2>LLM-Driven Narrative Framework</h2>
+<p>The LLM generates narratives that promote positive views of rural living. The narratives emphasize sustainability, community values, quality of life, and personal agency. The approach avoids direct top-down messaging. Instead of saying that people should move to rural areas, the LLM frames rural life as attractive and community-driven. Possible content includes social media posts, blog articles, and influencer-oriented messages. The framework aims to make cooperation feel like an organic social movement. This is important because overt policy messaging may trigger resistance. The LLM adapts narratives to agent state and network position. The narrative strategy is designed to shape opinions gradually through repeated exposure.</p>
+<h2>Monitoring and Feedback Loops</h2>
+<p>The framework includes feedback mechanisms to measure whether narratives are effective. Sentiment analysis tracks whether attitudes toward rural life improve over time. Network cohesion measures whether communities form around pro-rural narratives. The clustering coefficient is used to detect tightly connected groups. Population flow data represents whether influence translates into concrete migration behavior. These metrics connect narrative influence with both opinion change and behavioral change. The feedback loop allows the LLM strategy to adapt over time. As cooperation grows, narratives become more aligned with observed social behavior. This creates a possible positive feedback loop between influence and action.</p>
+<h2>Connecting Narratives with Agent Behavior</h2>
+<p>Agents consume LLM-generated narratives according to their current opinions and sensitivity. A narrative aligned with an agent’s existing opinion is more likely to influence behavior. More sensitive agents respond more strongly to LLM-generated content. Each agent also has a threshold for action based on the fraction of cooperating neighbors. LLM narratives can lower this threshold by making cooperation seem more attractive. After reading a narrative, an agent updates its opinion and observes neighbor behavior. If enough neighbors cooperate, the agent may switch from inaction to action. This creates social proof: cooperation becomes more likely when others are already cooperating. The mechanism combines individual persuasion with network contagion.</p>
+<h2>Simulating Social Influence and Cooperation Dynamics</h2>
+<p>The simulation uses threshold models of collective behavior. An agent acts when the proportion of cooperating neighbors exceeds its threshold. Agents are heterogeneous, so they do not all respond in the same way. Differences include sensitivity to influence, risk tolerance, and personal preferences. The LLM modifies perceived benefits of cooperation and can lower action thresholds. Central agents can be targeted because they are more influential in the network. Once central agents cooperate, their behavior can trigger cascades. The paper models this cascade with a sigmoid probability function. The result is an emergent pattern of cooperation produced by social proof and narrative influence.</p>
+<h2>Long-Term Societal Implications</h2>
+<p>The authors argue that LLM-driven influence could reduce the burden of traditional policy intervention. Traditional rural repopulation policies often require subsidies, infrastructure, or direct incentives. LLM-driven narratives may be cheaper and easier to scale. The paper defines cost savings as the difference between policy cost and LLM-influence cost. The desired outcome is a self-sustaining cooperative ecosystem. Once a critical mass of agents adopts rural living, the behavior may continue without strong LLM influence. The authors model this with a logistic growth process. As rural population grows, the attractiveness of rural life also increases. This creates a reinforcing cycle of social proof and population growth.</p>
+<h2>Visualization Analysis</h2>
+<p>The paper analyzes the relationship between network position and influence. The simulations show a strong positive correlation between network centrality and influence. The reported correlation is r = 0.969 with p &lt; 0.006. This suggests that central agents receive and propagate more influence. Temporal analysis shows that influence increases over time. Influence starts around 0.05–0.06 and rises toward 0.08–0.09. The influence distribution is approximately normal according to the Shapiro-Wilk test. The paper also reports a large effect size for network position, with Cohen’s d = 4.530. These results support the claim that network structure strongly shapes LLM-guided influence.</p>
+<h2>Edge LLM Experiments</h2>
+<p>The authors also test GPT-4o-mini in a randomly structured network. This experiment studies whether smaller models can still generate useful influence dynamics. The average influence increases steadily over time. Final average influence reaches about 0.07. The correlation between centrality and influence remains significant. The effects are weaker than with GPT-4o but follow the same general pattern. This suggests that smaller LLMs may still support cooperative influence in MAS. The authors connect this to edge and resource-constrained applications. The result is relevant for deploying influence systems outside large cloud-based models.</p>
+<h2>Practical Challenges and Ethical Considerations</h2>
+<p>The paper recognizes that LLM-driven influence creates ethical risks. Persuasive narratives can become manipulation if users are not aware of the influence process. The authors recommend transparency and explicit consent. They also warn that different communities may resist or react differently to narrative influence. Oversight mechanisms are needed to detect bias, adversarial influence, and harmful persuasion. The framework should support autonomy rather than coercion. The authors mention the EU AI Act and algorithmic transparency as relevant governance references. Defense and military applications are considered especially sensitive. In such contexts, strong safeguards are needed to avoid escalation and preserve human control.</p>
+<h2>Pros</h2>
+<p>* The paper offers a clear framework connecting LLM narratives, network centrality, and cooperative behavior.</p>
+<p>* The focus on indirect influence is original and useful for studying “soft” mechanisms of social coordination.</p>
+<p>* The model combines game theory, threshold dynamics, social proof, and network analysis in a coherent way.</p>
+<p>* The empirical analysis includes useful statistics such as correlation, temporal trends, normality tests, and effect size.</p>
+<p>* The GPT-4o-mini experiment is valuable because it considers smaller models and possible edge deployment.</p>
+<h2>Cons</h2>
+<p>* The rural repopulation scenario is interesting but still highly simplified compared with real migration decisions.</p>
+<p>* The framework risks normalizing persuasive AI systems that could manipulate opinions if not carefully governed.</p>
+<p>* The simulations rely on artificial agents and synthetic influence metrics, so real-world validity remains uncertain.</p>
+<p>* The paper assumes that LLM-generated narratives can be beneficial, but does not deeply test negative or adversarial narratives.</p>
+<p>* The mathematical model is elegant, but some links between equations, LLM outputs, and real behavior remain under-specified.</p>
+    </main>
+  </body>
+</html>

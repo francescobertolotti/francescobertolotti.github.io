@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Investigating Moral Evolution Via LLM-Based Agent Simulation</title>
+    <style>
+      :root {
+        --paper: #f5f0e4;
+        --paper-deep: #e5dcc8;
+        --ink: #161616;
+        --muted: #595349;
+        --line: #1e1e1e;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        color: var(--ink);
+        background:
+          linear-gradient(to bottom, rgba(229, 220, 200, 0.35), rgba(245, 240, 228, 0.98)),
+          var(--paper);
+        font-family: Georgia, "Times New Roman", serif;
+      }
+
+      main {
+        padding: 1rem 1rem 1.4rem;
+      }
+
+      h1, h2, h3 {
+        line-height: 1.15;
+        margin: 1.15rem 0 0.55rem;
+      }
+
+      h1:first-child, h2:first-child, h3:first-child {
+        margin-top: 0;
+      }
+
+      h2 {
+        font-size: 1.3rem;
+      }
+
+      h3 {
+        font-size: 1.02rem;
+      }
+
+      p, li {
+        line-height: 1.62;
+      }
+
+      p {
+        margin: 0 0 0.8rem;
+      }
+
+      ul {
+        margin: 0.25rem 0 0.95rem 1.2rem;
+        padding: 0;
+      }
+
+      li + li {
+        margin-top: 0.35rem;
+      }
+
+      code {
+        padding: 0.06rem 0.28rem;
+        border: 1px solid rgba(30, 30, 30, 0.18);
+        background: rgba(255, 255, 255, 0.45);
+        font-family: "SFMono-Regular", Menlo, Consolas, monospace;
+        font-size: 0.92em;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+<h2>Introduction</h2>
+<p>The paper studies moral evolution with LLM agents placed in a simulated prehistoric hunter-gatherer environment. Its core question is why moral systems that support cooperation can survive when natural selection should often reward selfish behavior. The authors argue that traditional game theory and anthropological evidence are valuable, but too limited to capture rich cognition, memory, and contextual interaction. They propose LLM-based simulation as a complementary method that can express more realistic psychology while still allowing controlled experiments. The intended contribution is therefore both substantive and methodological.</p>
+<h2>Related Work</h2>
+<p>The paper reviews three main backgrounds: evolutionary theories of cooperation, descriptive moral frameworks, and LLM-based agent simulation. On the evolutionary side, it uses kin selection, reciprocal altruism, group selection, and evolutionary game theory as conceptual anchors. On the moral side, it leans strongly on the expanding-circle idea, because it gives a simple way to grade agents by the scope of their concern. This is a smart design move: morality is operationalized through who counts as worthy of care, not through one fixed virtue score. The simulation literature is used mainly to justify that LLM agents can encode values, memory, reasoning, and social adaptation.</p>
+<h2>Simulation Environment</h2>
+<p>The environment, SOCIAL-EVOL, models survival, production, reproduction, and social conflict in a text-based prehistoric setting. Agents lose health over time, gather plants, hunt animals, reproduce, communicate, allocate resources, rob others, or fight. Plants are safer but less rewarding, while hunting is riskier and creates incentives for collaboration. Aggressive actions are possible and not automatically punished, which allows moral differences to produce real strategic divergence. This environment is built to make cooperation useful but not guaranteed.</p>
+<h2>Agent Design</h2>
+<p>The framework, MORE, gives all agents the same baseline goal of survival and reproduction, but different moral circles. The four main types are selfish, kin-focused, reciprocal group moral, and universal group moral. This is the conceptual center of the paper: moral variation is implemented as different boundaries of concern. Agents also have a cognition architecture with perception, reasoning, memory, and reflection, so moral type affects how they interpret and respond to events. The paper explicitly treats this as a simplification of continuous human morality, but a useful one for controlled experiments.</p>
+<h2>Validation Experiments</h2>
+<p>Before running evolutionary comparisons, the authors test whether the simulated agents actually behave like their assigned moral types. They use stronger models to infer moral type from observed behavior and obtain high classification accuracy with low variance. They also compare action distributions and show that selfish agents rob and fight more, while more moral agents communicate and allocate more. This validation step is important because the later evolution claims would be weak if type-conditioned behavior were not behaviorally visible. In other words, the paper first checks agent fidelity before asking evolutionary questions.</p>
+<h2>Main Experiments</h2>
+<p>The main experiments vary four dimensions: baseline abundance, resource scarcity, social interaction cost, and moral-type observability. In the baseline setting, kin-focused agents dominate because they can cooperate without the broader coordination problems of large-group morality. Under scarce resources, the competition becomes unstable and selfish agents can win by taking an early resource lead, even if moral types remain locally competitive. Under high communication cost, selfish agents dominate because collaboration becomes too expensive relative to immediate individual action. When moral type is hard to identify, reciprocal agents suffer because they are misread, while kin-focused and universal agents can persist longer in different ways.</p>
+<h2>Discussion</h2>
+<p>The discussion links the simulation outcomes to wider theories of social evolution. One important interpretation is that kin-based cooperation may have been historically robust because kinship was easier to identify than broader moral reliability. The paper also argues that the expanding-circle model works well as a unifying moral framework, because broader but self-consistent circles often perform best when recognition is reliable. A second major point is that cognition matters: recognition errors, communication costs, and limited information can change which moral systems survive. This makes moral evolution a joint product of ethics, ecology, and cognition rather than of payoff structure alone.</p>
+<h2>Pros</h2>
+<ul>
+<li>The paper has a strong conceptual core: the expanding-circle operationalization gives a clear and theoretically meaningful way to model moral diversity.</li>
+<li>The environment is richer than standard repeated-game setups, because survival, reproduction, conflict, and communication all interact in the same simulation.</li>
+<li>The validation section is a real strength, since it shows that the moral types are behaviorally distinguishable before the evolutionary analysis begins.</li>
+<li>The experiments generate interpretable comparative results about scarcity, observability, and communication cost instead of reporting only one headline outcome.</li>
+</ul>
+<h2>Cons</h2>
+<ul>
+<li>The moral categories are still coarse, so the framework may miss important mixed or context-dependent forms of human moral reasoning.</li>
+<li>The prehistoric environment is theoretically motivated but highly stylized, which limits how directly one can map these outcomes to actual human evolution.</li>
+<li>The causal claims remain simulation-based: the framework is suggestive and illuminating, but it cannot by itself establish what really happened historically.</li>
+<li>Several omitted factors, especially space and mate selection, are serious enough that they could plausibly change which moral types look evolutionarily stable.</li>
+</ul>
+    </main>
+  </body>
+</html>
