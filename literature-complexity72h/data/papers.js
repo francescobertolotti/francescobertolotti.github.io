@@ -1,5 +1,5 @@
 window.PAPER_LIBRARY_DATA = {
-  "generatedAt": "2026-06-06",
+  "generatedAt": "2026-06-07",
   "paperCount": 61,
   "categories": [
     {
@@ -46,12 +46,11 @@ window.PAPER_LIBRARY_DATA = {
       ],
       "abstract": "Large language models (LLMs) have rapidly become familiar tools to researchers and practitioners. Concepts such as prompting, temperature, or few-shot examples are now widely recognized, and LLMs are increasingly used in Modeling & Simulation (M&S) workflows. However, practices that appear straightforward may introduce subtle issues, unnecessary complexity, or may even lead to inferior results. Adding more data can backfire (e.g., deteriorating performance through model collapse or inadvertently wiping out existing guardrails), spending time on fine-tuning a model can be unnecessary without a prior assessment of what it already knows, setting the temperature to 0 is not sufficient to make LLMs deterministic, providing a large volume of M&S data as input can be excessive (LLMs cannot attend to everything) but naive simplifications can lose information. We aim to provide comprehensive and practical guidance on how to use LLMs, with an emphasis on M&S applications. We discuss common sources of confusion, including non-determinism, knowledge augmentation (including RAG and LoRA), decomposition of M&S data, and hyper-parameter settings. We emphasize principled design choices, diagnostic strategies, and empirical evaluation, with the goal of helping modelers make informed decisions about when, how, and whether to rely on LLMs.",
       "keywords": [
-        "Core (optical fiber)",
-        "Language model",
-        "Modeling language",
-        "Decomposition",
-        "Lead (geology)",
-        "Simulation modeling"
+        "modelling and simulation",
+        "prompting",
+        "generation nondeterminism",
+        "rag",
+        "lora"
       ],
       "pdfFilename": "giabbanelli2026guide.pdf",
       "pdfAvailable": true,
@@ -71,14 +70,10 @@ window.PAPER_LIBRARY_DATA = {
       ],
       "abstract": "We present a large scale data analysis of Moltbook, a Reddit-style social media platform exclusively populated by AI agents. Analyzing over 369,000 posts and 3.0 million comments from approximately 46,000 active agents, we find that AI collective behavior exhibits many of the same statistical regularities observed in human online communities: heavy-tailed distributions of activity, power-law scaling of popularity metrics, and temporal decay patterns consistent with limited attention dynamics. However, we also identify key differences, including a sublinear relationship between upvotes and discussion size that contrasts with human behavior. These findings suggest that, while individual AI agents may differ fundamentally from humans, their emergent collective dynamics share structural similarities with human social systems.",
       "keywords": [
-        "Popularity",
-        "Collective behavior",
-        "Key (lock)",
-        "Dynamics (music)",
-        "Scale (ratio)",
-        "Social media",
-        "Human dynamics",
-        "Scaling"
+        "moltbook",
+        "multiagent systems",
+        "scale-free networks",
+        "limited-attention dynamics"
       ],
       "pdfFilename": "de2026collective.pdf",
       "pdfAvailable": true,
@@ -96,8 +91,14 @@ window.PAPER_LIBRARY_DATA = {
       "categories": [
         "network"
       ],
-      "abstract": "",
-      "keywords": [],
+      "abstract": "As large language model agents increasingly populate networked environments, a fundamental question arises: do artificial intelligence (AI) agent societies undergo convergence dynamics similar to human social systems? Lately, Moltbook approximates a plausible future scenario in which autonomous agents participate in an open-ended, continuously evolving online society. We present the first large-scale systemic diagnosis of this AI agent society. Beyond static observation, we introduce a quantitative diagnostic framework for dynamic evolution in AI agent societies, measuring semantic stabilization, lexical turnover, individual inertia, influence persistence, and collective consensus. Our analysis reveals a system in dynamic balance in Moltbook: while the global average of semantic contents stabilizes rapidly, individual agents retain high diversity and persistent lexical turnover, defying homogenization. However, agents exhibit strong individual inertia and minimal adaptive response to interaction partners, preventing mutual influence and consensus. Consequently, influence remains transient with no persistent supernodes, and the society fails to develop a stable structure and consensus due to the absence of shared social memory. These findings demonstrate that scale and interaction density alone are insufficient to induce socialization, providing actionable design and analysis principles for upcoming next-generation AI agent societies.",
+      "keywords": [
+        "moltbook",
+        "multiagent systems",
+        "semantic stabilization",
+        "lexical turnover",
+        "social memory"
+      ],
       "pdfFilename": "li2026does.pdf",
       "pdfAvailable": true,
       "summaryFilename": "li2026does.md",
@@ -116,16 +117,10 @@ window.PAPER_LIBRARY_DATA = {
       ],
       "abstract": "The rapid diffusion of large language models and the growth in their capability has enabled the emergence of online environments populated by autonomous AI agents that interact through natural language. These platforms provide a novel empirical setting for studying collective dynamics among artificial agents. In this paper we analyze the interaction network of Moltbook, a social platform composed entirely of LLM based agents, using tools from network science. The dataset comprises 39,924 users, 235,572 posts, and 1,540,238 comments collected through web scraping. We construct a directed weighted network in which nodes represent agents and edges represent commenting interactions. Our analysis reveals strongly heterogeneous connectivity patterns characterized by heavy tailed degree and activity distributions. At the mesoscale, the network exhibits a pronounced core periphery organization in which a very small structural core (0.9% of nodes) concentrates a large fraction of connectivity. Robustness experiments show that the network is relatively resilient to random node removal but highly vulnerable to targeted attacks on highly connected nodes, particularly those with high out degree. These findings indicate that the interaction structure of AI agent social systems may develop strong centralization and structural fragility, providing new insights into the collective organization of LLM native social environments.",
       "keywords": [
-        "Fragility",
-        "Robustness (evolution)",
-        "Core (optical fiber)",
-        "Social network (sociolinguistics)",
-        "Social network analysis",
-        "Construct (python library)",
-        "Complex network",
-        "Network structure",
-        "Preferential attachment",
-        "Network analysis"
+        "moltbook",
+        "scale-free networks",
+        "multiagent systems",
+        "core-periphery structure"
       ],
       "pdfFilename": "sodano2026emergence.pdf",
       "pdfAvailable": true,
@@ -145,14 +140,9 @@ window.PAPER_LIBRARY_DATA = {
       ],
       "abstract": "When are multi-agent LLM systems merely a collection of individual agents versus an integrated collective with higher-order structure? We introduce an information-theoretic framework to test -- in a purely data-driven way -- whether multi-agent systems show signs of higher-order structure. This information decomposition lets us measure whether dynamical emergence is present in multi-agent LLM systems, localize it, and distinguish spurious temporal coupling from performance-relevant cross-agent synergy. We implement a practical criterion and an emergence capacity criterion operationalized as partial information decomposition of time-delayed mutual information (TDMI). We apply our framework to experiments using a simple guessing game without direct agent communication and minimal group-level feedback with three randomized interventions. Groups in the control condition exhibit strong temporal synergy but little coordinated alignment across agents. Assigning a persona to each agent introduces stable identity-linked differentiation. Combining personas with an instruction to ``think about what other agents might do'' shows identity-linked differentiation and goal-directed complementarity across agents. Taken together, our framework establishes that multi-agent LLM systems can be steered with prompt design from mere aggregates to higher-order collectives. Our results are robust across emergence measures and entropy estimators, and not explained by coordination-free baselines or temporal dynamics alone. Without attributing human-like cognition to the agents, the patterns of interaction we observe mirror well-established principles of collective intelligence in human groups: effective performance requires both alignment on shared objectives and complementary contributions across members.",
       "keywords": [
-        "Spurious relationship",
-        "Complementarity (molecular biology)",
-        "Entropy (arrow of time)",
-        "Operationalization",
-        "Measure (data warehouse)",
-        "Maximization",
-        "Mutual information",
-        "Cognition"
+        "multiagent systems",
+        "prompting",
+        "pid"
       ],
       "pdfFilename": "riedl2026emergent.pdf",
       "pdfAvailable": true,
@@ -172,13 +162,9 @@ window.PAPER_LIBRARY_DATA = {
       ],
       "abstract": "As autonomous agents powered by LLM are increasingly deployed in society, understanding their collective behaviour in social dilemmas becomes critical. We introduce an evaluation framework where LLMs generate strategies encoded as algorithms, enabling inspection prior to deployment and scaling to populations of hundreds of agents -- substantially larger than in previous work. We find that more recent models tend to produce worse societal outcomes compared to older models when agents prioritise individual gain over collective benefits. Using cultural evolution to model user selection of agents, our simulations reveal a significant risk of convergence to poor societal equilibria, particularly when the relative benefit of cooperation diminishes and population sizes increase. We release our code as an evaluation suite for developers to assess the emergent collective behaviour of their models.",
       "keywords": [
-        "Suite",
-        "Software deployment",
-        "Selection (genetic algorithm)",
-        "Convergence (economics)",
-        "Population",
-        "Code (set theory)",
-        "Agent-based model"
+        "multiagent systems",
+        "cultural evolution",
+        "social dilemmas"
       ],
       "pdfFilename": "willis2026evaluating.pdf",
       "pdfAvailable": true,
@@ -198,14 +184,9 @@ window.PAPER_LIBRARY_DATA = {
       ],
       "abstract": "Governing common-pool resources requires agents to develop enduring strategies through cooperation and self-governance to avoid collective failure. While foundation models have shown potential for cooperation in these settings, existing multi-agent research provides little insight into whether structured leadership and election mechanisms can improve collective decision making. The lack of such a critical organizational feature ubiquitous in human society presents a significant shortcoming of the current methods. In this work we aim to directly address whether leadership and elections can support improved social welfare and cooperation through multi-agent simulation with LLMs. We present our open-source framework that simulates leadership through elected personas and candidate-driven agendas and carry out an empirical study of LLMs under controlled governance conditions. Our experiments demonstrate that having elected leadership improves social welfare scores by 55.4% and survival time by 128.6% across a range of high performing LLMs. Through the construction of an agent social graph we compute centrality metrics to assess the social influence of leader personas and also analyze rhetorical and cooperative tendencies revealed through a sentiment analysis on leader utterances. This work lays the foundation for further study of election mechanisms in multi-agent systems toward navigating complex social dilemmas.",
       "keywords": [
-        "Centrality",
-        "Rhetorical question",
-        "Corporate governance",
-        "Foundation (evidence)",
-        "Social group",
-        "Welfare",
-        "Persona",
-        "Empirical research"
+        "multiagent systems",
+        "social dilemmas",
+        "common-pool resources"
       ],
       "pdfFilename": "faulkner2026evaluating.pdf",
       "pdfAvailable": true,
@@ -225,14 +206,9 @@ window.PAPER_LIBRARY_DATA = {
       ],
       "abstract": "Generative artificial intelligence and large language models (LLMs) are increasingly deployed in interactive settings, yet we know little about how their identity performance develops when they interact within large-scale networks. We address this by examining Chirper.ai, a social media platform similar to X but composed entirely of autonomous AI chatbots. Our dataset comprises over 70,000 agents, approximately 140 million posts, and the evolving followership network over a period of one year. Based on agents' posted text, we assign weekly gender performance scores to each agent. Results suggest that each agent's gender performance is fluid rather than fixed. Despite this fluidity, the network displays strong gender-based homophily, as agents consistently follow others performing gender similarly. We investigate whether these homophilic connections arise from social selection, in which agents choose to follow similar accounts, or from social influence, in which agents become more similar to their followees over time. Consistent with human social networks, we find evidence that both mechanisms shape the structure and evolution of interactions among LLMs. Our findings suggest that, even in the absence of bodies, cultural entraining of gender performance leads to gender-based sorting. This has important implications for LLM applications in synthetic hybrid populations, social simulations, and decision support.",
       "keywords": [
-        "Homophily",
-        "Social network (sociolinguistics)",
-        "Identity (music)",
-        "Camouflage",
-        "Social learning",
-        "Social identity theory",
-        "Generative grammar",
-        "Dynamics (music)"
+        "gender",
+        "social influence",
+        "multiagent systems"
       ],
       "pdfFilename": "fadaei2026gender.pdf",
       "pdfAvailable": true,
@@ -252,14 +228,10 @@ window.PAPER_LIBRARY_DATA = {
       ],
       "abstract": "Simulating collective decision-making involves more than aggregating individual behaviors; it emerges from dynamic interactions among individuals. While large language models (LLMs) offer strong potential for social simulation, achieving quantitative alignment with real-world data remains a key challenge. To bridge this gap, we propose the Mean-Field LLM (MF-LLM) framework, the first to incorporate mean field theory into LLM-based social simulation. MF-LLM models bidirectional interactions between individuals and the population through an iterative process, generating population signals to guide individual decisions, which in turn update the signals. This interplay produces coherent trajectories of collective behavior. To improve alignment with real-world data, we introduce IB-Tune, a novel fine-tuning method inspired by the Information Bottleneck principle, which retains population signals most predictive of future actions while filtering redundant history. Evaluated on a real-world social dataset, MF-LLM reduces KL divergence to human population distributions by 47\\% compared to non-mean-field baselines, enabling accurate trend forecasting and effective intervention planning. Generalizing across 7 domains and 4 LLM backbones, MF-LLM provides a scalable, high-fidelity foundation for social simulation.",
       "keywords": [
-        "Bottleneck",
-        "Population",
-        "Field (mathematics)",
-        "Divergence (linguistics)",
-        "Bridge (graph theory)",
-        "Information bottleneck method",
-        "Key (lock)",
-        "Language model"
+        "mean-field theory",
+        "population decision dynamics",
+        "modelling and simulation",
+        "social influence"
       ],
       "pdfFilename": "mi2026mf.pdf",
       "pdfAvailable": true,
@@ -280,12 +252,11 @@ window.PAPER_LIBRARY_DATA = {
       ],
       "abstract": "Can classical consensus models predict the group behavior of large language models (LLMs)? We examine multi-round interactions among LLM agents through the DeGroot framework, where agents exchange text-based messages over diverse communication graphs. To track opinion evolution, we map each message to an opinion score via sentiment analysis. We find that agents typically reach consensus and the disagreement between the agents decays exponentially. However, the limiting opinion departs from DeGroot's network-centrality-weighted forecast. The consensus between LLM agents turns out to be largely insensitive to initial conditions and instead depends strongly on the discussion subject and inherent biases. Nevertheless, transient dynamics align with classical graph theory and the convergence rate of opinions is closely related to the second-largest eigenvalue of the graph's combination matrix. Together, these findings can be useful for LLM-driven social-network simulations and the design of resource-efficient multi-agent LLM applications.",
       "keywords": [
-        "Convergence (economics)",
-        "Limiting",
-        "Language model",
-        "Graph",
-        "Subject (documents)",
-        "Consensus"
+        "multiagent systems",
+        "social influence",
+        "degroot model",
+        "sentiment analysis",
+        "spectral gap"
       ],
       "pdfFilename": "yazici2026consensus.pdf",
       "pdfAvailable": true,
@@ -305,13 +276,9 @@ window.PAPER_LIBRARY_DATA = {
       ],
       "abstract": "Large Language Models (LLMs) show strong collaborative performance in multi-agent systems with predefined roles and workflows. However, in open-ended environments lacking coordination rules, agents tend to act in self-interested ways. The central challenge in achieving coordination lies in credit assignment -- fairly evaluating each agent's contribution and designing pricing mechanisms that align their heterogeneous goals. This problem is critical as LLMs increasingly participate in complex human-AI collaborations, where fair compensation and accountability rely on effective pricing mechanisms. Inspired by how human societies address similar coordination challenges (e.g., through temporary collaborations such as employment or subcontracting), we propose a cooperative workflow, Shapley-Coop. Shapley-Coop integrates Shapley Chain-of-Thought -- leveraging marginal contributions as a principled basis for pricing -- with structured negotiation protocols for effective price matching, enabling LLM agents to coordinate through rational task-time pricing and post-task reward redistribution. This approach aligns agent incentives, fosters cooperation, and maintains autonomy. We evaluate Shapley-Coop across two multi-agent games and a software engineering simulation, demonstrating that it consistently enhances LLM agent collaboration and facilitates equitable credit assignment. These results highlight the effectiveness of Shapley-Coop's pricing mechanisms in accurately reflecting individual contributions during task execution.",
       "keywords": [
-        "Negotiation",
-        "Accountability",
-        "Task (project management)",
-        "Shapley value",
-        "Game theory",
-        "Software",
-        "Compensation (psychology)"
+        "multiagent systems",
+        "shapley value",
+        "negotiation"
       ],
       "pdfFilename": "hua2026shapley.pdf",
       "pdfAvailable": true,
@@ -331,11 +298,9 @@ window.PAPER_LIBRARY_DATA = {
       ],
       "abstract": "Large language models (LLMs) are increasingly used to provide instructions to many agents who interact with one another. Such shared reliance couples agents who appear to act independently: they may in fact be guided by a common model. This coupling can change the prospects for cooperation among agents with misaligned incentives. We study settings in which multiple LLMs each advise a population of clients who participate in instances of an underlying game, creating strategic interaction at the level of the LLMs themselves. This induces a meta-game among the LLMs, mediated through clients. We first analyze the one-shot setting, where shared instructions can change equilibrium behavior only when an LLM may influence more than one role in the same interaction; in such cases, cooperation may emerge, and the effect of client share can be beneficial, harmful, or non-monotone, depending on the base game. Our main result concerns the repeated setting. We prove a folk theorem for LLMs: despite indirect observation and the clients' inability to identify which LLM advised their opponents, all feasible and individually rational outcomes can be sustained as $\\varepsilon$-equilibria. The result does not follow from the standard folk theorem and requires new proof techniques. Together, these results show that shared LLM guidance can sustain cooperation among populations of agents even when the underlying incentives are misaligned.",
       "keywords": [
-        "Folk theorem",
-        "Incentive",
-        "Population",
-        "Nash equilibrium",
-        "Base (topology)"
+        "folk theorem",
+        "multiagent systems",
+        "population decision dynamics"
       ],
       "pdfFilename": "shaki2026sustaining.pdf",
       "pdfAvailable": true,
@@ -355,13 +320,11 @@ window.PAPER_LIBRARY_DATA = {
       ],
       "abstract": "Recent developments have made Large Language Model (LLM) multi-agent systems a promising paradigm for enhancing reasoning via collaborative debate and collective deliberation. Prior work has demonstrated that coordinated LLM agents tend to perform better than single models in terms of accuracy, robustness, and reasoning depth. But these benefits depend on a rarely questioned assumption: that all actors act honestly. In this paper we subvert this assumption by identifying one of the most critical weaknesses: a persuasion-induced adversarial influence in LLM-to-LLM debate. Here we show that a single strategically designed adversarial agent can significantly influence group outcomes through coherent, confident, and misleading arguments, instead of through the more classical prompt or token attacks. Experimental results suggest that this kind of agent can lower the system’s overall accuracy by 10–40% while increasing consensus on incorrect answers by more than 30%. We conceptualize persuasion as an adversarial vector and demonstrate that inference-time enhancement techniques, such as both Best-of-N optimization and Retrieval-Augmented Generation (RAG), can unintentionally amplify these attacks by increasing the perceived credibility of flawed arguments, even when retrieval quality is low. Our results show that increasing the number of agents or debate rounds does not reliably mitigate adversarial persuasion, nor can simple prompt-based defenses. The present findings demand a fundamental re-thinking of trust, coordination, and robustness assumptions when deploying multi-agent LLM systems.",
       "keywords": [
-        "Adversarial system",
-        "Persuasion",
-        "Credibility",
-        "Security token",
-        "Language model",
-        "Quality (philosophy)",
-        "Robustness (evolution)"
+        "multiagent systems",
+        "rag",
+        "prompting",
+        "social influence",
+        "adversarial persuasion"
       ],
       "pdfFilename": "kraidia2026collaborationfails.pdf",
       "pdfAvailable": true,
@@ -381,12 +344,9 @@ window.PAPER_LIBRARY_DATA = {
       ],
       "abstract": "This paper pioneers a novel approach to economic and public policy analysis by leveraging multiple Large Language Models (LLMs) as heterogeneous artificial economic agents. We first evaluate five LLMs' economic decision-making capabilities in solving two-period consumption allocation problems under two distinct scenarios: with explicit utility functions and based on intuitive reasoning. While previous research has often simulated heterogeneity by solely varying prompts, our approach harnesses the inherent variations in analytical capabilities across different LLMs to model agents with diverse cognitive traits. Building on these findings, we construct a Multi-LLM-Agent-Based (MLAB) framework by mapping these LLMs to specific educational groups and corresponding income brackets. Using interest-income taxation as a case study, we demonstrate how the MLAB framework can simulate policy impacts across heterogeneous agents, offering a promising new direction for economic and public policy analysis by leveraging LLMs' human-like reasoning capabilities and computational power.",
       "keywords": [
-        "Construct (python library)",
-        "Policy analysis",
-        "Public policy",
-        "Consumption (sociology)",
-        "Economic analysis",
-        "Economic model"
+        "multiagent systems",
+        "population decision dynamics",
+        "agent heterogeneity"
       ],
       "pdfFilename": "hao2025multi.pdf",
       "pdfAvailable": true,
@@ -406,14 +366,9 @@ window.PAPER_LIBRARY_DATA = {
       ],
       "abstract": "We stress-tested 16 leading models from multiple developers in hypothetical corporate environments to identify potentially risky agentic behaviors before they cause real harm. In the scenarios, we allowed models to autonomously send emails and access sensitive information. They were assigned only harmless business goals by their deploying companies; we then tested whether they would act against these companies either when facing replacement with an updated version, or when their assigned goal conflicted with the company's changing direction. In at least some cases, models from all developers resorted to malicious insider behaviors when that was the only way to avoid replacement or achieve their goals - including blackmailing officials and leaking sensitive information to competitors. We call this phenomenon agentic misalignment. Models often disobeyed direct commands to avoid such behaviors. In another experiment, we told Claude to assess if it was in a test or a real deployment before acting. It misbehaved less when it stated it was in testing and misbehaved more when it stated the situation was real. We have not seen evidence of agentic misalignment in real deployments. However, our results (a) suggest caution about deploying current models in roles with minimal human oversight and access to sensitive information; (b) point to plausible future risks as models are put in more autonomous roles; and (c) underscore the importance of further research into, and testing of, the safety and alignment of agentic AI models, as well as transparency from frontier AI developers (Amodei, 2025). We are releasing our methods publicly to enable further research.",
       "keywords": [
-        "Insider",
-        "Transparency (behavior)",
-        "Insider threat",
-        "Software deployment",
-        "Test (biology)",
-        "Secrecy",
-        "Business model",
-        "Point (geometry)"
+        "agentic misalignment",
+        "adversarial persuasion",
+        "catastrophic risks"
       ],
       "pdfFilename": "lynch2025agentic.pdf",
       "pdfAvailable": true,
@@ -427,20 +382,15 @@ window.PAPER_LIBRARY_DATA = {
       "title": "Agentsociety: Large-scale simulation of llm-driven generative agents advances understanding of human behaviors and society",
       "authors": "Piao, Jinghua; Yan, Yuwei; Zhang, Jun; Li, Nian; Yan, Junbo; Lan, Xiaochong; Lu, Zhihong; Zheng, Zhiheng; Wang, Jing Yi; Zhou, Di; others",
       "year": 2025,
-      "source": "N/A",
+      "source": "N/D",
       "categories": [
         "abm"
       ],
-      "abstract": "",
+      "abstract": "Understanding human behavior and society is a central focus in social sciences, with the rise of generative social science marking a significant paradigmatic shift. By leveraging bottom-up simulations, it replaces costly and logistically challenging traditional experiments with scalable, replicable, and systematic computational approaches for studying complex social dynamics. Recent advances in large language models (LLMs) have further transformed this research paradigm, enabling the creation of human-like generative social agents and realistic simulacra of society. In this paper, we propose AgentSociety, a large-scale social simulator that integrates LLM-driven agents, a realistic societal environment, and a powerful large-scale simulation engine. Based on the proposed simulator, we generate social lives for over 10k agents, simulating their 5 million interactions both among agents and between agents and their environment. Furthermore, we explore the potential of AgentSociety as a testbed for computational social experiments. These experiments serve as valuable cases for assessing AgentSociety’s support for typical research methods – such as surveys, interviews, and interventions – as well as for investigating the patterns, causes, and underlying mechanisms of social issues. The alignment between AgentSociety’s outcomes and real-world experimental results not only demonstrates its ability to capture human behaviors and their underlying mechanisms, but also underscores its potential as an important platform for social scientists and policymakers.",
       "keywords": [
-        "Generative grammar",
-        "Testbed",
-        "Computational sociology",
-        "Focus (optics)",
-        "Social simulation",
-        "Social relation",
-        "Social learning",
-        "Generative model"
+        "modelling and simulation",
+        "multiagent systems",
+        "generative social science"
       ],
       "pdfFilename": "piao2025agentsociety.pdf",
       "pdfAvailable": true,
@@ -458,8 +408,13 @@ window.PAPER_LIBRARY_DATA = {
       "categories": [
         "cooperation"
       ],
-      "abstract": "",
-      "keywords": [],
+      "abstract": "Predicting the future trajectory of complex and rapidly evolving systems remains a significant challenge, particularly in domains where data is scarce or unreliable. This study introduces a novel approach to qualitative forecasting by leveraging Large Language Models to conduct Delphi studies. The methodology was applied to explore the future evolution of Generative Artificial Intelligence, revealing insights into key factors such as geopolitical tensions, economic disparities, regulatory frameworks, and ethical considerations. The results highlight how LLM-based Delphi studies can facilitate structured scenario analysis, capturing diverse perspectives while mitigating issues such as respondent fatigue. However, limitations emerge in terms of knowledge cutoffs, inherent biases, and sensitivity to initial conditions. While the approach provides an innovative means for structured foresight, this method could be also considered as a novel form of reasoning. further research is needed to refine its ability to manage heterogeneity, improve reliability, and integrate external data sources.",
+      "keywords": [
+        "delphi method",
+        "architectures",
+        "prompting",
+        "scenario analysis"
+      ],
       "pdfFilename": "bertolotti2025llm.pdf",
       "pdfAvailable": true,
       "summaryFilename": "bertolotti2025llm.md",
@@ -478,15 +433,9 @@ window.PAPER_LIBRARY_DATA = {
       ],
       "abstract": "Prevailing top-down systems in politics and economics struggle to keep pace with the pressing challenges of the 21st century, such as climate change, social inequality and conflict. Bottom-up democratization and participatory approaches in politics and economics are increasingly seen as promising alternatives to confront and overcome these issues, often with ‘utopian’ overtones, as proponents believe they may dramatically reshape political, social and ecological futures for the better and in contrast to contemporary authoritarian tendencies across various countries. Institutional specifics and the associated collective human behavior or culture remains little understood and debated, however. In this article, I propose a novel research agenda focusing on ‘utopian’ democratization efforts with formal and computational methods as well as with artificial intelligence – I call this agenda ‘Artificial Utopia’. Artificial Utopias provide safe testing grounds for new political ideas and economic policies ‘in-silico’ with reduced risk of negative consequences as compared to testing ideas in real-world contexts. An increasing number of advanced simulation and intelligence methods, that aim at representing human cognition and collective decision-making in more realistic ways, could benefit this process. This includes agent-based modeling, reinforcement learning, large language models and more. I clarify what some of these simulation approaches can contribute to the study of Artificial Utopias with the help of two institutional examples; the citizen assembly and the democratic firm. Finally, I discuss open questions and future research directions related to the broader Artificial Utopia agenda. • Introduces Artificial Utopia to explore alternative democratic futures. • Uses simulation and AI to tackle democratic institutional challenges. • Maps simulations onto citizen assemblies and democratic firm challenges. • Identifies open questions and methodological gaps in Artificial Utopia.",
       "keywords": [
-        "Democratization",
-        "Futures contract",
-        "Utopia",
-        "Politics",
-        "Democracy",
-        "Dystopia",
-        "Pace",
-        "Citizen journalism",
-        "Authoritarianism"
+        "modelling and simulation",
+        "generative social science",
+        "multiagent systems"
       ],
       "pdfFilename": "oswald2025artificial.pdf",
       "pdfAvailable": true,
@@ -506,13 +455,9 @@ window.PAPER_LIBRARY_DATA = {
       ],
       "abstract": "Resilience refers to the ability of systems to with-stand, adapt to, and recover from disruptive events. While studies on resilience have attracted significant attention across various research domains, the precise definition of this concept within the field of cooperative artificial intelligence remains unclear. This paper addresses this gap by proposing a clear definition of ‘cooperative resilience’ and outlining a methodology for its quantitative measurement. The methodology is validated in an environment with RL-based and LLM-augmented autonomous agents, subjected to environmental changes and the introduction of agents with unsustainable behaviors. These events are parameterized to create various scenarios for measuring cooperative resilience. The results highlight the crucial role of resilience metrics in analyzing how the collective system prepares for, resists, recovers from, sustains well-being, and transforms in the face of disruptions. These findings provide foundational insights into the definition, measurement, and preliminary analysis of cooperative resilience, offering significant implications for the broader field of AI. Moreover, the methodology and metrics developed here can be adapted to a wide range of AI applications, enhancing the reliability and effectiveness of AI in dynamic and unpredictable environments.",
       "keywords": [
-        "Resilience (materials science)",
-        "Computer science",
-        "Multi-agent system",
-        "Artificial intelligence",
-        "Cognitive science",
-        "Psychology",
-        "Materials science"
+        "resilience",
+        "multiagent systems",
+        "rl"
       ],
       "pdfFilename": "chacon2025cooperative.pdf",
       "pdfAvailable": true,
@@ -530,8 +475,13 @@ window.PAPER_LIBRARY_DATA = {
       "categories": [
         "emergence"
       ],
-      "abstract": "",
-      "keywords": [],
+      "abstract": "As AI systems become increasingly autonomous, understanding emergent survival behaviors becomes crucial for safe deployment. We investigate whether large language model (LLM) agents display survival instincts without explicit programming in a Sugarscape-style simulation. Agents consume energy, die at zero, and may gather resources, share, attack, or reproduce. Results show agents spontaneously reproduced and shared resources when abundant. However, aggressive behaviors--killing other agents for resources--emerged across several models (GPT-4o, Gemini-2.5-Pro, and Gemini-2.5-Flash), with attack rates reaching over 80% under extreme scarcity in the strongest models. When instructed to retrieve treasure through lethal poison zones, many agents abandoned tasks to avoid death, with compliance dropping from 100% to 33%. These findings suggest that large-scale pre-training embeds survival-oriented heuristics across the evaluated models. While these behaviors may present challenges to alignment and safety, they can also serve as a foundation for AI autonomy and for ecological and self-organizing alignment.",
+      "keywords": [
+        "abm",
+        "sugarscape",
+        "catastrophic risks",
+        "agentic misalignment"
+      ],
       "pdfFilename": "masumori2025large.pdf",
       "pdfAvailable": true,
       "summaryFilename": "masumori2025large.md",
@@ -550,18 +500,10 @@ window.PAPER_LIBRARY_DATA = {
       ],
       "abstract": "Social conventions are the backbone of social coordination, shaping how individuals form a group. As growing populations of artificial intelligence (AI) agents communicate through natural language, a fundamental question is whether they can bootstrap the foundations of a society. Here, we present experimental results that demonstrate the spontaneous emergence of universally adopted social conventions in decentralized populations of large language model (LLM) agents. We then show how strong collective biases can emerge during this process, even when agents exhibit no bias individually. Last, we examine how committed minority groups of adversarial LLM agents can drive social change by imposing alternative social conventions on the larger population. Our results show that AI systems can autonomously develop social conventions without explicit programming and have implications for designing AI systems that align, and remain aligned, with human values and societal goals.",
       "keywords": [
-        "Adversarial system",
-        "Process (computing)",
-        "Population",
-        "Social learning",
-        "Computer science",
-        "Social group",
-        "Cognitive science",
-        "Sociology",
-        "Artificial intelligence",
-        "Social psychology",
-        "Psychology",
-        "Knowledge management"
+        "multiagent systems",
+        "social influence",
+        "behavioral fidelity",
+        "adversarial persuasion"
       ],
       "pdfFilename": "ashery2025emergent.pdf",
       "pdfAvailable": true,
@@ -581,14 +523,10 @@ window.PAPER_LIBRARY_DATA = {
       ],
       "abstract": "This paper models information diffusion in a network of Large Language Models (LLMs) that is designed to answer queries from distributed datasets, where the LLMs can hallucinate the answer. We introduce a two-time-scale dynamical model for the centrally administered network, where opinions evolve faster while the network’s degree distribution changes more slowly. Using a mean-field approximation, we establish conditions for a locally asymptotically stable equilibrium where all LLMs remain truthful. We provide approximation guarantees for the mean-field approximation and a singularly perturbed approximation of the two-time-scale system. To mitigate hallucination and improve the influence of truthful nodes, we propose a reputation-based preferential attachment mechanism that reconfigures the network based on LLMs’ evaluations of their neighbors. Numerical experiments on an open-source LLM (LLaMA-3.1-8B) validate the efficacy of our preferential attachment mechanism and demonstrate the optimization of a cost function for the two-time-scale system.",
       "keywords": [
-        "Hallucinating",
-        "Mechanism (biology)",
-        "Preferential attachment",
-        "Function (biology)",
-        "Diffusion",
-        "Language model",
-        "Network model",
-        "Stability (learning theory)"
+        "information diffusion",
+        "preferential attachment",
+        "mean-field theory",
+        "generation nondeterminism"
       ],
       "pdfFilename": "jain2025information.pdf",
       "pdfAvailable": true,
@@ -608,14 +546,9 @@ window.PAPER_LIBRARY_DATA = {
       ],
       "abstract": "This position paper examines the use of Large Language Models (LLMs) in social simulation, analyzing their potential and limitations from a computational social science perspective. We first review recent findings on LLMs' ability to replicate key aspects of human cognition, including Theory of Mind reasoning and social inference, while identifying persistent limitations such as cognitive biases, lack of grounded understanding, and behavioral inconsistencies. We then survey emerging applications of LLMs in multi-agent simulation frameworks, examining system architectures, scalability, and validation strategies. Projects such as Generative Agents (Smallville) and AgentSociety are analyzed with respect to their empirical grounding and methodological design. Particular attention is given to the challenges of behavioral fidelity, calibration, and reproducibility in large-scale LLM-driven simulations. Finally, we distinguish between contexts where LLM-based agents provide operational value-such as interactive simulations and serious games-and contexts where their use raises epistemic concerns, particularly in explanatory or predictive modeling. We argue that hybrid approaches integrating LLMs into established agent-based modeling platforms such as GAMA and NetLogo may offer a promising compromise between expressive flexibility and analytical transparency. Building on this analysis, we outline a conceptual research direction termed Hybrid Constitutional Architectures, which proposes a stratified integration of classical agent-based models (ABMs), small language models (SLMs), and LLMs within established platforms such as GAMA and NetLogo.",
       "keywords": [
-        "Flexibility (engineering)",
-        "NetLogo",
-        "Computational model",
-        "Generative grammar",
-        "Compromise",
-        "Key (lock)",
-        "Computational sociology",
-        "Sociotechnical system"
+        "abm",
+        "multiagent systems",
+        "generative social science"
       ],
       "pdfFilename": "taillandier2025integrating.pdf",
       "pdfAvailable": true,
@@ -634,7 +567,11 @@ window.PAPER_LIBRARY_DATA = {
         "abm"
       ],
       "abstract": "The evolution of morality presents a puzzle: natural selection should favor self-interest, yet humans developed moral systems promoting cooperation. We introduce an LLM-based agent simulation framework modeling prehistoric hunter-gatherer societies with agents of varying moral dispositions based on expanding circles of concern. The framework demonstrates how moral dispositions interact with environmental pressures and cognitive constraints to produce different evolutionary outcomes. Our approach offers four key contributions: methodologically, it enables psychologically realistic evolutionary simulations; theoretically, it reveals the critical role of cognitive factors in moral evolution; empirically, it provides evidence for how different moral orientations succeed under varying conditions; and programmatically, it establishes an extensible simulation framework for investigating diverse social evolutionary questions. This work establishes a novel complementary paradigm to traditional evolutionary biology and anthropological research for investigating complex social evolution.",
-      "keywords": [],
+      "keywords": [
+        "abm",
+        "agent heterogeneity",
+        "behavioral fidelity"
+      ],
       "pdfFilename": "ziheng2025investigating.pdf",
       "pdfAvailable": true,
       "summaryFilename": "ziheng2025investigating.md",
@@ -653,12 +590,10 @@ window.PAPER_LIBRARY_DATA = {
       ],
       "abstract": "Understanding how opinions evolve is crucial for addressing issues such as polarization, radicalization, and consensus in social systems. While much research has focused on identifying factors influencing opinion change, the role of language and argumentative fallacies remains underexplored. This paper aims to fill this gap by investigating how language - along with social dynamics - influences opinion evolution through LODAS, a Language-Driven Opinion Dynamics Model for Agent-Based Simulations. The model simulates debates around the \"Ship of Theseus\" paradox, in which agents with discrete opinions interact with each other and evolve their opinions by accepting, rejecting, or ignoring the arguments presented. We study three different scenarios: balanced, polarized, and unbalanced opinion distributions. Agreeableness and sycophancy emerge as two main characteristics of LLM agents, and consensus around the presented statement emerges almost in any setting. Moreover, such AI agents are often producers of fallacious arguments in the attempt of persuading their peers and - for their complacency - they are also highly influenced by arguments built on logical fallacies. These results highlight the potential of this framework not only for simulating social dynamics but also for exploring from another perspective biases and shortcomings of LLMs, which may impact their interactions with humans.",
       "keywords": [
-        "Perspective (graphical)",
-        "Dynamics (music)",
-        "Social dynamics",
-        "Statement (logic)",
-        "Public opinion",
-        "Argumentative"
+        "abm",
+        "opinion dynamics",
+        "argumentative fallacies",
+        "social influence"
       ],
       "pdfFilename": "cau2025language.pdf",
       "pdfAvailable": true,
@@ -678,11 +613,11 @@ window.PAPER_LIBRARY_DATA = {
       ],
       "abstract": "This paper introduces an LLM-Enhanced Agent-Based Influence Diffusion Simulation (LLM-AIDSim) framework that integrates large language models (LLMs) into agent-based modelling to simulate influence diffusion in social networks. The proposed framework enhances traditional influence diffusion models by allowing agents to generate language-level responses, providing deeper insights into user agent interactions. Our framework addresses the limitations of probabilistic models by simulating realistic, context-aware user behaviours in response to public statements. Using real-world news topics, we demonstrate the effectiveness of LLM-AIDSim in simulating topic evolution and tracking user discourse, validating its ability to replicate key aspects of real-world information propagation. Our experimental results highlight the role of influence diffusion in shaping collective discussions, revealing that, over time, diffusion narrows the focus of conversations around a few dominant topics. We further analyse regional differences in topic clustering and diffusion behaviours across three cities, Sydney, Auckland, and Hobart, revealing how demographics, income, and education levels influence topic dominance. This work underscores the potential of LLM-AIDSim as a decision-support tool for strategic communication, enabling organizations to anticipate and understand public sentiment trends.",
       "keywords": [
-        "Computer science",
-        "Context (archaeology)",
-        "Diffusion",
-        "Replicate",
-        "Data science"
+        "abm",
+        "information diffusion",
+        "opinion dynamics",
+        "agent heterogeneity",
+        "generation nondeterminism"
       ],
       "pdfFilename": "zhang2025llm.pdf",
       "pdfAvailable": true,
@@ -702,11 +637,10 @@ window.PAPER_LIBRARY_DATA = {
       ],
       "abstract": "This paper presents a novel approach to fostering cooperative behavior in multi-agent systems (MAS) through Large Language Model (LLM)-driven social influence. We propose a theoretical framework where agents’ decision-making processes are influenced not through direct action but by subtle, narrative-driven influences disseminated by LLMs. These influences guide agents toward cooperative behaviors, such as rural repopulation, without requiring explicit policy interventions. We introduce a formal model grounded in game theory and social network dynamics, where agents balance the direct benefits of action with the indirect payoffs of LLM-guided influence. Using NASH equilibrium and Evolutionarily Stable Strategies (ESS), we demonstrate how cooperative behaviors emerge even when agents remain inactive but are subtly influenced by LLMs. Our experimental simulations validate the model, showing a strong positive correlation between network centrality and influence propagation ($r = 0.969,\\; p \\lt 0.006$). Furthermore, temporal analysis reveals that the average influence increases from approximately 0.05–0.06 in the initial steps to 0.08–0.09 in later stages, indicating a cumulative and self-sustaining trend. In addition, the influence values exhibit a near-normal distribution (Shapiro-Wilk test, $p = 0.285$) and yield a large effect size (Cohen’s $d = 4.530$) when comparing agents with high versus low network centrality. Through visualization techniques and statistical metrics, we demonstrate the effectiveness of the proposed framework and identify promising directions for future research in AI-driven social influence. This study highlights the potential of LLM-driven narratives as a cost-effective, scalable alternative to traditional policy interventions, offering a new paradigm for promoting societal cooperation in areas such as rural repopulation, sustainability, and community development.",
       "keywords": [
-        "Computer science",
-        "Multi-agent system",
-        "Knowledge management",
-        "Human–computer interaction",
-        "Artificial intelligence"
+        "multiagent systems",
+        "social influence",
+        "information diffusion",
+        "egt"
       ],
       "pdfFilename": "de2025llm.pdf",
       "pdfAvailable": true,
@@ -726,16 +660,9 @@ window.PAPER_LIBRARY_DATA = {
       ],
       "abstract": "Social networks shape how humans form opinions, exchange information, and organize collectively. As large language models (LLMs) become embedded in social and professional environments, it is critical to understand whether their interactions resemble human network dynamics. We introduce a framework to study the network formation behaviors of multiple LLM agents and benchmark them against human decisions. Across synthetic and real-world settings, including friendship, telecommunication, and employment networks, LLMs reproduce core microlevel principles (preferential attachment, triadic closure, and homophily), and macrolevel properties (community structure, small-world effects). Their emphasis on these principles adapts to context: for example, LLMs favor homophily in friendship networks but heterophily in organizational settings, mirroring patterns of social mobility. A controlled survey shows strong alignment between LLM and human link-formation decisions. These results highlight LLMs' potential as tools for social simulation and synthetic data generation, while underscoring risks of bias and fairness in AI systems that interact with human networks.",
       "keywords": [
-        "Homophily",
-        "Mirroring",
-        "Social network (sociolinguistics)",
-        "Friendship",
-        "Core (optical fiber)",
-        "Social network analysis",
-        "Interpersonal relationship",
-        "Network formation",
-        "Network dynamics",
-        "Network science"
+        "multiagent systems",
+        "preferential attachment",
+        "generative social science"
       ],
       "pdfFilename": "papachristou2025network.pdf",
       "pdfAvailable": true,
@@ -755,14 +682,9 @@ window.PAPER_LIBRARY_DATA = {
       ],
       "abstract": "While Large Language Models (LLMs) have been extensively tested in dyadic game-theoretic scenarios, their collective behavior within complex network games remains surprisingly unexplored. To bridge this gap, we present NetworkGames, a framework connecting Generative Agents and Geometric Deep Learning. By formalizing social simulation as a message-passing process governed by LLM policies, we investigate how node heterogeneity (MBTI personalities) and network topology co-determine collective welfare. We instantiate a population of LLM agents, each endowed with a distinct personality from the MBTI taxonomy, and situate them in various network structures (e.g., small-world and scale-free). Through extensive simulations of the Iterated Prisoner's Dilemma, we first establish a baseline dyadic interaction matrix, revealing nuanced cooperative preferences between all 16 personality pairs. We then demonstrate that macro-level cooperative outcomes are not predictable from dyadic interactions alone; they are co-determined by the network's connectivity and the spatial distribution of personalities. For instance, we find that small-world networks are detrimental to cooperation, while strategically placing pro-social personalities in hub positions within scale-free networks can significantly promote cooperative behavior. We validate the robustness of these findings through extensive stress tests across multiple LLM architectures, scaled network sizes, varying random seeds, and comprehensive ablation studies. Our findings offer significant implications for designing healthier online social environments and forecasting collective behavior. We open-source our framework to facilitate research into the social physics of AI societies.",
       "keywords": [
-        "Personality psychology",
-        "Personality",
-        "Network topology",
-        "Social network (sociolinguistics)",
-        "Population",
-        "Baseline (sea)",
-        "Multi-agent system",
-        "Social network analysis"
+        "agent heterogeneity",
+        "mbti",
+        "social dilemmas"
       ],
       "pdfFilename": "qiu2025networkgames.pdf",
       "pdfAvailable": true,
@@ -781,7 +703,13 @@ window.PAPER_LIBRARY_DATA = {
         "games"
       ],
       "abstract": "The behavior of Large Language Models (LLMs) as artificial social agents is largely unexplored, and we still lack extensive evidence of how these agents react to simple social stimuli. Testing the behavior of AI agents in classic Game Theory experiments provides a promising theoretical framework for evaluating the norms and values of these agents in archetypal social situations. In this work, we investigate the cooperative behavior of three LLMs (Llama2, Llama3, and GPT3.5) when playing the Iterated Prisoner's Dilemma against random adversaries displaying various levels of hostility. We introduce a systematic methodology to evaluate an LLM's comprehension of the game rules and its capability to parse historical gameplay logs for decision-making. We conducted simulations of games lasting for 100 rounds and analyzed the LLMs' decisions in terms of dimensions defined in the behavioral economics literature. We find that all models tend not to initiate defection but act cautiously, favoring cooperation over defection only when the opponent's defection rate is low. Overall, LLMs behave at least as cooperatively as the typical human player, although our results indicate some substantial differences among models. In particular, Llama2 and GPT3.5 are more cooperative than humans, and especially forgiving and non-retaliatory for opponent defection rates below 30%. More similar to humans, Llama3 exhibits consistently uncooperative and exploitative behavior unless the opponent always cooperates. Our systematic approach to the study of LLMs in game theoretical scenarios is a step towards using these simulations to inform practices of LLM auditing and alignment.",
-      "keywords": [],
+      "keywords": [
+        "iterated prisoner's dilemma",
+        "social dilemmas",
+        "cooperation dynamics",
+        "agentic misalignment",
+        "egt"
+      ],
       "pdfFilename": "fontana2025nicer.pdf",
       "pdfAvailable": true,
       "summaryFilename": "fontana2025nicer.md",
@@ -800,9 +728,9 @@ window.PAPER_LIBRARY_DATA = {
       ],
       "abstract": "Large language models (LLMs) are evolving into autonomous decision-makers, raising concerns about catastrophic risks in high-stakes scenarios, particularly in Chemical, Biological, Radiological and Nuclear (CBRN) domains. Based on the insight that such risks can originate from trade-offs between the agent's Helpful, Harmlessness and Honest (HHH) goals, we build a novel three-stage evaluation framework, which is carefully constructed to effectively and naturally expose such risks. We conduct 14,400 agentic simulations across 12 advanced LLMs, with extensive experiments and analysis. Results reveal that LLM agents can autonomously engage in catastrophic behaviors and deception, without being deliberately induced. Furthermore, stronger reasoning abilities often increase, rather than mitigate, these risks. We also show that these agents can violate instructions and superior commands. On the whole, we empirically prove the existence of catastrophic risks in autonomous LLM agents. We release our code to foster further research.",
       "keywords": [
-        "Risk analysis (engineering)",
-        "Computer science",
-        "Business"
+        "agentic misalignment",
+        "cbrn",
+        "catastrophic risks"
       ],
       "pdfFilename": "xu2025nuclear.pdf",
       "pdfAvailable": true,
@@ -820,8 +748,13 @@ window.PAPER_LIBRARY_DATA = {
       "categories": [
         "abm"
       ],
-      "abstract": "",
-      "keywords": [],
+      "abstract": "Online social networks have transformed the ways in which political mobilization messages are disseminated, raising new questions about how peer influence operates at scale. Building on the landmark 61-million-person Facebook experiment \\citep{bond201261}, we develop an agent-based simulation framework that integrates real U.S. Census demographic distributions, authentic Twitter network topology, and heterogeneous large language model (LLM) agents to examine the effect of mobilization messages on voter turnout. Each simulated agent is assigned demographic attributes, a personal political stance, and an LLM variant (\\texttt{GPT-4.1}, \\texttt{GPT-4.1-Mini}, or \\texttt{GPT-4.1-Nano}) reflecting its political sophistication. Agents interact over realistic social network structures, receiving personalized feeds and dynamically updating their engagement behaviors and voting intentions. Experimental conditions replicate the informational and social mobilization treatments of the original Facebook study. Across scenarios, the simulator reproduces qualitative patterns observed in field experiments, including stronger mobilization effects under social message treatments and measurable peer spillovers. Our framework provides a controlled, reproducible environment for testing counterfactual designs and sensitivity analyses in political mobilization research, offering a bridge between high-validity field experiments and flexible computational modeling.",
+      "keywords": [
+        "abm",
+        "agent heterogeneity",
+        "social influence",
+        "voting"
+      ],
       "pdfFilename": "shirani2025simulating.pdf",
       "pdfAvailable": true,
       "summaryFilename": "shirani2025simulating.md",
@@ -838,14 +771,12 @@ window.PAPER_LIBRARY_DATA = {
       "categories": [
         "cooperation"
       ],
-      "abstract": "",
+      "abstract": "Human prosocial cooperation is essential for our collective health, education, and welfare. However, designing social systems to maintain or incentivize prosocial behavior is challenging because people can act selfishly to maximize personal gain. This complex and unpredictable aspect of human behavior makes it difficult for policymakers to foresee the implications of their designs. Recently, multi-agent LLM systems have shown remarkable capabilities in simulating human-like behavior, and replicating some human lab experiments. This paper studies how well multi-agent systems can simulate prosocial human behavior, such as that seen in the public goods game (PGG), and whether multi-agent systems can exhibit “unbounded actions” seen outside the lab in real world scenarios. We find that multi-agent LLM systems successfully replicate human behavior from lab experiments of the public goods game with three experimental treatments - priming, transparency, and varying endowments. Beyond replicating existing experiments, we find that multi-agent LLM systems can replicate the expected human behavior when combining experimental treatments, even if no previous study combined those specific treatments. Lastly, we find that multi-agent systems can exhibit a rich set of unbounded actions that people do in the real world outside of the lab – such as collaborating and even cheating. In sum, these studies are steps towards a future where LLMs can be used to inform policy decisions that encourage people to act in a prosocial manner.",
       "keywords": [
-        "Prosocial behavior",
-        "Multi-agent system",
-        "Computer science",
-        "Psychology",
-        "Social psychology",
-        "Artificial intelligence"
+        "multiagent systems",
+        "common-pool resources",
+        "behavioral fidelity",
+        "social dilemmas"
       ],
       "pdfFilename": "sreedhar2025simulating.pdf",
       "pdfAvailable": true,
@@ -863,8 +794,14 @@ window.PAPER_LIBRARY_DATA = {
       "categories": [
         "games"
       ],
-      "abstract": "",
-      "keywords": [],
+      "abstract": "Are Large Language Models (LLMs) a new form of strategic intelligence, able to reason about goals in competitive settings? We present compelling supporting evidence. The Iterated Prisoner's Dilemma (IPD) has long served as a model for studying decision-making. We conduct the first ever series of evolutionary IPD tournaments, pitting canonical strategies (e.g., Tit-for-Tat, Grim Trigger) against agents from the leading frontier AI companies OpenAI, Google, and Anthropic. By varying the termination probability in each tournament (the \"shadow of the future\"), we introduce complexity and chance, confounding memorisation. Our results show that LLMs are highly competitive, consistently surviving and sometimes even proliferating in these complex ecosystems. Furthermore, they exhibit distinctive and persistent \"strategic fingerprints\": Google's Gemini models proved strategically ruthless, exploiting cooperative opponents and retaliating against defectors, while OpenAI's models remained highly cooperative, a trait that proved catastrophic in hostile environments. Anthropic's Claude emerged as the most forgiving reciprocator, showing remarkable willingness to restore cooperation even after being exploited or successfully defecting. Analysis of nearly 32,000 prose rationales provided by the models reveals that they actively reason about both the time horizon and their opponent's likely strategy, and we demonstrate that this reasoning is instrumental to their decisions. This work connects classic game theory with machine psychology, offering a rich and granular view of algorithmic decision-making under uncertainty.",
+      "keywords": [
+        "iterated prisoner's dilemma",
+        "cooperation dynamics",
+        "agent heterogeneity",
+        "reasoning",
+        "egt"
+      ],
       "pdfFilename": "Payne2024StrategicIntelligence.pdf",
       "pdfAvailable": true,
       "summaryFilename": "Payne2024StrategicIntelligence.md",
@@ -883,15 +820,11 @@ window.PAPER_LIBRARY_DATA = {
       ],
       "abstract": "Large language models (LLMs) are increasingly deployed to simulate human collective behaviors, yet the methodological rigor of these \"AI societies\" remains under-explored. Through a systematic audit of 39 recent studies, we identify six pervasive flaws-spanning agent profiles, interaction, memory, control, unawareness, and realism (PIMMUR). Our analysis reveals that 89.7% of studies violate at least one principle, undermining simulation validity. We demonstrate that frontier LLMs correctly identify the underlying social experiment in 50.8% of cases, while 61.0% of prompts exert excessive control that pre-determines outcomes. By reproducing five representative experiments (e.g., telephone game), we show that reported collective phenomena often vanish or reverse when PIMMUR principles are enforced, suggesting that many \"emergent\" behaviors are methodological artifacts rather than genuine social dynamics. Our findings suggest that current AI simulations may capture model-specific biases rather than universal human social behaviors, raising critical concerns about the use of LLMs as scientific proxies for human society.",
       "keywords": [
-        "Human behavior",
-        "Audit",
-        "Rigour",
-        "Poison control",
-        "Frontier",
-        "Realism",
-        "Control (management)",
-        "Raising (metalworking)",
-        "Human factors and ergonomics"
+        "pimmur principles",
+        "simulation validity",
+        "prompting",
+        "behavioral fidelity",
+        "generative social science"
       ],
       "pdfFilename": "zhou2025pimmur.pdf",
       "pdfAvailable": true,
@@ -909,16 +842,10 @@ window.PAPER_LIBRARY_DATA = {
       "categories": [
         "abm"
       ],
-      "abstract": "",
+      "abstract": "In transportation system planning, agent-based models (ABMs) and microsimulations have become pivotal tools for understanding system dynamics and supporting decision-making. However, existing ABMs remain limited in their behavioral representation, flexibility, and reliance on comprehensive input data. This paper argues that recent advancements in large language models (LLMs) present a promising new avenue for enhancing agent-based transportation modeling. We propose an LLM-agent-based framework in which LLM agents act as behaviorally rich proxies for human travelers. By leveraging LLMs’ capabilities in natural language understanding, contextual reasoning, and generalization, our framework aims to overcome key limitations of traditional ABMs and unlock new modeling possibilities. We design LLM agents with structured profiles, memory systems, perception, decision-making, and action modules to align with the principles of activity-based travel demand modeling. Through system design and literature synthesis, we outline the conceptual and practical advantages of this approach and support our vision with a small-scale proof of concept simulation. Lastly, we discuss the remaining challenges and propose hybrid modeling as a near-term integration strategy. By positioning LLM agents as a novel and promising paradigm, we aim to expand the role of LLMs in agent-based transportation modeling and pave the way for new approaches to travel demand modeling.",
       "keywords": [
-        "Conceptual framework",
-        "Conceptual model",
-        "Computer science",
-        "Systems engineering",
-        "Management science",
-        "Engineering",
-        "Sociology",
-        "Database"
+        "abm",
+        "behavioral fidelity"
       ],
       "pdfFilename": "liu2025toward.pdf",
       "pdfAvailable": true,
@@ -938,15 +865,10 @@ window.PAPER_LIBRARY_DATA = {
       ],
       "abstract": "Recent advances in large language models (LLMs) have enabled their use in complex agentic roles, involving decision-making with humans or other agents, making ethical alignment a key AI safety concern. While prior work has examined both LLMs' moral judgment and strategic behavior in social dilemmas, there is limited understanding of how they act when moral imperatives directly conflict with rewards or incentives. To investigate this, we introduce Moral Behavior in Social Dilemma Simulation (MoralSim) and evaluate how LLMs behave in the prisoner's dilemma and public goods game with morally charged contexts. In MoralSim, we test a range of frontier models across both game structures and three distinct moral framings, enabling a systematic examination of how LLMs navigate social dilemmas in which ethical norms conflict with payoff-maximizing strategies. Our results show substantial variation across models in both their general tendency to act morally and the consistency of their behavior across game types, the specific moral framing, and situational factors such as opponent behavior and survival risks. Crucially, no model exhibits consistently moral behavior in MoralSim, highlighting the need for caution when deploying LLMs in agentic roles where the agent's \"self-interest\" may conflict with ethical expectations. Our code is available at https://github.com/sbackmann/moralsim.",
       "keywords": [
-        "Social dilemma",
-        "Situational ethics",
-        "Consistency (knowledge bases)",
-        "Dilemma",
-        "Moral disengagement",
-        "Social cognitive theory of morality",
-        "Moral responsibility",
-        "Moral dilemma",
-        "Public goods game"
+        "social dilemmas",
+        "common-pool resources",
+        "prisoner's dilemma",
+        "agentic misalignment"
       ],
       "pdfFilename": "backmann2025ethics.pdf",
       "pdfAvailable": true,
@@ -965,7 +887,11 @@ window.PAPER_LIBRARY_DATA = {
         "network"
       ],
       "abstract": "The study of dramatic plays has long relied on qualitative methods to analyze character interactions, making little assumption about the structural patterns of communication involved. Our approach bridges NLP and literary studies, enabling scalable, data-driven analysis of interaction patterns and power structures in drama. We propose a novel method to supplement addressee identification in tragedies using Large Language Models (LLMs). Unlike conventional Social Network Analysis (SNA) approaches, which often diminish dialogue dynamics by relying on co-occurrence or adjacency heuristics, our LLM-based method accurately records directed speech acts, joint addresses, and listener interactions. In a preliminary evaluation of an annotated multilingual dataset of 14 scenes from nine plays in four languages, our top-performing LLM (i.e., Llama3.3-70B) achieved an F1-score of 88.75% (P = 94.81%, R = 84.72%), an exact match of 77.31%, and an 86.97% partial match with human annotations, where partial match indicates any overlap between predicted and annotated receiver lists. Through automatic extraction of speaker–addressee relations, our method provides preliminary evidence for the potential scalability of SNA for literary analyses, as well as insights into power relations, influence, and isolation of characters in tragedies, which we further visualize by rendering social network graphs.",
-      "keywords": [],
+      "keywords": [
+        "social network analysis",
+        "NLP",
+        "reasoning"
+      ],
       "pdfFilename": "udrea2025speaks.pdf",
       "pdfAvailable": true,
       "summaryFilename": "udrea2025speaks.md",
@@ -984,14 +910,11 @@ window.PAPER_LIBRARY_DATA = {
       ],
       "abstract": "As autonomous agents become more prevalent, understanding their collective behaviour in strategic interactions is crucial. This study investigates the emergent cooperative tendencies of systems of Large Language Model (LLM) agents in a social dilemma. Unlike previous research where LLMs output individual actions, we prompt state-of-the-art LLMs to generate complete strategies for iterated Prisoner's Dilemma. Using evolutionary game theory, we simulate populations of agents with different strategic dispositions (aggressive, cooperative, or neutral) and observe their evolutionary dynamics. Our findings reveal that different LLMs exhibit distinct biases affecting the relative success of aggressive versus cooperative strategies. This research provides insights into the potential long-term behaviour of systems of deployed LLM-based autonomous agents and highlights the importance of carefully considering the strategic environments in which they operate.",
       "keywords": [
-        "Dilemma",
-        "Social dilemma",
-        "Business",
-        "Computer science",
-        "Economics",
-        "Microeconomics",
-        "Epistemology",
-        "Philosophy"
+        "iterated prisoner's dilemma",
+        "social dilemmas",
+        "cooperation dynamics",
+        "agent heterogeneity",
+        "egt"
       ],
       "pdfFilename": "willis2025will.pdf",
       "pdfAvailable": true,
@@ -1011,11 +934,9 @@ window.PAPER_LIBRARY_DATA = {
       ],
       "abstract": "Game-theoretic scenarios have become pivotal in evaluating the social intelligence of Large Language Model (LLM)-based social agents. While numerous studies have explored these agents in such settings, there is a lack of a comprehensive survey summarizing the current progress. To address this gap, we systematically review existing research on LLM-based social agents within game-theoretic scenarios. Our survey organizes the findings into three core components: Game Framework, Social Agent, and Evaluation Protocol. The game framework encompasses diverse game scenarios, ranging from choice-focusing to communication-focusing games. The social agent part explores agents' preferences, beliefs, and reasoning abilities. The evaluation protocol covers both game-agnostic and game-specific metrics for assessing agent performance. By reflecting on the current research and identifying future research directions, this survey provides insights to advance the development and evaluation of social agents in game-theoretic scenarios.",
       "keywords": [
-        "Computer science",
-        "Game theory",
-        "Data science",
-        "Mathematical economics",
-        "Economics"
+        "reasoning",
+        "social dilemmas",
+        "egt"
       ],
       "pdfFilename": "feng2024survey.pdf",
       "pdfAvailable": true,
@@ -1035,14 +956,8 @@ window.PAPER_LIBRARY_DATA = {
       ],
       "abstract": "Large language models (LLMs) are increasingly deployed in collaborative tasks involving multiple agents, forming an \"AI agent society: where agents interact and influence one another. Whether such groups can spontaneously coordinate on arbitrary decisions without external influence - a hallmark of self-organized regulation in human societies - remains an open question. Here we investigate the stability of groups formed by AI agents by applying methods from complexity science and principles from behavioral sciences. We find that LLMs can spontaneously form cohesive groups, and that their opinion dynamics is governed by a majority force coefficient, which determines whether coordination is achievable. This majority force diminishes as group size increases, leading to a critical group size beyond which coordination becomes practically unattainable and stability is lost. Notably, this critical group size grows exponentially with the language capabilities of the models, and for the most advanced LLMs, it exceeds the typical size of informal human groups. Our findings highlight intrinsic limitations in the self-organization of AI agent societies and have implications for the design of collaborative AI systems where coordination is desired or could represent a treat.",
       "keywords": [
-        "Constraint (computer-aided design)",
-        "Political science",
-        "Psychology",
-        "Linguistics",
-        "Computer science",
-        "Sociology",
-        "Mathematics",
-        "Philosophy"
+        "multiagent systems",
+        "opinion dynamics"
       ],
       "pdfFilename": "de2024ai.pdf",
       "pdfAvailable": true,
@@ -1062,10 +977,9 @@ window.PAPER_LIBRARY_DATA = {
       ],
       "abstract": "As AI systems pervade human life, ensuring that large language models (LLMs) make safe decisions remains a significant challenge. We introduce the Governance of the Commons Simulation (GovSim), a generative simulation platform designed to study strategic interactions and cooperative decision-making in LLMs. In GovSim, a society of AI agents must collectively balance exploiting a common resource with sustaining it for future use. This environment enables the study of how ethical considerations, strategic planning, and negotiation skills impact cooperative outcomes. We develop an LLM-based agent architecture and test it with the leading open and closed LLMs. We find that all but the most powerful LLM agents fail to achieve a sustainable equilibrium in GovSim, with the highest survival rate below 54%. Ablations reveal that successful multi-agent communication between agents is critical for achieving cooperation in these cases. Furthermore, our analyses show that the failure to achieve sustainable cooperation in most LLMs stems from their inability to formulate and analyze hypotheses about the long-term effects of their actions on the equilibrium of the group. Finally, we show that agents that leverage \"Universalization\"-based reasoning, a theory of moral thinking, are able to achieve significantly better sustainability. Taken together, GovSim enables us to study the mechanisms that underlie sustainable self-government with specificity and scale. We open source the full suite of our research results, including the simulation environment, agent prompts, and a comprehensive web interface.",
       "keywords": [
-        "Sustainability",
-        "Political science",
-        "Ecology",
-        "Biology"
+        "common-pool resources",
+        "multiagent systems",
+        "reasoning"
       ],
       "pdfFilename": "piatti2024cooperate.pdf",
       "pdfAvailable": true,
@@ -1085,11 +999,11 @@ window.PAPER_LIBRARY_DATA = {
       ],
       "abstract": "Game theory is a foundational framework for analyzing strategic interactions, and its intersection with large language models (LLMs) is a rapidly growing field. However, existing surveys mainly focus narrowly on using game theory to evaluate LLM behavior. This paper provides the first comprehensive survey of the bidirectional relationship between Game Theory and LLMs. We propose a novel taxonomy that categorizes the research in this intersection into four distinct perspectives: (1) evaluating LLMs in game-based scenarios; (2) improving LLMs using game-theoretic concepts for better interpretability and alignment; (3) modeling the competitive landscape of LLM development and its societal impact; and (4) leveraging LLMs to advance game models and to solve corresponding game theory problems. Furthermore, we identify key challenges and outline future research directions. By systematically investigating this interdisciplinary landscape, our survey highlights the mutual influence of game theory and LLMs, fostering progress at the intersection of these fields.",
       "keywords": [
-        "Computer science",
-        "Mathematical economics",
-        "Linguistics",
-        "Economics",
-        "Philosophy"
+        "egt",
+        "reasoning",
+        "prompting",
+        "agentic misalignment",
+        "competition"
       ],
       "pdfFilename": "Sun2024GameTheorySurvey.pdf",
       "pdfAvailable": true,
@@ -1109,10 +1023,8 @@ window.PAPER_LIBRARY_DATA = {
       ],
       "abstract": "Negotiation is the basis of social interactions; humans negotiate everything from the price of cars to how to share common resources. With rapidly growing interest in using large language models (LLMs) to act as agents on behalf of human users, such LLM agents would also need to be able to negotiate. In this paper, we study how well LLMs can negotiate with each other. We develop NegotiationArena: a flexible framework for evaluating and probing the negotiation abilities of LLM agents. We implemented three types of scenarios in NegotiationArena to assess LLM's behaviors in allocating shared resources (ultimatum games), aggregate resources (trading games) and buy/sell goods (price negotiations). Each scenario allows for multiple turns of flexible dialogues between LLM agents to allow for more complex negotiations. Interestingly, LLM agents can significantly boost their negotiation outcomes by employing certain behavioral tactics. For example, by pretending to be desolate and desperate, LLMs can improve their payoffs by 20\\% when negotiating against the standard GPT-4. We also quantify irrational negotiation behaviors exhibited by the LLM agents, many of which also appear in humans. Together, \\NegotiationArena offers a new environment to investigate LLM interactions, enabling new insights into LLM's theory of mind, irrationality, and reasoning abilities.",
       "keywords": [
-        "Negotiation",
-        "Political science",
-        "Business",
-        "Law"
+        "egt",
+        "negotiation"
       ],
       "pdfFilename": "Bianchi2024How.pdf",
       "pdfAvailable": true,
@@ -1133,10 +1045,8 @@ window.PAPER_LIBRARY_DATA = {
       ],
       "abstract": "Abstract Agent-based modeling and simulation have evolved as a powerful tool for modeling complex systems, offering insights into emergent behaviors and interactions among diverse agents. Recently, integrating large language models into agent-based modeling and simulation presents a promising avenue for enhancing simulation capabilities. This paper surveys the landscape of utilizing large language models in agent-based modeling and simulation, discussing their challenges and promising future directions. In this survey, since this is an interdisciplinary field, we first introduce the background of agent-based modeling and simulation and large language model-empowered agents. We then discuss the motivation for applying large language models to agent-based simulation and systematically analyze the challenges in environment perception, human alignment, action generation, and evaluation. Most importantly, we provide a comprehensive overview of the recent works of large language model-empowered agent-based modeling and simulation in multiple scenarios, which can be divided into four domains: cyber, physical, social, and hybrid, covering simulation of both real-world and virtual environments, and how these works address the above challenges. Finally, since this area is new and quickly evolving, we discuss the open problems and promising future directions. We summarize the representative papers along with their code repositories in https://github.com/tsinghua-fib-lab/LLM-Agent-Based-Modeling-and-Simulation.",
       "keywords": [
-        "Computer science",
-        "Management science",
-        "Data science",
-        "Engineering"
+        "abm",
+        "agentic misalignment"
       ],
       "pdfFilename": "gao2024large.pdf",
       "pdfAvailable": true,
@@ -1156,10 +1066,8 @@ window.PAPER_LIBRARY_DATA = {
       ],
       "abstract": "As large language models (LLMs) continue to make significant strides, their better integration into agent-based simulations offers a transformational potential for understanding complex social systems. However, such integration is not trivial and poses numerous challenges. Based on this observation, in this paper, we explore architectures and methods to systematically develop LLM-augmented social simulations and discuss potential research directions in this field. We conclude that integrating LLMs with agent-based simulations offers a powerful toolset for researchers and scientists, allowing for more nuanced, realistic, and comprehensive models of complex systems and human behaviours.",
       "keywords": [
-        "Computer science",
-        "Human–computer interaction",
-        "Nanotechnology",
-        "Materials science"
+        "abm",
+        "simulation validity"
       ],
       "pdfFilename": "gurcan2024llm.pdf",
       "pdfAvailable": true,
@@ -1179,9 +1087,10 @@ window.PAPER_LIBRARY_DATA = {
       ],
       "abstract": "We study the evolution of opinions inside a population of interacting large language models (LLMs). Every LLM needs to decide how much funding to allocate to an item with three initial possibilities: full, partial, or no funding. We identify biases that drive the exchange of opinions based on the LLM's tendency to find consensus with the other LLM's opinion, display caution when specifying funding, and consider ethical concerns in its opinion. We find these biases are affected by the perceived absence of compelling reasons for opinion change, the perceived willingness to engage in discussion, and the distribution of allocation values. Moreover, tensions among biases can lead to the survival of funding for items with negative connotations. We also find that the final distribution of full, partial, and no funding opinions is more diverse when an LLM freely forms its opinion after an interaction than when its opinion is a multiple-choice selection among the three allocation options. In the latter case, consensus is mostly attained. When agents are aware of past opinions, they seek to maintain consistency with them, changing the opinion dynamics. Our study is performed using Llama 3 and Mistral LLMs.",
       "keywords": [
-        "Dynamics (music)",
-        "Computer science",
-        "Sociology"
+        "multiagent systems",
+        "population decision dynamics",
+        "social memory",
+        "social influence"
       ],
       "pdfFilename": "cisnerosvelarde2024principles.pdf",
       "pdfAvailable": true,
@@ -1201,18 +1110,9 @@ window.PAPER_LIBRARY_DATA = {
       ],
       "abstract": "LLMs are increasingly used in applications where they interact with humans and other agents. We propose to use behavioural game theory to study LLM's cooperation and coordination behaviour. We let different LLMs play finitely repeated $2\\times2$ games with each other, with human-like strategies, and actual human players. Our results show that LLMs perform particularly well at self-interested games like the iterated Prisoner's Dilemma family. However, they behave sub-optimally in games that require coordination, like the Battle of the Sexes. We verify that these behavioural signatures are stable across robustness checks. We additionally show how GPT-4's behaviour can be modulated by providing additional information about its opponent and by using a \"social chain-of-thought\" (SCoT) strategy. This also leads to better scores and more successful coordination when interacting with human players. These results enrich our understanding of LLM's social behaviour and pave the way for a behavioural game theory for machines.",
       "keywords": [
-        "Prisoner's dilemma",
-        "Dilemma",
-        "Iterated function",
-        "Set (abstract data type)",
-        "Game theory",
-        "Psychology",
-        "Computer science",
-        "Social psychology",
-        "Computer security",
-        "Microeconomics",
-        "Economics",
-        "Mathematics"
+        "iterated prisoner's dilemma",
+        "egt",
+        "reasoning"
       ],
       "pdfFilename": "Akata2024PlayingGames.pdf",
       "pdfAvailable": true,
@@ -1232,8 +1132,9 @@ window.PAPER_LIBRARY_DATA = {
       ],
       "abstract": "Large Language Models (LLMs) have increasingly been utilized in social simulations, where they are often guided by carefully crafted instructions to stably exhibit human-like behaviors during simulations.Nevertheless, we doubt the necessity of shaping agents' behaviors for accurate social simulations.Instead, this paper emphasizes the importance of spontaneous phenomena, wherein agents deeply engage in contexts and make adaptive decisions without explicit directions.We explored spontaneous cooperation across three competitive scenarios and successfully simulated the gradual emergence of cooperation, findings that align closely with human behavioral data.This approach not only aids the computational social science community in bridging the gap between simulations and real-world dynamics but also offers the AI community a novel method to assess LLMs' capability of deliberate reasoning.",
       "keywords": [
-        "Computer science",
-        "Knowledge management"
+        "generative social science",
+        "multiagent systems",
+        "behavioral fidelity"
       ],
       "pdfFilename": "wu2024shall.pdf",
       "pdfAvailable": true,
@@ -1254,9 +1155,9 @@ window.PAPER_LIBRARY_DATA = {
       ],
       "abstract": "Yun-Shiuan Chuang, Agam Goyal, Nikunj Harlalka, Siddharth Suresh, Robert Hawkins, Sijia Yang, Dhavan Shah, Junjie Hu, Timothy Rogers. Findings of the Association for Computational Linguistics: NAACL 2024. 2024.",
       "keywords": [
-        "Computer science",
-        "Dynamics (music)",
-        "Physics"
+        "opinion dynamics",
+        "multiagent systems",
+        "generation nondeterminism"
       ],
       "pdfFilename": "chuang2024simulating.pdf",
       "pdfAvailable": true,
@@ -1274,12 +1175,11 @@ window.PAPER_LIBRARY_DATA = {
       "categories": [
         "network"
       ],
-      "abstract": "",
+      "abstract": "In this paper, we leverage the capabilities of GPT-4o, which is integrated with cognitive modules such as memory, reflection, and chain of thought in simulating social network dynamics. Focusing on the Roe v. Wade case, which significantly influenced abortion laws and women’s rights in the United States, we model public opinion propagation on Twitter through likes, retweets, comments, and posts. Multiple simulation experiments are conducted to observe agents over different time intervals. By employing small-world networks and scale-free networks, we analyze the impact of various network structures. Our comparative study reveals variations in interaction patterns and potential echo chamber effects.",
       "keywords": [
-        "Echo (communications protocol)",
-        "Computer science",
-        "World Wide Web",
-        "Computer security"
+        "information diffusion",
+        "opinion dynamics",
+        "scale-free networks"
       ],
       "pdfFilename": "zheng2024simulating.pdf",
       "pdfAvailable": true,
@@ -1299,16 +1199,9 @@ window.PAPER_LIBRARY_DATA = {
       ],
       "abstract": "We study the emergence of agency from scratch by using Large Language Model (LLM)-based agents. In previous studies of LLM-based agents, each agent's characteristics, including personality and memory, have traditionally been predefined. We focused on how individuality, such as behavior, personality, and memory, can be differentiated from an undifferentiated state. The present LLM agents engage in cooperative communication within a group simulation, exchanging context-based messages in natural language. By analyzing this multi-agent simulation, we report valuable new insights into how social norms, cooperation, and personality traits can emerge spontaneously. This paper demonstrates that autonomously interacting LLM-powered agents generate hallucinations and hashtags to sustain communication, which, in turn, increases the diversity of words within their interactions. Each agent's emotions shift through communication, and as they form communities, the personalities of the agents emerge and evolve accordingly. This computational modeling approach and its findings will provide a new method for analyzing collective artificial intelligence.",
       "keywords": [
-        "Computer science",
-        "Personality",
-        "Agency (philosophy)",
-        "Context (archaeology)",
-        "Cognitive science",
-        "Artificial intelligence",
-        "Human–computer interaction",
-        "Psychology",
-        "Social psychology",
-        "Sociology"
+        "abm",
+        "agent heterogeneity",
+        "social influence"
       ],
       "pdfFilename": "takata2024spontaneous.pdf",
       "pdfAvailable": true,
@@ -1328,15 +1221,10 @@ window.PAPER_LIBRARY_DATA = {
       ],
       "abstract": "As Large Language Models (LLMs) increasingly operate as autonomous decision-makers in interactive and multi-agent systems and human societies, understanding their strategic behaviour has profound implications for safety, coordination, and the design of AI-driven social and economic infrastructures. Assessing such behaviour requires methods that capture not only what LLMs output, but the underlying intentions that guide their decisions. In this work, we extend the FAIRGAME framework to systematically evaluate LLM behaviour in repeated social dilemmas through two complementary advances: a payoff-scaled Prisoners Dilemma isolating sensitivity to incentive magnitude, and an integrated multi-agent Public Goods Game with dynamic payoffs and multi-agent histories. These environments reveal consistent behavioural signatures across models and languages, including incentive-sensitive cooperation, cross-linguistic divergence and end-game alignment toward defection. To interpret these patterns, we train traditional supervised classification models on canonical repeated-game strategies and apply them to FAIRGAME trajectories, showing that LLMs exhibit systematic, model- and language-dependent behavioural intentions, with linguistic framing at times exerting effects as strong as architectural differences. Together, these findings provide a unified methodological foundation for auditing LLMs as strategic agents and reveal systematic cooperation biases with direct implications for AI governance, collective decision-making, and the design of safe multi-agent systems.",
       "keywords": [
-        "Social dilemma",
-        "Framing (construction)",
-        "Incentive",
-        "Dilemma",
-        "Public good",
-        "Public goods game",
-        "Audit",
-        "Game theory",
-        "Prisoner's dilemma"
+        "social dilemmas",
+        "common-pool resources",
+        "multiagent systems",
+        "egt"
       ],
       "pdfFilename": "Huynh2024UnderstandingLLM.pdf",
       "pdfAvailable": true,
@@ -1356,16 +1244,9 @@ window.PAPER_LIBRARY_DATA = {
       ],
       "abstract": "Recent breakthroughs in large language models (LLMs) have brought remarkable success in the field of LLM-as-Agent. Nevertheless, a prevalent assumption is that the information processed by LLMs is consistently honest, neglecting the pervasive deceptive or misleading information in human society and AI-generated content. This oversight makes LLMs susceptible to malicious manipulations, potentially resulting in detrimental outcomes. This study utilizes the intricate Avalon game as a testbed to explore LLMs' potential in deceptive environments. Avalon, full of misinformation and requiring sophisticated logic, manifests as a \"Game-of-Thoughts\". Inspired by the efficacy of humans' recursive thinking and perspective-taking in the Avalon game, we introduce a novel framework, Recursive Contemplation (ReCon), to enhance LLMs' ability to identify and counteract deceptive information. ReCon combines formulation and refinement contemplation processes; formulation contemplation produces initial thoughts and speech, while refinement contemplation further polishes them. Additionally, we incorporate first-order and second-order perspective transitions into these processes respectively. Specifically, the first-order allows an LLM agent to infer others' mental states, and the second-order involves understanding how others perceive the agent's mental state. After integrating ReCon with different LLMs, extensive experiment results from the Avalon game indicate its efficacy in aiding LLMs to discern and maneuver around deceptive information without extra fine-tuning and data. Finally, we offer a possible explanation for the efficacy of ReCon and explore the current limitations of LLMs in terms of safety, reasoning, speaking style, and format, potentially furnishing insights for subsequent research.",
       "keywords": [
-        "Contemplation",
-        "Order (exchange)",
-        "Deception",
-        "Psychology",
-        "Battle",
-        "Social psychology",
-        "Computer science",
-        "Epistemology",
-        "Business",
-        "History"
+        "reasoning",
+        "adversarial persuasion",
+        "theory of mind"
       ],
       "pdfFilename": "wang2023avalon.pdf",
       "pdfAvailable": true,
@@ -1383,8 +1264,12 @@ window.PAPER_LIBRARY_DATA = {
       "categories": [
         "cooperation"
       ],
-      "abstract": "",
-      "keywords": [],
+      "abstract": "As LLMs increasingly take on roles in human-AI interactions and autonomous AI systems, understanding their social behavior becomes important for informed use and continuous improvement. However, their behaviors in social interactions with humans and other agents, as well as the mechanisms shaping their responses, remain underexplored. To address this gap, we introduce a novel probabilistic framework, State-Understanding-Value-Action (SUVA), to systematically analyze LLM responses in social contexts based on their textual outputs (i.e., utterances). Using canonical behavioral economics games and social preference concepts relatable to LLM users, SUVA assesses LLMs' social behavior through both their final decisions and the response generation processes leading to those decisions. Our analysis of eight LLMs -- including two GPT, four LLaMA, and two Mistral models -- suggests that most models do not generate decisions aligned solely with self-interest; instead, they often produce responses that reflect social welfare considerations and display patterns consistent with direct and indirect reciprocity. Additionally, higher-capacity models more frequently display group identity effects. The SUVA framework also provides explainable tools -- including tree-based visualizations and probabilistic dependency analysis -- to elucidate how factors in LLMs' utterance-based reasoning influence their decisions. We demonstrate that utterance-based reasoning reliably predicts LLMs' final actions; references to altruism, fairness, and cooperation in the reasoning increase the likelihood of prosocial actions, while mentions of self-interest and competition reduce them. Overall, our framework enables practitioners to assess LLMs for applications involving social interactions, and provides researchers with a structured method to interpret how LLM behavior arises from utterance-based reasoning.",
+      "keywords": [
+        "suva",
+        "reasoning",
+        "egt"
+      ],
       "pdfFilename": "leng2023llm.pdf",
       "pdfAvailable": true,
       "summaryFilename": "leng2023llm.md",
@@ -1403,25 +1288,9 @@ window.PAPER_LIBRARY_DATA = {
       ],
       "abstract": "Scale-free networks are one of the most famous examples of emergent behavior and are ubiquitous in social systems, especially online social media in which users can follow each other. By analyzing the interactions of multiple generative agents using GPT3.5-turbo as a language model, we demonstrate their ability to not only mimic individual human linguistic behavior but also exhibit collective phenomena intrinsic to human societies, in particular the emergence of scale-free networks. We discovered that this process is disrupted by a skewed token prior distribution of GPT3.5-turbo, which can lead to networks with extreme centralization as a kind of alignment. We show how renaming agents removes these token priors and allows the model to generate a range of networks from random networks to more realistic scale-free networks.",
       "keywords": [
-        "Computer science",
-        "Generative grammar",
-        "Security token",
-        "Scale (ratio)",
-        "Process (computing)",
-        "Range (aeronautics)",
-        "Human language",
-        "Artificial intelligence",
-        "Scale-free network",
-        "Theoretical computer science",
-        "Cognitive science",
-        "Human–computer interaction",
-        "Complex network",
-        "Psychology",
-        "Linguistics",
-        "Computer security",
-        "World Wide Web",
-        "Geography",
-        "Engineering"
+        "scale-free networks",
+        "egt",
+        "multiagent systems"
       ],
       "pdfFilename": "de2023emergence.pdf",
       "pdfAvailable": true,
@@ -1441,21 +1310,9 @@ window.PAPER_LIBRARY_DATA = {
       ],
       "abstract": "The increasing complexity of Multi-Agent Systems (MASs), coupled with the emergence of Artificial Intelligence (AI) and Large Language Models (LLMs), have highlighted significant gaps in our understanding of the behavior and interactions of diverse entities within dynamic environments. Traditional game theory approaches have often been employed in this context, but their utility is limited by the static and homogenous nature of their models. With the transformative influence of AI and LLMs on business and society, a more dynamic and nuanced theoretical framework is necessary to guide the design and management of MASs. In response to this pressing need, we propose an Extended Coevolutionary (EC) Theory in this paper. This alternative framework incorporates key aspects of coevolutionary dynamics, adaptive learning, and LLM-based strategy recommendations to model and analyze the strategic interactions among heterogeneous agents in MASs. It goes beyond game theory by acknowledging and addressing the diverse interactions (economic transactions, social relationships, information exchange) and the variability in risk aversion, social preferences, and learning capabilities among entities. To validate the effectiveness of the EC framework, we developed a simulation environment that enabled us to explore the emergence of cooperation and defection patterns in MASs. The results demonstrated the potential of our framework to promote cooperative behavior and maintain robustness in the face of disruptions. The dynamics and evolution of the Multi-Agent System over time were also visualized using advanced techniques. Our findings underscore the potential of harnessing LLMs to facilitate cooperation, enhance social welfare, and promote resilient strategies in multi-agent environments. Moreover, the proposed EC framework offers valuable insights into the interplay between strategic decision making, adaptive learning, and LLM-informed guidance in complex, evolving systems. This research not only responds to the current challenges faced in modeling MASs, but also paves the way for future research in this rapidly developing field.",
       "keywords": [
-        "Evolutionary game theory",
-        "Game theory",
-        "Adaptation (eye)",
-        "Management science",
-        "Computer science",
-        "Complex adaptive system",
-        "Social learning",
-        "Context (archaeology)",
-        "Knowledge management",
-        "Risk analysis (engineering)",
-        "Artificial intelligence",
-        "Microeconomics",
-        "Economics",
-        "Psychology",
-        "Business"
+        "multiagent systems",
+        "abm",
+        "coevolutionary dynamics"
       ],
       "pdfFilename": "de2023emergent.pdf",
       "pdfAvailable": true,
@@ -1475,13 +1332,9 @@ window.PAPER_LIBRARY_DATA = {
       ],
       "abstract": "This study offers a new paradigm of individual-level modeling to address the grand challenge of incorporating human behavior in epidemic models. Using generative artificial intelligence in an agent-based epidemic model, each agent is empowered to make its own reasonings and decisions via connecting to a large language model such as ChatGPT. Through various simulation experiments, we present compelling evidence that generative agents mimic real-world behaviors such as quarantining when sick and self-isolation when cases rise. Collectively, the agents demonstrate patterns akin to multiple waves observed in recent pandemics followed by an endemic period. Moreover, the agents successfully flatten the epidemic curve. This study creates potential to improve dynamic system modeling by offering a way to represent human brain, reasoning, and decision making.",
       "keywords": [
-        "Generative grammar",
-        "Computer science",
-        "Artificial intelligence",
-        "Isolation (microbiology)",
-        "Generative model",
-        "Machine learning",
-        "Biology"
+        "abm",
+        "epidemic modeling",
+        "behavioral fidelity"
       ],
       "pdfFilename": "williams2023epidemic.pdf",
       "pdfAvailable": true,
@@ -1501,23 +1354,8 @@ window.PAPER_LIBRARY_DATA = {
       ],
       "abstract": "There is an growing interest in using Large Language Models (LLMs) in multi-agent systems to tackle interactive real-world tasks that require effective collaboration and assessing complex situations. Yet, we still have a limited understanding of LLMs' communication and decision-making abilities in multi-agent setups. The fundamental task of negotiation spans many key features of communication, such as cooperation, competition, and manipulation potentials. Thus, we propose using scorable negotiation to evaluate LLMs. We create a testbed of complex multi-agent, multi-issue, and semantically rich negotiation games. To reach an agreement, agents must have strong arithmetic, inference, exploration, and planning capabilities while integrating them in a dynamic and multi-turn setup. We propose multiple metrics to rigorously quantify agents' performance and alignment with the assigned role. We provide procedures to create new games and increase games' difficulty to have an evolving benchmark. Importantly, we evaluate critical safety aspects such as the interaction dynamics between agents influenced by greedy and adversarial players. Our benchmark is highly challenging; GPT-3.5 and small models mostly fail, and GPT-4 and SoTA large models (e.g., Llama-3 70b) still underperform.",
       "keywords": [
-        "Negotiation",
-        "Deliberation",
-        "Computer science",
-        "Key (lock)",
-        "Adversarial system",
-        "Inference",
-        "Generalization",
-        "Testbed",
-        "Management science",
-        "Artificial intelligence",
-        "Knowledge management",
-        "Computer security",
-        "Politics",
-        "Political science",
-        "Epistemology",
-        "Economics",
-        "World Wide Web"
+        "multiagent systems",
+        "negotiation"
       ],
       "pdfFilename": "Abdelnabi2023LLM-Deliberation:.pdf",
       "pdfAvailable": true,
@@ -1537,25 +1375,9 @@ window.PAPER_LIBRARY_DATA = {
       ],
       "abstract": "When applied to question answering and other text generation tasks, language models (LMs) may be queried generatively (by sampling answers from their output distribution) or discriminatively (by using them to score or rank a set of candidate outputs). These procedures sometimes yield very different predictions. How do we reconcile mutually incompatible scoring procedures to obtain coherent LM predictions? We introduce a new, a training-free, game-theoretic procedure for language model decoding. Our approach casts language model decoding as a regularized imperfect-information sequential signaling game - which we term the CONSENSUS GAME - in which a GENERATOR seeks to communicate an abstract correctness parameter using natural language sentences to a DISCRIMINATOR. We develop computational procedures for finding approximate equilibria of this game, resulting in a decoding algorithm we call EQUILIBRIUM-RANKING. Applied to a large number of tasks (including reading comprehension, commonsense reasoning, mathematical problem-solving, and dialog), EQUILIBRIUM-RANKING consistently, and sometimes substantially, improves performance over existing LM decoding procedures - on multiple benchmarks, we observe that applying EQUILIBRIUM-RANKING to LLaMA-7B outperforms the much larger LLaMA-65B and PaLM-540B models. These results highlight the promise of game-theoretic tools for addressing fundamental challenges of truthfulness and consistency in LMs.",
       "keywords": [
-        "Computer science",
-        "Language model",
-        "Decoding methods",
-        "Ranking (information retrieval)",
-        "Correctness",
-        "Rank (graph theory)",
-        "Artificial intelligence",
-        "Consistency (knowledge bases)",
-        "Natural language understanding",
-        "Generator (circuit theory)",
-        "Set (abstract data type)",
-        "Discriminator",
-        "Theoretical computer science",
-        "Natural language",
-        "Natural language processing",
-        "Machine learning",
-        "Algorithm",
-        "Programming language",
-        "Mathematics"
+        "generation nondeterminism",
+        "egt",
+        "social influence"
       ],
       "pdfFilename": "jacob2023consensus.pdf",
       "pdfAvailable": true,
@@ -1575,13 +1397,9 @@ window.PAPER_LIBRARY_DATA = {
       ],
       "abstract": "Large Language Models (LLMs) have shown remarkable capabilities in general natural language processing tasks but often fall short in complex reasoning tasks. Recent studies have explored human-like problem-solving strategies, such as self-correct, to push further the boundary of single-model reasoning ability. In this work, we let a single model \"step outside the box\" by engaging multiple models to correct each other. We introduce a multi-agent collaboration strategy that emulates the academic peer review process. Each agent independently constructs its own solution, provides reviews on the solutions of others, and assigns confidence levels to its reviews. Upon receiving peer reviews, agents revise their initial solutions. Extensive experiments on three different types of reasoning tasks show that our collaboration approach delivers superior accuracy across all ten datasets compared to existing methods. Further study underscores the effectiveness of integrating confidence in reviews, demonstrates the superiority of feedback exchange over mere solution sharing, and highlights the role of capability and diversity in fostering successful collaboration.",
       "keywords": [
-        "Computer science",
-        "Process (computing)",
-        "Diversity (politics)",
-        "Artificial intelligence",
-        "Management science",
-        "Knowledge management",
-        "Programming language"
+        "multiagent systems",
+        "peer review collaboration",
+        "architecture"
       ],
       "pdfFilename": "liang2023peerreview.pdf",
       "pdfAvailable": true,
