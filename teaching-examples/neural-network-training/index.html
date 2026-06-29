@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Come impara una rete neurale</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="hero">
+        <h1>Come impara una rete neurale</h1>
+        <p class="hero-copy">
+          Questa demo racconta l'addestramento come un processo di aggiustamento
+          progressivo: la rete vede un esempio, prova a riconoscerlo, corregge i
+          suoi pesi e riprova.
+        </p>
+        <div class="story-strip">
+          <div class="story-pill">
+            <strong>1.</strong>
+            <span>All'inizio la rete non sa nulla.</span>
+          </div>
+          <div class="story-pill">
+            <strong>2.</strong>
+            <span>Ogni cifra MNIST le mostra un nuovo indizio.</span>
+          </div>
+          <div class="story-pill">
+            <strong>3.</strong>
+            <span>I pesi cambiano e i collegamenti si rinforzano o si indeboliscono.</span>
+          </div>
+          <div class="story-pill">
+            <strong>4.</strong>
+            <span>Dopo molti esempi la previsione migliora.</span>
+          </div>
+        </div>
+      </header>
+
+      <main class="dashboard">
+        <section class="card controls-card">
+          <div class="card-header">
+            <div>
+              <h2>Apprendimento con esempi</h2>
+            </div>
+            <div class="status-block">
+              <span id="dataset-progress">Dataset in caricamento...</span>
+              <span id="training-status">La rete sta aspettando il primo esempio.</span>
+            </div>
+          </div>
+
+          <div class="sample-stage">
+            <canvas id="sample-canvas" width="280" height="280" aria-label="Immagine MNIST corrente"></canvas>
+            <div class="sample-meta">
+              <div class="meta-chip">
+                <span class="meta-label">Etichetta reale</span>
+                <strong id="true-label">-</strong>
+              </div>
+              <div class="meta-chip">
+                <span class="meta-label">Previsione</span>
+                <strong id="predicted-label">-</strong>
+              </div>
+              <div class="meta-chip">
+                <span class="meta-label">Confidenza</span>
+                <strong id="predicted-confidence">-</strong>
+              </div>
+              <div class="meta-chip">
+                <span class="meta-label">Passi di training</span>
+                <strong id="steps-trained">0</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="control-panel">
+            <button id="next-sample-btn" class="button secondary">Mostra prossimo esempio</button>
+            <button id="train-once-btn" class="button primary">Allena su questo esempio</button>
+            <button id="train-and-next-btn" class="button secondary">Allena e passa oltre</button>
+            <button id="auto-train-btn" class="button accent">Auto training</button>
+            <button id="stop-auto-btn" class="button ghost">Pausa</button>
+            <button id="shuffle-btn" class="button ghost">Mescola le 3000 cifre</button>
+            <button id="reset-network-btn" class="button ghost danger">Resetta la rete</button>
+          </div>
+
+          <div class="slider-row">
+            <label for="learning-rate">Intensita dell'aggiustamento</label>
+            <input id="learning-rate" type="range" min="0.01" max="0.35" step="0.01" value="0.08" />
+            <strong id="learning-rate-value">0.08</strong>
+          </div>
+
+          <div class="metrics-grid">
+            <div class="metric">
+              <span class="metric-label">Accuratezza ultimi 50 passi</span>
+              <strong id="rolling-accuracy">0%</strong>
+            </div>
+          </div>
+          <div class="history-card">
+            <div class="history-head">
+              <span class="metric-label">Serie storica dell'accuratezza</span>
+              <strong id="history-summary">0 punti</strong>
+            </div>
+            <canvas
+              id="accuracy-history-canvas"
+              width="860"
+              height="220"
+              aria-label="Serie storica dell'accuratezza"
+            ></canvas>
+          </div>
+        </section>
+
+        <section class="card network-card">
+          <div class="card-header">
+            <div>
+              <h2>La rete neurale</h2>
+            </div>
+            <p class="network-legend">
+              Colore dei nodi: quanto si attivano con la cifra corrente. Colore dei link: forza e segno del peso tra neuroni.
+            </p>
+          </div>
+          <svg id="network-svg" viewBox="0 0 760 560" role="img" aria-label="Visualizzazione della rete neurale"></svg>
+        </section>
+
+        <section class="insight-row">
+          <section class="card prediction-card">
+            <div class="card-header">
+              <div>
+                <h2>Distribuzione delle uscite</h2>
+              </div>
+            </div>
+            <div id="prediction-bars" class="prediction-bars"></div>
+          </section>
+
+          <section class="card inspector-card">
+            <div class="card-header">
+              <div>
+                <h2>Modifica manuale</h2>
+              </div>
+            </div>
+
+            <div class="inspector-layout">
+              <div class="inspector-details">
+                <h3 id="selected-node-title">Nodo selezionato</h3>
+                <p id="selected-node-description" class="inspector-copy">
+                  Seleziona un nodo della rete per vedere i suoi dettagli.
+                </p>
+
+                <div class="slider-row compact">
+                  <label for="bias-slider">Bias del nodo</label>
+                  <input id="bias-slider" type="range" min="-3" max="3" step="0.01" value="0" />
+                  <strong id="bias-value">0.00</strong>
+                </div>
+
+                <div class="nudge-row">
+                  <button id="bias-down-btn" class="button ghost">Bias -</button>
+                  <button id="bias-up-btn" class="button ghost">Bias +</button>
+                </div>
+              </div>
+
+              <div class="map-panel">
+                <canvas id="weightmap-canvas" width="360" height="360" aria-label="Mappa dei pesi del nodo selezionato"></canvas>
+              </div>
+            </div>
+          </section>
+        </section>
+      </main>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
