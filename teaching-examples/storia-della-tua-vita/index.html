@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Storia della tua vita</title>
+    <meta
+      name="description"
+      content="Scheda iniziale del personaggio per Storia della tua vita."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="./config.js"></script>
+    <script defer src="./app.js"></script>
+  </head>
+  <body>
+    <div class="site-ribbon">
+      <span>Laboratorio di prompt engineering</span>
+      <span>Scheda iniziale del personaggio</span>
+    </div>
+
+    <main class="page-shell">
+      <section class="hero">
+        <div class="hero-copy">
+          <h1>Storia della tua vita</h1>
+          <div class="hero-actions">
+            <button id="open-instructions" class="button button--ghost" type="button">
+              Istruzioni
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section class="content-grid">
+        <div class="panel panel--full">
+          <div class="panel-header">
+            <p class="panel-step">Passo 1</p>
+            <h2>Chiave OpenAI del giocatore</h2>
+          </div>
+
+          <label class="field">
+            <span>API key</span>
+            <input
+              id="api-key"
+              type="password"
+              autocomplete="off"
+              placeholder="sk-..."
+            />
+          </label>
+
+        </div>
+
+        <div class="panel panel--full">
+          <div class="panel-header">
+            <p class="panel-step">Passo 2</p>
+            <h2>Scheda iniziale del personaggio</h2>
+          </div>
+
+          <form id="profile-form" class="profile-grid">
+            <label class="field">
+              <span>Nome</span>
+              <input id="field-name" name="name" type="text" placeholder="Nome del personaggio" />
+            </label>
+
+            <label class="field">
+              <span>Eta</span>
+              <input id="field-age" name="age" type="text" placeholder="Es. 28 anni" />
+            </label>
+
+            <label class="field">
+              <span>Genere</span>
+              <input id="field-gender" name="gender" type="text" placeholder="Es. donna, uomo" />
+            </label>
+
+            <label class="field">
+              <span>Professione o ruolo</span>
+              <input
+                id="field-profession"
+                name="profession"
+                type="text"
+                placeholder="Es. apprendista, medico, soldato"
+              />
+            </label>
+
+            <label class="field">
+              <span>Epoca</span>
+              <input
+                id="field-historicalPeriod"
+                name="historicalPeriod"
+                type="text"
+                placeholder="Es. Milano contemporanea, Rinascimento"
+              />
+            </label>
+
+            <label class="field">
+              <span>Luogo</span>
+              <input
+                id="field-place"
+                name="place"
+                type="text"
+                placeholder="Es. Roma, villaggio di montagna, Marte"
+              />
+            </label>
+
+            <label class="field field--full">
+              <span>Ambizione o desiderio</span>
+              <input
+                id="field-ambition"
+                name="ambition"
+                type="text"
+                placeholder="Cosa vuole davvero questo personaggio?"
+              />
+            </label>
+
+            <label class="field field--full">
+              <span>Contesto iniziale</span>
+              <textarea
+                id="field-initialContext"
+                name="initialContext"
+                rows="6"
+                placeholder="Qual e' la situazione di partenza? Quali tensioni, problemi o occasioni esistono gia'?"
+              ></textarea>
+            </label>
+          </form>
+
+          <div class="toolbar">
+            <button id="reset-profile" class="button button--ghost" type="button">
+              Nuovo profilo
+            </button>
+            <button id="download-profile" class="button" type="button">
+              Scarica JSON
+            </button>
+            <button id="load-profile" class="button button--ghost" type="button">
+              Carica JSON
+            </button>
+            <button id="start-game" class="button" type="button">
+              Inizia il gioco
+            </button>
+            <input id="upload-json" type="file" accept="application/json,.json" hidden />
+          </div>
+
+          <p id="status-message" class="status" aria-live="polite"></p>
+        </div>
+
+        <section id="game-panel" class="panel panel--full game-panel" hidden>
+          <div class="panel-header">
+            <p class="panel-step">Gioco</p>
+            <h2>Storia in corso</h2>
+          </div>
+
+          <div id="game-messages" class="game-messages" aria-live="polite"></div>
+
+          <form id="game-form" class="game-form">
+            <label class="field field--full">
+              <span>La tua prossima scelta</span>
+              <textarea
+                id="game-input"
+                rows="4"
+                placeholder="Scrivi cosa decide di fare il personaggio..."
+              ></textarea>
+            </label>
+
+            <div class="toolbar">
+              <button id="new-story" class="button button--ghost" type="button">
+                Nuova storia
+              </button>
+              <button id="send-turn" class="button" type="submit">
+                Continua la storia
+              </button>
+            </div>
+          </form>
+        </section>
+      </section>
+    </main>
+
+    <div id="warning-modal" class="modal" hidden>
+      <div class="modal__backdrop"></div>
+      <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="warning-title">
+        <p class="panel-step">Attenzione</p>
+        <h2 id="warning-title">Sei andato fuori trama</h2>
+        <p id="warning-text" class="modal__text"></p>
+        <div class="toolbar">
+          <button id="close-warning" class="button" type="button">
+            Riprova da qui
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div id="instructions-modal" class="modal" hidden>
+      <div class="modal__backdrop"></div>
+      <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="instructions-title">
+        <p class="panel-step">Istruzioni</p>
+        <h2 id="instructions-title">Come si usa</h2>
+        <div class="instructions-list">
+          <p>Inserisci la tua chiave API OpenAI.</p>
+          <p>Compila la scheda iniziale del personaggio.</p>
+          <p>Se vuoi, salva o ricarica la scheda in JSON.</p>
+          <p>Premi `Inizia il gioco`.</p>
+          <p>Continua la storia scrivendo una scelta alla volta.</p>
+          <p>Se vai fuori trama, il gioco ti chiedera' di riformulare la scelta.</p>
+        </div>
+        <div class="toolbar">
+          <button id="close-instructions" class="button" type="button">
+            Chiudi
+          </button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
