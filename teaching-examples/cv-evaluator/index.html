@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./styles.css" />
+    <title>CV Evaluator</title>
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="hero">
+        <h1>CV Evaluator</h1>
+        <p class="intro">
+      Benvenuto in CV Evaluator, un'applicazione didattica sviluppata da Francesco Bertolotti che analizza il tuo curriculum vitae (CV).
+        </p>
+      </header>
+
+      <section class="controls" aria-label="Controlli applicazione">
+        <label class="field">
+          <span>OpenAI API key</span>
+          <input
+            id="apiKey"
+            type="password"
+            placeholder="sk-..."
+            autocomplete="off"
+            spellcheck="false"
+          />
+        </label>
+
+        <label class="field">
+          <span>PDF del CV</span>
+          <input id="pdfFile" type="file" accept="application/pdf" />
+        </label>
+
+        <div class="actions">
+          <button id="analyzeButton" type="button">Analizza CV</button>
+          <button id="resetButton" type="button" class="ghost">Pulisci sessione</button>
+        </div>
+      </section>
+
+      <section class="status-strip" aria-live="polite">
+        <p id="statusText">In attesa di un PDF.</p>
+        <p id="metaText"></p>
+      </section>
+
+      <section class="results-sections" aria-label="Risultati">
+        <article class="result-panel">
+          <h2 class="panel-title">Estrazione CV</h2>
+          <div class="results-grid">
+            <div class="result-column">
+              <p class="section-label">Profilo</p>
+              <dl id="profileBlock" class="key-value"></dl>
+
+              <p class="section-label">Formazione</p>
+              <div id="educationBlock" class="stack-list"></div>
+
+              <p class="section-label">Esperienze</p>
+              <div id="experienceBlock" class="stack-list"></div>
+            </div>
+
+            <div class="result-column">
+              <p class="section-label">Competenze</p>
+              <div id="skillsBlock" class="token-flow"></div>
+
+              <p class="section-label">Lingue e certificazioni</p>
+              <div id="extrasBlock" class="stack-list"></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="result-panel">
+          <h2 class="panel-title">Valutazione CV</h2>
+          <div class="evaluation-grid">
+            <div class="result-column">
+              <p class="section-label">Osservazioni</p>
+              <div id="notesBlock" class="stack-list"></div>
+            </div>
+
+            <div class="result-column">
+              <p class="section-label">Score</p>
+              <div id="scoreBlock" class="score-block"></div>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section class="text-preview" aria-label="Anteprima testo estratto">
+        <details class="preview-toggle">
+          <summary>
+            <span class="section-label">Testo PDF estratto</span>
+          </summary>
+          <pre id="rawTextBlock"></pre>
+        </details>
+      </section>
+    </main>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

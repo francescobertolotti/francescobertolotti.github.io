@@ -279,6 +279,23 @@ textarea {
   margin-bottom: 0;
 }
 
+.evaluation-chart-shell {
+  border: 1px solid rgba(25, 52, 88, 0.14);
+  background: #f9fbfd;
+  padding: 0.75rem;
+}
+
+.evaluation-chart {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.modal__dialog--compact {
+  width: min(420px, calc(100vw - 2rem));
+  text-align: center;
+}
+
 .button {
   appearance: none;
   border: 1px solid var(--unicatt-blue-800);

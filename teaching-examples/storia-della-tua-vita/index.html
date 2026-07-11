@@ -169,6 +169,9 @@
               <button id="new-story" class="button button--ghost" type="button">
                 Nuova storia
               </button>
+              <button id="open-evaluation" class="button button--ghost" type="button">
+                Valutazione obiettivo
+              </button>
               <button id="send-turn" class="button" type="submit">
                 Continua la storia
               </button>
@@ -194,7 +197,12 @@
 
     <div id="instructions-modal" class="modal" hidden>
       <div class="modal__backdrop"></div>
-      <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="instructions-title">
+      <div
+        class="modal__dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="instructions-title"
+      >
         <p class="panel-step">Istruzioni</p>
         <h2 id="instructions-title">Come si usa</h2>
         <div class="instructions-list">
@@ -210,6 +218,53 @@
             Chiudi
           </button>
         </div>
+      </div>
+    </div>
+
+    <div id="evaluation-modal" class="modal" hidden>
+      <div class="modal__backdrop"></div>
+      <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="evaluation-title">
+        <p class="panel-step">Valutazione</p>
+        <h2 id="evaluation-title">Raggiungimento dell'obiettivo</h2>
+        <p id="evaluation-current" class="modal__text"></p>
+        <div class="evaluation-chart-shell">
+          <svg
+            id="evaluation-chart"
+            class="evaluation-chart"
+            viewBox="0 0 640 320"
+            role="img"
+            aria-label="Grafico della serie storica della valutazione obiettivo"
+          ></svg>
+        </div>
+        <div class="toolbar">
+          <button id="close-evaluation" class="button" type="button">
+            Chiudi
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div id="goal-reached-modal" class="modal" hidden>
+      <div class="modal__backdrop"></div>
+      <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="goal-reached-title">
+        <p class="panel-step">Obiettivo raggiunto</p>
+        <h2 id="goal-reached-title">Hai raggiunto l'obiettivo</h2>
+        <p class="modal__text">
+          Hai raggiunto l'obiettivo, ben fatto! Gioco terminato.
+        </p>
+        <div class="toolbar">
+          <button id="close-goal-reached" class="button" type="button">
+            Continua comunque
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div id="loading-modal" class="modal" hidden>
+      <div class="modal__backdrop"></div>
+      <div class="modal__dialog modal__dialog--compact" role="status" aria-live="polite">
+        <p class="panel-step">Attendi</p>
+        <h2>Risposta in corso</h2>
       </div>
     </div>
   </body>
