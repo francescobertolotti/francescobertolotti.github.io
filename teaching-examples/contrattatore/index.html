@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contrattatore</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="topbar">
+        <div>
+          <h1>Contrattatore</h1>
+        </div>
+        <div class="topbar-actions">
+          <button id="instructionsButton" class="ghost-button" type="button">Istruzioni</button>
+          <button id="exportLogButton" class="ghost-button" type="button">Excel log</button>
+          <button id="resetAppButton" class="ghost-button" type="button">Reset</button>
+        </div>
+      </header>
+
+      <main class="app-grid">
+        <section class="panel panel-setup">
+          <h2>Setup</h2>
+
+          <label class="field">
+            <span>Giocatore</span>
+            <input
+              id="playerNameInput"
+              type="text"
+              placeholder="Nome giocatore"
+              autocomplete="off"
+              spellcheck="false"
+            />
+          </label>
+
+          <label class="field">
+            <span>OpenAI API key</span>
+            <input
+              id="apiKeyInput"
+              type="password"
+              placeholder="sk-..."
+              autocomplete="off"
+              spellcheck="false"
+            />
+          </label>
+
+          <label class="field">
+            <span>Model</span>
+            <select
+              id="modelInput"
+            >
+              <option value="gpt-5-nano">gpt-5-nano</option>
+              <option value="gpt-5-mini" selected>gpt-5-mini</option>
+              <option value="gpt-5">gpt-5</option>
+              <option value="gpt-5.4-nano">gpt-5.4-nano</option>
+              <option value="gpt-5.4-mini">gpt-5.4-mini</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span>Difficolta</span>
+            <select id="difficultyInput">
+              <option value="easy">Morbida</option>
+              <option value="medium" selected>Normale</option>
+              <option value="hard">Ossuta</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span>Link Amazon</span>
+            <input
+              id="amazonUrlInput"
+              type="url"
+              placeholder="https://www.amazon.it/..."
+              autocomplete="off"
+              spellcheck="false"
+            />
+          </label>
+
+          <div class="button-row">
+            <button id="analyzeButton" type="button">Analizza link</button>
+            <button id="startButton" type="button" class="secondary-button">Avvia partita</button>
+          </div>
+
+          <label class="field">
+            <span>Nome prodotto</span>
+            <input id="productTitleInput" type="text" autocomplete="off" spellcheck="false" />
+          </label>
+
+          <label class="field">
+            <span>Prezzo di riferimento</span>
+            <input
+              id="productPriceInput"
+              type="number"
+              min="1"
+              step="1"
+              placeholder="199"
+              autocomplete="off"
+            />
+          </label>
+
+          <label class="field">
+            <span>Categoria</span>
+            <input id="productCategoryInput" type="text" autocomplete="off" spellcheck="false" />
+          </label>
+
+          <label class="field">
+            <span>Descrizione</span>
+            <textarea
+              id="productDescriptionInput"
+              rows="7"
+              placeholder="Caratteristiche utili per il venditore e per la trattativa"
+            ></textarea>
+          </label>
+
+          <div id="setupStatus" class="status-line" aria-live="polite"></div>
+        </section>
+
+        <section class="panel panel-chat">
+          <h2>Chat</h2>
+          <div id="chatMeta" class="meta-strip">Nessuna partita attiva</div>
+          <div id="chatLog" class="chat-log" aria-live="polite"></div>
+
+          <form id="composerForm" class="composer">
+            <textarea
+              id="messageInput"
+              rows="4"
+              placeholder="Fai la tua offerta o prova a convincere il venditore"
+              disabled
+            ></textarea>
+            <div class="button-row">
+              <button id="sendButton" type="submit" disabled>Invia</button>
+            </div>
+          </form>
+        </section>
+
+        <section class="panel panel-state">
+          <h2>Stato</h2>
+          <div id="sellerSnapshot" class="snapshot-block"></div>
+          <div id="timeline" class="timeline"></div>
+        </section>
+      </main>
+    </div>
+
+    <template id="messageTemplate">
+      <article class="message">
+        <div class="message-role"></div>
+        <div class="message-text"></div>
+      </article>
+    </template>
+
+    <dialog id="impatienceDialog" class="alert-dialog">
+      <div class="dialog-body">
+        <div class="dialog-kicker">trattativa chiusa</div>
+        <p id="impatienceMessage"></p>
+        <button id="closeDialogButton" type="button">Capito</button>
+      </div>
+    </dialog>
+
+    <dialog id="instructionsDialog" class="alert-dialog instructions-dialog">
+      <div class="dialog-body">
+        <div class="dialog-kicker">come funziona</div>
+        <div id="instructionsContent" class="instructions-content"></div>
+        <button id="closeInstructionsButton" type="button">Chiudi</button>
+      </div>
+    </dialog>
+
+    <script src="./app.js" defer></script>
+  </body>
+  </html>

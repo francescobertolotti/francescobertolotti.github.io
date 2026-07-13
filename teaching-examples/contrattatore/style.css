@@ -1,0 +1,371 @@
+:root {
+  --bg: #0c0f0d;
+  --panel: #121614;
+  --panel-alt: #161c19;
+  --line: #2d3832;
+  --line-strong: #4e6258;
+  --text: #edf2ed;
+  --muted: #97a69c;
+  --accent: #d0ff45;
+  --accent-soft: rgba(208, 255, 69, 0.12);
+  --blue: #8fb8ff;
+  --red: #ff7d59;
+  --shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  background:
+    radial-gradient(circle at top left, rgba(208, 255, 69, 0.12), transparent 28%),
+    radial-gradient(circle at top right, rgba(143, 184, 255, 0.14), transparent 26%),
+    linear-gradient(180deg, #0a0c0b 0%, #101412 100%);
+  color: var(--text);
+  font-family: "Instrument Sans", sans-serif;
+}
+
+button,
+select,
+input,
+textarea {
+  font: inherit;
+}
+
+button {
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: #091006;
+  cursor: pointer;
+  padding: 0.95rem 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 700;
+  transition: transform 120ms ease, background 120ms ease, color 120ms ease;
+}
+
+button:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.secondary-button {
+  border-color: var(--blue);
+  background: transparent;
+  color: var(--blue);
+}
+
+.ghost-button {
+  border-color: var(--line-strong);
+  background: transparent;
+  color: var(--text);
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  border: 1px solid var(--line-strong);
+  background: rgba(10, 12, 11, 0.72);
+  color: var(--text);
+  padding: 0.9rem 0.95rem;
+  outline: none;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--accent);
+  box-shadow: inset 0 0 0 1px var(--accent);
+}
+
+textarea {
+  resize: vertical;
+}
+
+.page-shell {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 0 0 24px;
+}
+
+.topbar h1,
+.panel h2 {
+  margin: 0;
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+}
+
+.topbar h1 {
+  font-size: clamp(2.5rem, 5vw, 5rem);
+  line-height: 0.95;
+}
+
+.app-grid {
+  display: grid;
+  grid-template-columns: 360px minmax(0, 1.1fr) 360px;
+  gap: 18px;
+  min-height: calc(100vh - 140px);
+}
+
+.panel {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.015), transparent 38%),
+    var(--panel);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.panel > h2 {
+  padding: 18px 18px 0;
+  font-size: 1.45rem;
+}
+
+.panel-setup,
+.panel-state {
+  padding-bottom: 18px;
+}
+
+.field,
+.button-row,
+.status-line,
+.meta-strip,
+.snapshot-block,
+.timeline {
+  margin: 0 18px;
+}
+
+.field {
+  display: grid;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.field span,
+.message-role,
+.meta-strip,
+.status-line,
+.snapshot-key,
+.timeline-time {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.field span,
+.meta-strip,
+.status-line,
+.snapshot-key,
+.timeline-time {
+  color: var(--muted);
+}
+
+.button-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.status-line {
+  min-height: 1.25rem;
+  margin-top: 18px;
+}
+
+.meta-strip {
+  margin-top: 12px;
+  padding: 12px 18px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.chat-log {
+  flex: 1;
+  overflow: auto;
+  padding: 8px 0 0;
+}
+
+.message {
+  padding: 16px 18px 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.message-role {
+  margin-bottom: 8px;
+}
+
+.message-text {
+  font-size: 1rem;
+  line-height: 1.55;
+  white-space: pre-wrap;
+}
+
+.message-user .message-role {
+  color: var(--blue);
+}
+
+.message-assistant .message-role {
+  color: var(--accent);
+}
+
+.message-system .message-role {
+  color: var(--red);
+}
+
+.composer {
+  border-top: 1px solid var(--line);
+  padding: 18px;
+  display: grid;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.snapshot-block {
+  margin-top: 14px;
+  border-top: 1px solid var(--line);
+  padding-top: 14px;
+}
+
+.snapshot-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.snapshot-value {
+  text-align: right;
+  font-weight: 600;
+}
+
+.timeline {
+  margin-top: 18px;
+  border-top: 1px solid var(--line);
+  padding-top: 10px;
+  overflow: auto;
+}
+
+.timeline-entry {
+  padding: 12px 0 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.timeline-time {
+  margin-bottom: 8px;
+}
+
+.timeline-text {
+  line-height: 1.45;
+  color: var(--text);
+}
+
+.timeline-text code {
+  font-family: "IBM Plex Mono", monospace;
+  color: var(--accent);
+}
+
+.alert-dialog {
+  border: 1px solid var(--red);
+  padding: 0;
+  background: var(--panel-alt);
+  color: var(--text);
+  max-width: 460px;
+  width: calc(100% - 32px);
+}
+
+.alert-dialog::backdrop {
+  background: rgba(0, 0, 0, 0.72);
+}
+
+.dialog-body {
+  padding: 24px;
+}
+
+.dialog-kicker {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 12px;
+}
+
+.dialog-body p {
+  margin: 0 0 18px;
+  line-height: 1.5;
+  font-size: 1.05rem;
+}
+
+.instructions-dialog {
+  max-width: 860px;
+}
+
+.instructions-content {
+  display: grid;
+  gap: 14px;
+  margin-bottom: 18px;
+  max-height: 68vh;
+  overflow: auto;
+  padding-right: 8px;
+}
+
+.instructions-content h3 {
+  margin: 0 0 6px;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1.1rem;
+  letter-spacing: -0.03em;
+}
+
+.instructions-content p,
+.instructions-content li {
+  margin: 0;
+  line-height: 1.55;
+}
+
+.instructions-content ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.instructions-content strong {
+  color: var(--accent);
+}
+
+@media (max-width: 1180px) {
+  .app-grid {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+
+  .panel-chat {
+    min-height: 60vh;
+  }
+}

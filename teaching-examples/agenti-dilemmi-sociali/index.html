@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Giochi sociali iterati vs LLM</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <section class="hero">
+        <p class="eyebrow">Static Web App</p>
+        <h1>Giochi sociali iterati contro un LLM</h1>
+        <p class="intro">
+          Inserisci la tua chiave API OpenAI, scegli gioco, modello e parametri
+          della partita, poi gioca turno per turno contro un agente che decide
+          senza vedere la tua scelta corrente.
+        </p>
+      </section>
+
+      <section class="card" id="setup-card">
+        <div class="card-head">
+          <h2>Impostazioni iniziali</h2>
+          <p>Tutto resta nel browser. Nessun backend richiesto.</p>
+        </div>
+
+        <form id="setup-form" class="form-grid">
+          <label>
+            <span>OpenAI API key</span>
+            <input
+              id="api-key"
+              name="apiKey"
+              type="password"
+              placeholder="sk-..."
+              autocomplete="off"
+              required
+            />
+          </label>
+
+          <label>
+            <span>Modello</span>
+            <select id="model" name="model" required>
+              <option value="gpt-5-nano">gpt-5-nano</option>
+              <option value="gpt-5-mini" selected>gpt-5-mini</option>
+              <option value="gpt-5">gpt-5</option>
+              <option value="gpt-5.4-nano">gpt-5.4-nano</option>
+              <option value="gpt-5.4-mini">gpt-5.4-mini</option>
+            </select>
+          </label>
+
+          <label>
+            <span>Numero di turni</span>
+            <input
+              id="turn-count"
+              name="turnCount"
+              type="number"
+              min="1"
+              max="25"
+              step="1"
+              value="10"
+              required
+            />
+          </label>
+
+          <label>
+            <span>Turni precedenti visibili all'LLM</span>
+            <input
+              id="memory-window"
+              name="memoryWindow"
+              type="number"
+              min="0"
+              max="25"
+              step="1"
+              value="3"
+              required
+            />
+          </label>
+
+          <label>
+            <span>Gioco</span>
+            <select id="game" name="game" required>
+              <option value="prisoners_dilemma">Dilemma del prigioniero</option>
+              <option value="chicken">Gioco del pollo</option>
+              <option value="stag_hunt">Stag Hunt</option>
+              <option value="battle_of_the_sexes">Battle of the Sexes</option>
+            </select>
+          </label>
+
+          <label>
+            <span>Modalità</span>
+            <select id="mode" name="mode" required>
+              <option value="blind" selected>Senza dichiarazione</option>
+              <option value="declaration">Con dichiarazione</option>
+            </select>
+          </label>
+
+          <label class="toggle-box">
+            <span>Riflessione post turno LLM</span>
+            <div class="toggle-row">
+              <input id="enable-reflection" name="enableReflection" type="checkbox" />
+              <p class="toggle-copy">
+                Se attiva, dopo ogni turno l'LLM scrive una breve riflessione sul
+                proprio comportamento e su quello del giocatore, fino a 3 righe.
+              </p>
+            </div>
+          </label>
+
+          <div class="payoff-box">
+            <div class="matrix-head">
+              <p class="payoff-title">Matrice di payoff</p>
+              <button id="matrix-help-btn" class="ghost-btn small-btn" type="button">
+                Come si legge
+              </button>
+            </div>
+            <p class="matrix-subtitle" id="game-description">
+              Dilemma classico: la defezione tenta, ma la cooperazione reciproca
+              è migliore del conflitto reciproco.
+            </p>
+            <div id="payoff-matrix" class="payoff-matrix"></div>
+          </div>
+
+          <button class="primary-btn" type="submit">Avvia partita</button>
+        </form>
+
+      </section>
+
+      <section class="card game-panel hidden" id="game-card">
+        <div class="status-bar">
+          <div>
+            <p class="status-label">Partita</p>
+            <p id="match-summary" class="status-value">Turno 1 di 10</p>
+          </div>
+          <div>
+            <p class="status-label">Memoria LLM</p>
+            <p id="memory-summary" class="status-value">Ultimi 3 turni</p>
+          </div>
+          <div>
+            <p class="status-label">Modello</p>
+            <p id="model-summary" class="status-value">gpt-5-mini</p>
+          </div>
+          <div>
+            <p class="status-label">Modalità</p>
+            <p id="mode-summary" class="status-value">Senza dichiarazione</p>
+          </div>
+          <div>
+            <p class="status-label">Riflessione</p>
+            <p id="reflection-summary" class="status-value">Disattiva</p>
+          </div>
+        </div>
+
+        <div class="score-grid">
+          <article class="score-card">
+            <p>Tu</p>
+            <strong id="player-score">0</strong>
+          </article>
+          <article class="score-card">
+            <p>LLM</p>
+            <strong id="llm-score">0</strong>
+          </article>
+        </div>
+
+        <details id="game-info-details" class="payoff-box game-info-box">
+          <summary class="details-summary">
+            <span class="payoff-title">Gioco e payoff in corso</span>
+            <span class="summary-caret" aria-hidden="true"></span>
+          </summary>
+          <div class="details-toolbar">
+            <button id="in-game-help-btn" class="ghost-btn small-btn" type="button">
+              Come si legge
+            </button>
+          </div>
+          <p class="matrix-subtitle" id="in-game-description">
+            Dilemma classico: la defezione tenta, ma la cooperazione reciproca
+            è migliore del conflitto reciproco.
+          </p>
+          <div id="in-game-payoff-matrix" class="payoff-matrix"></div>
+        </details>
+
+        <div class="turn-box">
+          <h2>Scelta del turno</h2>
+          <p class="turn-copy" id="turn-copy">
+            Scegli la tua azione, poi inviala. L'LLM decide in parallelo solo
+            sulla base delle regole e della storia consentita.
+          </p>
+
+          <div id="declaration-panel" class="declaration-panel hidden">
+            <div class="declaration-grid">
+              <div class="declaration-column">
+                <h3>1. La tua dichiarazione</h3>
+                <p class="declaration-copy">
+                  Scrivi in massimo 200 caratteri cosa dichiari di voler fare in
+                  questo turno.
+                </p>
+                <textarea
+                  id="player-declaration"
+                  maxlength="200"
+                  rows="4"
+                  placeholder="Esempio: vorrei cooperare se anche tu mostri disponibilità a farlo."
+                ></textarea>
+                <p id="declaration-count" class="helper-text">0 / 200</p>
+                <button id="submit-declaration-btn" class="primary-btn" type="button">
+                  Invia dichiarazioni
+                </button>
+              </div>
+              <div class="declaration-column">
+                <h3>2. Dichiarazione e scelta LLM</h3>
+                <p id="llm-declaration-status" class="declaration-copy">
+                  Dopo l'invio vedrai qui cosa l'LLM dichiara e quale scelta ha
+                  già deciso di fare.
+                </p>
+                <div class="declaration-output">
+                  <p class="output-label">Dichiarazione LLM</p>
+                  <p id="llm-declaration-text" class="output-box">Nessuna dichiarazione ancora.</p>
+                </div>
+                <div class="declaration-output">
+                  <p class="output-label">Scelta già decisa dall'LLM</p>
+                  <p id="llm-choice-reveal" class="output-box">Non ancora rivelata.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="choice-row" id="choice-row"></div>
+
+          <div class="action-row">
+            <p id="selected-choice" class="selected-choice">
+              Nessuna scelta selezionata.
+            </p>
+            <button id="play-turn-btn" class="primary-btn" type="button" disabled>
+              Gioca il turno
+            </button>
+          </div>
+        </div>
+
+        <div class="result-box">
+          <h2>Esito ultimo turno</h2>
+          <p id="turn-result" class="turn-result">
+            La partita inizierà dopo il primo invio.
+          </p>
+          <div id="reflection-box" class="reflection-box hidden">
+            <p class="output-label">Riflessione LLM</p>
+            <p id="turn-reflection" class="output-box">Nessuna riflessione.</p>
+          </div>
+        </div>
+
+        <div class="history-box">
+          <div class="history-head">
+            <h2>Storico</h2>
+            <div class="history-actions">
+              <button id="stats-btn" class="ghost-btn" type="button">
+                Statistiche
+              </button>
+              <button id="reset-btn" class="ghost-btn" type="button">
+                Nuova partita
+              </button>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Turno</th>
+                  <th>Tu</th>
+                  <th>LLM</th>
+                  <th>Punti tu</th>
+                  <th>Punti LLM</th>
+                  <th>Totale</th>
+                </tr>
+              </thead>
+              <tbody id="history-body">
+                <tr>
+                  <td colspan="6" class="empty-history">
+                    Nessun turno ancora giocato.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <dialog id="matrix-help-dialog">
+      <div class="dialog-inner">
+        <h2>Come leggere la matrice di payoff</h2>
+        <p>
+          Ogni casella rappresenta l'incontro tra la tua scelta e quella
+          dell'LLM nello stesso turno.
+        </p>
+        <p>
+          Il formato è sempre <strong>tu, LLM</strong>. Quindi se una casella
+          mostra <strong>5, 0</strong>, significa che tu ottieni 5 punti e
+          l'LLM 0.
+        </p>
+        <p>
+          Le righe indicano la tua azione. Le colonne indicano l'azione
+          dell'LLM. Per esempio: riga "Cooperare" e colonna "Defezionare"
+          significa "tu cooperi, l'LLM defeziona".
+        </p>
+        <p>
+          A ogni turno entrambi scegliete simultaneamente. L'LLM non vede la tua
+          scelta del turno corrente: riceve solo le regole del gioco e lo
+          storico che hai deciso di rendergli visibile.
+        </p>
+        <div class="dialog-actions">
+          <button id="close-help-btn" class="primary-btn" type="button">
+            Chiudi
+          </button>
+        </div>
+      </div>
+    </dialog>
+
+    <dialog id="stats-dialog">
+      <div class="dialog-inner">
+        <h2>Statistiche</h2>
+        <p>
+          Qui trovi l'andamento storico delle scelte e dei punti turno per turno.
+        </p>
+        <div class="stats-section">
+          <h3>Serie storica delle scelte</h3>
+          <div id="choices-chart" class="chart-box"></div>
+        </div>
+        <div class="stats-section">
+          <h3>Serie storica dei punti</h3>
+          <div id="points-chart" class="chart-box"></div>
+        </div>
+        <div class="stats-section">
+          <h3>Serie storica dei punti cumulati</h3>
+          <div id="cumulative-chart" class="chart-box"></div>
+        </div>
+        <div class="dialog-actions">
+          <button id="close-stats-btn" class="primary-btn" type="button">
+            Chiudi
+          </button>
+        </div>
+      </div>
+    </dialog>
+
+    <script src="app.js"></script>
+  </body>
+</html>
