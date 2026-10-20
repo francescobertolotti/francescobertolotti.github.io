@@ -1,0 +1,96 @@
+{
+  "edition": "Edizione del 20 ottobre 2026",
+  "updatedAt": "2026-10-20T13:00:00+02:00",
+  "items": [
+    {
+      "id": "2026-10-20-italia-eredita-brancaccio",
+      "region": "Italia",
+      "country": "Italia",
+      "category": "Cronaca",
+      "political": false,
+      "headline": "Fernanda Ceccarelli Brancaccio, l’eredità milionaria della principessa morta a 107 anni: «Andrà tutto ai poveri»",
+      "summary": "A dodici anni dalla morte della principessa, prosegue la controversia giudiziaria sulla destinazione del suo patrimonio.",
+      "body": "L’eredità comprende immobili, terreni e titoli per circa venti milioni di euro. Ceccarelli Brancaccio aveva espresso la volontà di destinare i beni ai cittadini romani in difficoltà attraverso la fondazione che porta il nome della famiglia.",
+      "publishedAt": "2026-10-20",
+      "isDemo": false,
+      "sources": [
+        {
+          "name": "Leggo",
+          "url": "https://www.leggo.it/italia/roma/20_ottobre_2026_fernanda_ceccarelli_brancaccio_eredita_milionaria_a_chi_e_andata_oggi-9836998.html"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-19-esteri-cartello-falso",
+      "region": "Esteri",
+      "country": "Germania",
+      "category": "Società",
+      "political": false,
+      "headline": "Cambia il limite di velocità con un cartello falso: quasi 400 multati. Sanzioni annullate, ma è caccia al responsabile",
+      "summary": "A Haldensleben un segnale contraffatto ha indicato 70 km/h dove il limite effettivo era di 50 km/h.",
+      "body": "Il cartello è rimasto lungo una strada principale dal 4 al 6 settembre, mentre l’autovelox continuava a usare il limite reale. Il Comune ha annullato tutte le contestazioni di quei giorni e la polizia sta cercando chi ha installato il segnale.",
+      "publishedAt": "2026-10-19",
+      "isDemo": false,
+      "sources": [
+        {
+          "name": "Leggo",
+          "url": "https://www.leggo.it/esteri/news/19_ottobre_2026_autovelox_cartello_falso_limite_velocita_400_multe_annullate_haldensleben-9835079.html"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-18-esteri-ragazza-ia",
+      "region": "Esteri",
+      "country": "Brasile",
+      "category": "Tecnologia",
+      "political": false,
+      "headline": "Vende tutto e percorre per 2mila km per incontrare una ragazza conosciuta online, ma non esiste: è stata creata con l’IA. «Mi sentivo solo»",
+      "summary": "Un muratore brasiliano di 49 anni ha attraversato il Paese per incontrare una donna conosciuta online, scoprendo che non esisteva.",
+      "body": "L’uomo aveva venduto i propri beni prima di partire per Belo Horizonte. Il profilo, seguito da centinaia di migliaia di persone, rappresentava una donna generata artificialmente. Rimasto senza denaro, è stato assistito dai servizi sociali locali.",
+      "publishedAt": "2026-10-18",
+      "isDemo": false,
+      "sources": [
+        {
+          "name": "Leggo",
+          "url": "https://www.leggo.it/esteri/news/18_ottobre_2026_vende_tutto_ragazza_online_creata_intelligenza_artificiale-9833391.html"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-19-scienza-parkinson",
+      "region": "Scienza",
+      "country": "Regno Unito",
+      "category": "Ricerca",
+      "political": false,
+      "headline": "Parkinson, scoperta una difesa naturale del cervello: le cellule che eliminano le proteine tossiche",
+      "summary": "Un gruppo dell’Università di Oxford ha studiato cellule immunitarie cerebrali capaci di rimuovere aggregati dannosi senza distruggere i neuroni.",
+      "body": "La ricerca riguarda la microglia, prima linea di difesa del sistema nervoso. I risultati, pubblicati su Science Translational Medicine, potrebbero contribuire allo sviluppo di trattamenti che rafforzino i meccanismi protettivi già presenti nel cervello.",
+      "publishedAt": "2026-10-19",
+      "isDemo": false,
+      "sources": [
+        {
+          "name": "Leggo",
+          "url": "https://www.leggo.it/salute/ricerca/parkinson_cellule_immunitarie_cervello_proteine_tossiche_nuove_terapie-9834827.html"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-14-scienza-dieta-gravidanza",
+      "region": "Scienza",
+      "country": "Stati Uniti",
+      "category": "Salute",
+      "political": false,
+      "headline": "Dieta mediterranea in gravidanza: meno rischi di coliche ed eczema nei neonati, il ruolo del pesce",
+      "summary": "Uno studio statunitense associa la dieta mediterranea in gravidanza a un rischio inferiore di coliche ed eczema nei neonati.",
+      "body": "La ricerca, pubblicata su JAMA Network Open, ha esaminato anche il possibile ruolo del consumo regolare di pesce. Gli autori considerano rilevante il legame perché coliche ed eczema possono accompagnarsi a successive manifestazioni allergiche.",
+      "publishedAt": "2026-10-14",
+      "isDemo": false,
+      "sources": [
+        {
+          "name": "Leggo",
+          "url": "https://www.leggo.it/salute/prima_infanzia/gravidanza_dieta_mediterranea_coliche_eczema_pesce_harvard-9824318.html"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,620 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Laboratorio didattico per valutare sorpresa e plausibilità delle notizie.">
+  <link rel="icon" href="data:,">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+  <title>Il Quotidiano Possibile</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --paper: #ffffff;
+      --surface: #ffffff;
+      --ink: #2a2a2a;
+      --headline: #3f3f3f;
+      --muted: #595959;
+      --rule: #d2d2d2;
+      --soft: #f7f7f7;
+      --accent: #094e7f;
+      --accent-dark: #095075;
+      --focus: #094e7f;
+      --success: #246947;
+      --error: #a61b1b;
+      --font-editorial: Georgia, "Times New Roman", serif;
+      --font-ui: "Noto Sans", Arial, Helvetica, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      background: var(--paper);
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-width: 320px;
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: var(--font-editorial);
+      font-size: 1rem;
+      line-height: 1.65;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    button,
+    input[type="range"] {
+      cursor: pointer;
+      touch-action: manipulation;
+    }
+
+    a {
+      color: var(--accent-dark);
+      text-decoration-thickness: 0.08em;
+      text-underline-offset: 0.16em;
+    }
+
+    a:hover {
+      color: var(--accent);
+    }
+
+    :focus-visible {
+      outline: 3px solid var(--focus);
+      outline-offset: 3px;
+    }
+
+    .skip-link {
+      position: fixed;
+      top: 8px;
+      left: 8px;
+      z-index: 100;
+      padding: 10px 14px;
+      color: #fff;
+      background: var(--focus);
+      transform: translateY(-150%);
+    }
+
+    .skip-link:focus {
+      transform: translateY(0);
+    }
+
+    .page-shell {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .site-header {
+      padding: 32px 0 16px;
+      border-bottom: 4px double var(--ink);
+      text-align: center;
+    }
+
+    .kicker,
+    .edition-row,
+    .article-meta,
+    .label,
+    .progress,
+    .form-note,
+    .scale-copy,
+    .rating-value,
+    .student-panel,
+    .send-panel,
+    button,
+    .loading,
+    .error-panel {
+      font-family: var(--font-ui);
+    }
+
+    .kicker {
+      margin: 0 0 8px;
+      color: var(--accent);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      max-width: 900px;
+      margin: 0 auto;
+      font-size: clamp(2.2rem, 8vw, 5.4rem);
+      font-weight: 700;
+      color: var(--headline);
+      letter-spacing: -0.055em;
+      line-height: 0.94;
+      text-wrap: balance;
+    }
+
+    .tagline {
+      margin: 16px 0 20px;
+      color: var(--muted);
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      font-style: italic;
+    }
+
+    .edition-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px 24px;
+      padding-top: 10px;
+      border-top: 1px solid var(--rule);
+      color: var(--muted);
+      font-size: 0.78rem;
+      letter-spacing: 0.05em;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    main {
+      padding: 24px 0 64px;
+    }
+
+    .student-panel,
+    .send-panel {
+      margin-bottom: 32px;
+      padding: 24px;
+      border: 1px solid var(--rule);
+      border-top: 4px solid var(--accent);
+      background: var(--soft);
+    }
+
+    .student-panel h2,
+    .send-panel h2 {
+      margin: 0 0 8px;
+      color: var(--headline);
+      font-family: var(--font-editorial);
+      font-size: clamp(1.45rem, 3vw, 2rem);
+      line-height: 1.1;
+    }
+
+    .student-panel p,
+    .send-panel p {
+      max-width: 70ch;
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .identity-grid {
+      display: grid;
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    .identity-field {
+      display: grid;
+      gap: 6px;
+      font-weight: 700;
+    }
+
+    .identity-field input {
+      min-height: 48px;
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #757575;
+      border-radius: 0;
+      color: var(--ink);
+      background: #fff;
+      font-family: var(--font-ui);
+      font-size: 1rem;
+    }
+
+    .intro {
+      display: grid;
+      gap: 20px;
+      margin-bottom: 32px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .intro h2 {
+      max-width: 22ch;
+      margin: 0;
+      font-size: clamp(1.7rem, 4vw, 2.8rem);
+      line-height: 1.08;
+      text-wrap: balance;
+    }
+
+    .intro-copy {
+      max-width: 68ch;
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .progress {
+      align-self: end;
+      margin: 0;
+      padding: 12px 16px;
+      border-left: 4px solid var(--accent);
+      background: var(--surface);
+      font-weight: 700;
+    }
+
+    .news-grid {
+      display: grid;
+      gap: 24px;
+    }
+
+    .news-card {
+      min-width: 0;
+      padding: 24px;
+      border: 1px solid var(--rule);
+      border-top: 3px solid var(--headline);
+      background: var(--surface);
+    }
+
+    .article-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 12px;
+      align-items: center;
+      margin-bottom: 16px;
+      color: var(--muted);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .region {
+      color: var(--accent);
+    }
+
+    .category,
+    .politics-badge {
+      padding: 3px 8px;
+      border: 1px solid var(--rule);
+      background: var(--soft);
+    }
+
+    .politics-badge {
+      border-color: var(--accent-dark);
+      color: var(--accent-dark);
+    }
+
+    .headline {
+      margin: 0;
+      color: var(--headline);
+      font-size: clamp(1.65rem, 4vw, 2.55rem);
+      letter-spacing: -0.025em;
+      line-height: 1.04;
+      text-wrap: balance;
+    }
+
+    .summary {
+      margin: 16px 0 8px;
+      font-size: 1.12rem;
+      font-weight: 700;
+      line-height: 1.45;
+    }
+
+    .article-body {
+      max-width: 70ch;
+      margin: 0;
+    }
+
+    .evaluation-form {
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 2px solid var(--ink);
+    }
+
+    .evaluation-form h3 {
+      margin: 0 0 4px;
+      font-size: 1.2rem;
+    }
+
+    .form-note {
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .rating-grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .rating-control {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 4px 16px;
+      min-width: 0;
+    }
+
+    .label {
+      font-weight: 700;
+    }
+
+    .scale-copy {
+      grid-column: 1 / -1;
+      display: flex;
+      justify-content: space-between;
+      color: var(--muted);
+      font-size: 0.75rem;
+    }
+
+    .rating-control input {
+      grid-column: 1 / -1;
+      width: 100%;
+      min-height: 44px;
+      margin: 0;
+      accent-color: var(--accent);
+    }
+
+    .rating-value {
+      min-width: 5.2ch;
+      color: var(--accent-dark);
+      font-weight: 700;
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .form-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 16px;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    button {
+      min-height: 48px;
+      padding: 10px 18px;
+      border: 2px solid var(--accent);
+      border-radius: 0;
+      color: #fff;
+      background: var(--accent);
+      font-weight: 700;
+      transition: background-color 160ms ease, color 160ms ease;
+    }
+
+    button:hover {
+      color: var(--accent);
+      background: transparent;
+    }
+
+    button:active {
+      background: #e6f0f6;
+    }
+
+    button:disabled {
+      cursor: not-allowed;
+      border-color: #757575;
+      color: #fff;
+      background: #757575;
+      opacity: 0.72;
+    }
+
+    .form-message {
+      flex: 1 1 220px;
+      min-height: 1.5em;
+      margin: 0;
+      color: var(--success);
+      font-family: var(--font-ui);
+      font-weight: 700;
+    }
+
+    .send-panel {
+      margin-top: 32px;
+      margin-bottom: 0;
+    }
+
+    .send-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 16px;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    .send-status {
+      flex: 1 1 260px;
+      min-height: 1.5em;
+      font-weight: 700;
+    }
+
+    .send-status[data-state="success"] {
+      color: var(--success);
+    }
+
+    .send-status[data-state="error"] {
+      color: var(--error);
+    }
+
+    .loading,
+    .error-panel {
+      padding: 24px;
+      border: 1px solid var(--rule);
+      background: var(--surface);
+    }
+
+    .error-panel h2 {
+      margin-top: 0;
+      font-family: var(--font-editorial);
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    @media (min-width: 760px) {
+      .page-shell {
+        width: min(1180px, calc(100% - 64px));
+      }
+
+      .intro {
+        grid-template-columns: minmax(0, 1.15fr) minmax(260px, 0.85fr);
+      }
+
+      .identity-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .intro-copy {
+        grid-column: 1;
+      }
+
+      .progress {
+        grid-column: 2;
+        grid-row: 1 / span 2;
+      }
+
+      .news-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .news-card:first-child {
+        grid-column: 1 / -1;
+      }
+
+      .news-card:first-child .story-layout {
+        columns: 2;
+        column-gap: 40px;
+        column-rule: 1px solid var(--rule);
+      }
+
+      .rating-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (min-width: 1100px) {
+      .news-grid {
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+      }
+
+      .news-card {
+        grid-column: span 6;
+      }
+
+      .news-card:first-child {
+        grid-column: 1 / -1;
+        padding: 36px;
+      }
+
+      .news-card:first-child .headline {
+        max-width: 21ch;
+        font-size: 3.5rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#contenuto">Vai alle notizie</a>
+
+  <header class="site-header page-shell">
+    <p class="kicker">Corso di Digital Thinking - Università Cattolica del Sacro Cuore</p>
+    <h1>Il Quotidiano Possibile</h1>
+    <p class="tagline">Leggere, dubitare, valutare.</p>
+    <div class="edition-row" aria-label="Informazioni sull’edizione">
+      <span id="edition">Data in caricamento</span>
+    </div>
+  </header>
+
+  <main id="contenuto" class="page-shell" tabindex="-1">
+    <section class="student-panel" aria-labelledby="student-title">
+      <h2 id="student-title">Prima di iniziare</h2>
+      <p id="student-help">Nome, cognome e risposte saranno inviati al foglio del corso.</p>
+      <div class="identity-grid">
+        <label class="identity-field" for="first-name">
+          Nome
+          <input id="first-name" name="firstName" type="text" autocomplete="given-name" maxlength="80" required aria-describedby="student-help">
+        </label>
+        <label class="identity-field" for="last-name">
+          Cognome
+          <input id="last-name" name="lastName" type="text" autocomplete="family-name" maxlength="80" required aria-describedby="student-help">
+        </label>
+      </div>
+    </section>
+
+    <section class="intro" aria-labelledby="intro-title">
+      <h2 id="intro-title">Quanto ci sorprende ciò che crediamo vero?</h2>
+      <p class="intro-copy">
+        Leggi ogni notizia e registra due impressioni immediate. Non si tratta di indovinare:
+        ci interessa discutere quali segnali modificano il tuo giudizio.
+      </p>
+      <p class="progress" id="progress" role="status" aria-live="polite">Caricamento delle notizie…</p>
+    </section>
+
+    <div id="loading" class="loading">Sto aprendo l’edizione…</div>
+    <section id="news-list" class="news-grid" aria-label="Notizie da valutare" hidden></section>
+    <section id="error-panel" class="error-panel" role="alert" hidden>
+      <h2>L’edizione non è disponibile</h2>
+      <p id="error-message"></p>
+      <button id="retry-button" type="button">Riprova</button>
+    </section>
+
+    <section class="send-panel" aria-labelledby="send-title">
+      <h2 id="send-title">Invia le risposte</h2>
+      <p>Inserisci nome e cognome e conferma la valutazione di tutte le notizie.</p>
+      <div class="send-actions">
+        <button id="send-button" type="button" disabled>Invia a Google Sheets</button>
+        <p id="send-status" class="send-status" role="status" aria-live="polite"></p>
+      </div>
+    </section>
+  </main>
+
+  <template id="news-template">
+    <article class="news-card">
+      <div class="article-meta">
+        <span class="region"></span>
+        <span class="category"></span>
+        <span class="politics-badge" hidden>Politica</span>
+        <time class="published-at"></time>
+      </div>
+      <h2 class="headline"></h2>
+      <div class="story-layout">
+        <p class="summary"></p>
+        <p class="article-body"></p>
+      </div>
+      <form class="evaluation-form">
+        <h3>La tua prima impressione</h3>
+        <p class="form-note">Sposta entrambi i cursori. 0 è il minimo, 100 il massimo.</p>
+        <div class="rating-grid">
+          <label class="rating-control">
+            <span class="label">Quanto ti sorprende?</span>
+            <output class="rating-value surprise-value">50/100</output>
+            <span class="scale-copy"><span>Per nulla</span><span>Moltissimo</span></span>
+            <input class="surprise-input" name="surprise" type="range" min="0" max="100" step="10" value="50">
+          </label>
+          <label class="rating-control">
+            <span class="label">Quanto pensi sia vera?</span>
+            <output class="rating-value truth-value">50/100</output>
+            <span class="scale-copy"><span>Per nulla</span><span>Del tutto</span></span>
+            <input class="truth-input" name="truth" type="range" min="0" max="100" step="10" value="50">
+          </label>
+        </div>
+        <div class="form-actions">
+          <button type="submit">Conferma valutazione</button>
+          <p class="form-message" role="status" aria-live="polite"></p>
+        </div>
+      </form>
+    </article>
+  </template>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
